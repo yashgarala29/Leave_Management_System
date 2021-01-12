@@ -3,14 +3,16 @@ using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Leave_Management_System.Migrations
 {
     [DbContext(typeof(LeaveDbContext))]
-    partial class LeaveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210112051041_otherUser")]
+    partial class otherUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,18 +42,6 @@ namespace Leave_Management_System.Migrations
                     b.HasKey("Faculty_id");
 
                     b.ToTable("Faculty");
-                });
-
-            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
-                {
-                    b.Property<int>("leave_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.HasKey("leave_id");
-
-                    b.ToTable("LeaveHistory");
                 });
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.Registrar", b =>
