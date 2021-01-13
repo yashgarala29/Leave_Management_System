@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@inject SignInManager<IdentityUser> signinmanager
+@inject UserManager<IdentityUser> usemanager
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,6 +29,31 @@
                         </li>
                     </ul>
                 </div>
+                <ul class="navbar-nav">
+                    
+
+                    @if (signinmanager.IsSignedIn(User) )
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-page="" title="Manage">Hello @User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline" asp-controller="sellers" asp-action="Logout">
+                                <button type="submit" class="nav-link btn btn-link ">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link " asp-controller="sellers" asp-action="Create">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-controller="sellers" asp-action="login_seller">Login</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>

@@ -1,4 +1,5 @@
 ﻿using Leave_Management_System.Models.Class;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Leave_Management_System.Models.Context
 {
-    public class LeaveDbContext: DbContext
+    public class LeaveDbContext: IdentityDbContext
     {
         public LeaveDbContext(DbContextOptions<LeaveDbContext> options)
             : base(options)
