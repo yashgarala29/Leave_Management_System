@@ -1,6 +1,7 @@
 ﻿using Leave_Management_System.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,12 @@ namespace Leave_Management_System.Controllers
                 var result = await userManager.CreateAsync(user, registerViewModel.Password);
                 if(result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    var s = userManager.Users.Where(a => a.Email == registerViewModel.Email).FirstOrDefault();
+                    IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Pending");
+                    //IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Admin");
+
+                    if (identityResult.Succeeded)
+                        return RedirectToAction("index", "home");
                 }
             }
             return View(registerViewModel);
@@ -70,6 +76,8 @@ namespace Leave_Management_System.Controllers
             return RedirectToAction("privacy", "home");
                 
         }
+        
+
 
 
 

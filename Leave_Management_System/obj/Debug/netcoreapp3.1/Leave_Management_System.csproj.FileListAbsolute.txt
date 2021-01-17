@@ -156,3 +156,10 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\bin\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\Role\CreateRole.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\Role\ListOfAllUser.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\temp\AdminView.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\temp\DeanView.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\temp\Facultyview.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\temp\HODview.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\netcoreapp3.1\Razor\Views\temp\pendingView.cshtml.g.cs

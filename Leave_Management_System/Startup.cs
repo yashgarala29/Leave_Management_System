@@ -30,6 +30,7 @@ namespace Leave_Management_System
            opretion.UseSqlServer(Configuration.GetConnectionString("LeaveDbConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<LeaveDbContext>();
+
             services.AddControllersWithViews();
         }
 
