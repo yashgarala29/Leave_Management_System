@@ -31,9 +31,35 @@ namespace Leave_Management_System.Controllers
             {
                 var result = await signInManager.PasswordSignInAsync(
                     model.Email, model.Password,true, false);
-
+                
                 if (result.Succeeded)
                 {
+                    var curent_user=await userManager.FindByEmailAsync(model.Email);
+                   string role_user= (await userManager.GetRolesAsync(curent_user)).FirstOrDefault();
+                    if(role_user=="HOD")
+                    {
+                        return RedirectToAction("HODview","temp" );
+                    }
+                    else if (role_user == "admin")
+                    {
+                        return RedirectToAction("AdminView","temp" );
+                    }
+                    else if (role_user == "Dean")
+                    {
+                        return RedirectToAction("DeanView","temp" );
+                    }
+                    else if (role_user == "Faculty")
+                    {
+                        return RedirectToAction("FacultyView", "temp");
+                    }
+                    else if (role_user == "Registrar")
+                    {
+                        return RedirectToAction( "RegistarView","temp");
+                    }
+                    else if (role_user == "Pending")
+                    {
+                        return RedirectToAction( "pendingView", "temp");
+                    }
                     return RedirectToAction("index", "home");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");

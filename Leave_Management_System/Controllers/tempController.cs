@@ -24,16 +24,16 @@ namespace Leave_Management_System.Controllers
             this.roleManager = roleManager;
         }
         [Authorize(Roles = "Pending")]
-        [HttpGet]
         public IActionResult pendingView()
         {
             return View();
         }
-        [Authorize]
+        [Authorize(Roles = "Dean")]
         public IActionResult DeanView()
         {
             return View();
         }
+        [Authorize(Roles = "Faculty")]
         public IActionResult Facultyview()
         {
             return View();
@@ -43,8 +43,15 @@ namespace Leave_Management_System.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "HOD")]
         public IActionResult HODview()
         {
+            return View();
+        }
+        [Authorize(Roles = "Registrar")]
+        public IActionResult RegistrarView()
+        {
+            
             return View();
         }
     }
