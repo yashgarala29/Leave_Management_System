@@ -2,6 +2,7 @@ using Leave_Management_System.Models.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,9 @@ namespace Leave_Management_System
         {
             services.AddDbContext<LeaveDbContext>(opretion =>
            opretion.UseSqlServer(Configuration.GetConnectionString("LeaveDbConnection")));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<LeaveDbContext>();
+
             services.AddControllersWithViews();
         }
 
@@ -45,7 +49,7 @@ namespace Leave_Management_System
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
