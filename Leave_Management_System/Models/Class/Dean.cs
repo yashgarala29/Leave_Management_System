@@ -10,5 +10,6 @@ namespace Leave_Management_System.Models.Class
     {
         [Key]
         public int Dean_id { get; set; }
+        public IList<LeaveHistory> leaveHistory { get; set; }
     }
 }

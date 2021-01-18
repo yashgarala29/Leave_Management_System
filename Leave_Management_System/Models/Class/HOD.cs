@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leave_Management_System.Models.Class;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Leave_Management_System.Models
     {
         [Key]
         public int HOD_id { get; set; }
+        public IList<LeaveHistory> leaveHistory { get; set; }
     }
 }
