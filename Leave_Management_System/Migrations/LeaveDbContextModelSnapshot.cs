@@ -26,6 +26,22 @@ namespace Leave_Management_System.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
                     b.HasKey("Dean_id");
 
                     b.ToTable("Dean");
@@ -37,6 +53,22 @@ namespace Leave_Management_System.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
 
                     b.HasKey("Faculty_id");
 
@@ -50,17 +82,41 @@ namespace Leave_Management_System.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("DeanApproveStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Dean_id")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTill")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Faculty_id")
                         .HasColumnType("int");
 
+                    b.Property<string>("HODApproveStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("HOD_id")
                         .HasColumnType("int");
 
+                    b.Property<string>("LeaveReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LeaveStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoOfDay")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RegistrarApproveStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Registrar_id")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartFrome")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("leave_id");
 
@@ -82,6 +138,22 @@ namespace Leave_Management_System.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
                     b.HasKey("Registrar_id");
 
                     b.ToTable("Registrar");
@@ -93,6 +165,22 @@ namespace Leave_Management_System.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
 
                     b.HasKey("HOD_id");
 

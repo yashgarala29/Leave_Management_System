@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Leave_Management_System.Models.Class.LeaveHistory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HODApproveStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeanApproveStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegistrarApproveStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveReason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartFrome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ragistrar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.faculty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dean)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HODApproveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeanApproveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrarApproveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveReason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartFrome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ragistrar.Registrar_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hod.HOD_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.faculty.Faculty_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dean.Dean_id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.leave_id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.leave_id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.leave_id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
