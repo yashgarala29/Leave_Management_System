@@ -38,7 +38,7 @@
                 @Html.DisplayNameFor(model => model.EndTill)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.id)
+                @Html.DisplayNameFor(model => model.AllUser)
             </th>
             <th></th>
         </tr>
@@ -71,7 +71,7 @@
                 @Html.DisplayFor(modelItem => item.EndTill)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.id)
+                @Html.DisplayFor(modelItem => item.AllUser.id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.leave_id">Edit</a> |

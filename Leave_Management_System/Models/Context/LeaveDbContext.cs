@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Leave_Management_System.Models.ViewModel;
 
 namespace Leave_Management_System.Models.Context
 {
@@ -32,5 +33,11 @@ namespace Leave_Management_System.Models.Context
         //public DbSet<Faculty> Faculty { get; set; }
         //public DbSet<LeaveHistory> LeaveHistory { get; set; }
         public DbSet<Leave_Management_System.Models.Class.LeaveHistory> LeaveHistory { get; set; }
+        //public DbSet<HOD> HOD { get; set; }
+        //public DbSet<Registrar> Registrar { get; set; }
+        //public DbSet<Dean> Dean { get; set; }
+        //public DbSet<Faculty> Faculty { get; set; }
+        //public DbSet<LeaveHistory> LeaveHistory { get; set; }
+        public DbSet<Leave_Management_System.Models.ViewModel.LeaveRequest> LeaveRequest { get; set; }
     }
 }

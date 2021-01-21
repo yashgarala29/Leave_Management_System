@@ -31,10 +31,10 @@ namespace Leave_Management_System.Models.Class
 
 
 
-       
+
 
         public int id { get; set; }
-        [ForeignKey("Dean_id")]
+        [ForeignKey("id")]
         public AllUser AllUser { get; set; }
 
 

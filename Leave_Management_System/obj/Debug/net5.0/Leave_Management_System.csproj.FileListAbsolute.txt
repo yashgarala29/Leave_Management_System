@@ -185,6 +185,7 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\AllUsers\Details.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\AllUsers\Edit.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\AllUsers\Index.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\LeaveRequest.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\LeaveHistories\Create.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\LeaveHistories\Delete.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\LeaveHistories\Details.cshtml.g.cs

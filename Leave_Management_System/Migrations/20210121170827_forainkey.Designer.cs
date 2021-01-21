@@ -4,14 +4,16 @@ using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Leave_Management_System.Migrations
 {
     [DbContext(typeof(LeaveDbContext))]
-    partial class LeaveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121170827_forainkey")]
+    partial class forainkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,6 +75,9 @@ namespace Leave_Management_System.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("AllUserid")
+                        .HasColumnType("int");
+
                     b.Property<string>("DeanApproveStatus")
                         .HasColumnType("nvarchar(max)");
 
@@ -97,12 +102,9 @@ namespace Leave_Management_System.Migrations
                     b.Property<DateTime>("StartFrome")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("id")
-                        .HasColumnType("int");
-
                     b.HasKey("leave_id");
 
-                    b.HasIndex("id");
+                    b.HasIndex("AllUserid");
 
                     b.ToTable("LeaveHistory");
                 });
@@ -327,13 +329,9 @@ namespace Leave_Management_System.Migrations
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
                 {
-                    b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
+                    b.HasOne("Leave_Management_System.Models.Class.AllUser", null)
                         .WithMany("leaveHistory")
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AllUser");
+                        .HasForeignKey("AllUserid");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

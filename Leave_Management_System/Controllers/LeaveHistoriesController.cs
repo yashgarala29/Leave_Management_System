@@ -22,7 +22,8 @@ namespace Leave_Management_System.Controllers
         // GET: LeaveHistories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LeaveHistory.ToListAsync());
+            var leaveDbContext = _context.LeaveHistory.Include(l => l.AllUser);
+            return View(await leaveDbContext.ToListAsync());
         }
 
         // GET: LeaveHistories/Details/5
@@ -34,6 +35,7 @@ namespace Leave_Management_System.Controllers
             }
 
             var leaveHistory = await _context.LeaveHistory
+                .Include(l => l.AllUser)
                 .FirstOrDefaultAsync(m => m.leave_id == id);
             if (leaveHistory == null)
             {
@@ -46,6 +48,7 @@ namespace Leave_Management_System.Controllers
         // GET: LeaveHistories/Create
         public IActionResult Create()
         {
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id");
             return View();
         }
 
@@ -62,6 +65,7 @@ namespace Leave_Management_System.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id", leaveHistory.id);
             return View(leaveHistory);
         }
 
@@ -78,6 +82,7 @@ namespace Leave_Management_System.Controllers
             {
                 return NotFound();
             }
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id", leaveHistory.id);
             return View(leaveHistory);
         }
 
@@ -113,6 +118,7 @@ namespace Leave_Management_System.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id", leaveHistory.id);
             return View(leaveHistory);
         }
 
@@ -125,6 +131,7 @@ namespace Leave_Management_System.Controllers
             }
 
             var leaveHistory = await _context.LeaveHistory
+                .Include(l => l.AllUser)
                 .FirstOrDefaultAsync(m => m.leave_id == id);
             if (leaveHistory == null)
             {
