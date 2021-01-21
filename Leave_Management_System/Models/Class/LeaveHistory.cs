@@ -12,6 +12,25 @@ namespace Leave_Management_System.Models.Class
         [Key]
         public int leave_id { get; set; }
 
+
+        public string LeaveStatus { get; set; }
+        public string HODApproveStatus { get; set; }
+        public string DeanApproveStatus { get; set; }
+        public string RegistrarApproveStatus { get; set; }
+        [DataType(DataType.Text)]
+        public int NoOfDay  { get; set; }
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Leave Reason")]
+        public string LeaveReason { get; set;}
+        [DataType(DataType.Date)]
+        [Display(Name = "Leave Start Frome")]
+        public DateTime StartFrome { get; set;}
+        [DataType(DataType.Date)]
+        [Display(Name = "Leave End Till")]
+        public DateTime EndTill { get; set; }
+
+
+
         public int Registrar_id { get; set; }
         [ForeignKey("Registrar_id")]
         public Registrar ragistrar { get; set; }
