@@ -10,22 +10,22 @@ using Leave_Management_System.Models.Context;
 
 namespace Leave_Management_System.Controllers
 {
-    public class LeaveHistoriesController : Controller
+    public class AllUsersController : Controller
     {
         private readonly LeaveDbContext _context;
 
-        public LeaveHistoriesController(LeaveDbContext context)
+        public AllUsersController(LeaveDbContext context)
         {
             _context = context;
         }
 
-        // GET: LeaveHistories
+        // GET: AllUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LeaveHistory.ToListAsync());
+            return View(await _context.AllUser.ToListAsync());
         }
 
-        // GET: LeaveHistories/Details/5
+        // GET: AllUsers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Leave_Management_System.Controllers
                 return NotFound();
             }
 
-            var leaveHistory = await _context.LeaveHistory
-                .FirstOrDefaultAsync(m => m.leave_id == id);
-            if (leaveHistory == null)
+            var allUser = await _context.AllUser
+                .FirstOrDefaultAsync(m => m.id == id);
+            if (allUser == null)
             {
                 return NotFound();
             }
 
-            return View(leaveHistory);
+            return View(allUser);
         }
 
-        // GET: LeaveHistories/Create
+        // GET: AllUsers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: LeaveHistories/Create
+        // POST: AllUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("leave_id,LeaveStatus,HODApproveStatus,DeanApproveStatus,RegistrarApproveStatus,NoOfDay,LeaveReason,StartFrome,EndTill,id")] LeaveHistory leaveHistory)
+        public async Task<IActionResult> Create([Bind("id,Email,MobileNo,MobileNo2,Name,LastName,MiddleName,Deparment,Role,Addreaddress,City,PaidLeave")] AllUser allUser)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(leaveHistory);
+                _context.Add(allUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveHistory);
+            return View(allUser);
         }
 
-        // GET: LeaveHistories/Edit/5
+        // GET: AllUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Leave_Management_System.Controllers
                 return NotFound();
             }
 
-            var leaveHistory = await _context.LeaveHistory.FindAsync(id);
-            if (leaveHistory == null)
+            var allUser = await _context.AllUser.FindAsync(id);
+            if (allUser == null)
             {
                 return NotFound();
             }
-            return View(leaveHistory);
+            return View(allUser);
         }
 
-        // POST: LeaveHistories/Edit/5
+        // POST: AllUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("leave_id,LeaveStatus,HODApproveStatus,DeanApproveStatus,RegistrarApproveStatus,NoOfDay,LeaveReason,StartFrome,EndTill,id")] LeaveHistory leaveHistory)
+        public async Task<IActionResult> Edit(int id, [Bind("id,Email,MobileNo,MobileNo2,Name,LastName,MiddleName,Deparment,Role,Addreaddress,City,PaidLeave")] AllUser allUser)
         {
-            if (id != leaveHistory.leave_id)
+            if (id != allUser.id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Leave_Management_System.Controllers
             {
                 try
                 {
-                    _context.Update(leaveHistory);
+                    _context.Update(allUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LeaveHistoryExists(leaveHistory.leave_id))
+                    if (!AllUserExists(allUser.id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Leave_Management_System.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveHistory);
+            return View(allUser);
         }
 
-        // GET: LeaveHistories/Delete/5
+        // GET: AllUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Leave_Management_System.Controllers
                 return NotFound();
             }
 
-            var leaveHistory = await _context.LeaveHistory
-                .FirstOrDefaultAsync(m => m.leave_id == id);
-            if (leaveHistory == null)
+            var allUser = await _context.AllUser
+                .FirstOrDefaultAsync(m => m.id == id);
+            if (allUser == null)
             {
                 return NotFound();
             }
 
-            return View(leaveHistory);
+            return View(allUser);
         }
 
-        // POST: LeaveHistories/Delete/5
+        // POST: AllUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var leaveHistory = await _context.LeaveHistory.FindAsync(id);
-            _context.LeaveHistory.Remove(leaveHistory);
+            var allUser = await _context.AllUser.FindAsync(id);
+            _context.AllUser.Remove(allUser);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LeaveHistoryExists(int id)
+        private bool AllUserExists(int id)
         {
-            return _context.LeaveHistory.Any(e => e.leave_id == id);
+            return _context.AllUser.Any(e => e.id == id);
         }
     }
 }

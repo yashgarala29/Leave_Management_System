@@ -22,9 +22,23 @@
                         }
                     }
                 </select>
+                <select name="DeparmentList">
+                    @foreach (var item in Model[i].Department)
+                    {
+                        if (item == Model[i].CurentDepartment)
+                        {
+                            <option value="@item" selected="selected">@item</option>
+                        }
+                        else
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    }
+                </select>
+
             </div>
             <div class=" card-body">
-                <button type="submit"  asp-action="ListOfAllUser" asp-controller="Role"  asp-route-UserId="@Model[i].UserId"  class="btn btn-primary">Place Order</button> |
+                <button type="submit" asp-action="ListOfAllUser" asp-controller="Role" asp-route-UserId="@Model[i].UserId" class="btn btn-primary">Place Order</button> |
                 @*<a asp-action="ListOfAllUser" asp-route-id="@i">Edit</a>*@
                 @*<button class="btn btn-primary" id="@i" asp-controller="RoleController" asp-action="ListOf name="save_change">Save Change</button>*@
             </div>
@@ -38,12 +52,22 @@
 @section scripts{
     <script>
         $("[name=userRole]").on("change", function () {
-        var RoleId = $(this).val();
+            var RoleId = $(this).val();
             var save_change = $(this).closest('div').next().find("button")[0];
-            var t = save_change.formAction + "&RoleId="+RoleId;
-        //var oldUrl = save_change.asp-ro;
+            var t = save_change.formAction + "&RoleId=" + RoleId;
+            //var oldUrl = save_change.asp-ro;
             //var newUrl = oldUrl + "&analystid=" + analystId;
             $(save_change).attr("formAction", t);
-    })
+        })
+        $("[name=DeparmentList]").on("change", function () {
+            var RoleId = $(this).val();
+            var save_change = $(this).closest('div').next().find("button")[0];
+            var t = save_change.formAction + "&Deparment=" + RoleId;
+            //var oldUrl = save_change.asp-ro;
+            //var newUrl = oldUrl + "&analystid=" + analystId;
+            $(save_change).attr("formAction", t);
+        })
     </script>
+    
+   
 }

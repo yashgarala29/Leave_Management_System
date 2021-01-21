@@ -54,20 +54,9 @@
                 <span asp-validation-for="EndTill" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Registrar_id" class="control-label"></label>
-                <select asp-for="Registrar_id" class ="form-control" asp-items="ViewBag.Registrar_id"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="HOD_id" class="control-label"></label>
-                <select asp-for="HOD_id" class ="form-control" asp-items="ViewBag.HOD_id"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Faculty_id" class="control-label"></label>
-                <select asp-for="Faculty_id" class ="form-control" asp-items="ViewBag.Faculty_id"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dean_id" class="control-label"></label>
-                <select asp-for="Dean_id" class ="form-control" asp-items="ViewBag.Dean_id"></select>
+                <label asp-for="id" class="control-label"></label>
+                <input asp-for="id" class="form-control" />
+                <span asp-validation-for="id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

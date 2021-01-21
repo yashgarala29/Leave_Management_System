@@ -1,4 +1,6 @@
-﻿using Leave_Management_System.Models.ViewModel;
+﻿using Leave_Management_System.Models.Class;
+using Leave_Management_System.Models.Context;
+using Leave_Management_System.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,11 +13,13 @@ namespace Leave_Management_System.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly LeaveDbContext _context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser> userManager,
+        public AccountController(LeaveDbContext context,UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
         {
+            _context = context;
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
@@ -85,6 +89,13 @@ namespace Leave_Management_System.Controllers
                 var result = await userManager.CreateAsync(user, registerViewModel.Password);
                 if(result.Succeeded)
                 {
+                    AllUser allUser = new AllUser();
+                    allUser.Role = "Pending";
+                    allUser.Email = registerViewModel.Email;
+                    allUser.PaidLeave = 20;
+                    allUser.Deparment = "Pending";
+                    _context.Add(allUser);
+                    await _context.SaveChangesAsync();
                     var s = userManager.Users.Where(a => a.Email == registerViewModel.Email).FirstOrDefault();
                     IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Pending");
                     //IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Admin");

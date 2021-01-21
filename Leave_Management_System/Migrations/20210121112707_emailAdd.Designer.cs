@@ -4,14 +4,16 @@ using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Leave_Management_System.Migrations
 {
     [DbContext(typeof(LeaveDbContext))]
-    partial class LeaveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121112707_emailAdd")]
+    partial class emailAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,18 +21,12 @@ namespace Leave_Management_System.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("Leave_Management_System.Models.Class.AllUser", b =>
+            modelBuilder.Entity("Leave_Management_System.Models.Class.Dean", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Dean_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<string>("Addreaddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Deparment")
                         .HasColumnType("nvarchar(max)");
@@ -38,32 +34,53 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MiddleName")
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MobileNo")
                         .HasMaxLength(10)
                         .HasColumnType("int");
 
-                    b.Property<int>("MobileNo2")
+                    b.HasKey("Dean_id");
+
+                    b.ToTable("Dean");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.Class.Faculty", b =>
+                {
+                    b.Property<int>("Faculty_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
                         .HasMaxLength(10)
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Faculty_id");
 
-                    b.Property<int>("PaidLeave")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("AllUser");
+                    b.ToTable("Faculty");
                 });
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
@@ -76,14 +93,20 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("DeanApproveStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Dean_id")
+                    b.Property<int>("Dean_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndTill")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Faculty_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("HODApproveStatus")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HOD_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("LeaveReason")
                         .HasColumnType("nvarchar(max)");
@@ -97,17 +120,85 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("RegistrarApproveStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Registrar_id")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartFrome")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("id")
-                        .HasColumnType("int");
 
                     b.HasKey("leave_id");
 
                     b.HasIndex("Dean_id");
 
+                    b.HasIndex("Faculty_id");
+
+                    b.HasIndex("HOD_id");
+
+                    b.HasIndex("Registrar_id");
+
                     b.ToTable("LeaveHistory");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.Class.Registrar", b =>
+                {
+                    b.Property<int>("Registrar_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
+                    b.HasKey("Registrar_id");
+
+                    b.ToTable("Registrar");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.HOD", b =>
+                {
+                    b.Property<int>("HOD_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Deparment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MobileNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
+                    b.HasKey("HOD_id");
+
+                    b.ToTable("HOD");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -308,11 +399,37 @@ namespace Leave_Management_System.Migrations
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
                 {
-                    b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
+                    b.HasOne("Leave_Management_System.Models.Class.Dean", "dean")
                         .WithMany("leaveHistory")
-                        .HasForeignKey("Dean_id");
+                        .HasForeignKey("Dean_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("AllUser");
+                    b.HasOne("Leave_Management_System.Models.Class.Faculty", "faculty")
+                        .WithMany("leaveHistory")
+                        .HasForeignKey("Faculty_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Leave_Management_System.Models.HOD", "hod")
+                        .WithMany("leaveHistory")
+                        .HasForeignKey("HOD_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Leave_Management_System.Models.Class.Registrar", "ragistrar")
+                        .WithMany("leaveHistory")
+                        .HasForeignKey("Registrar_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("dean");
+
+                    b.Navigation("faculty");
+
+                    b.Navigation("hod");
+
+                    b.Navigation("ragistrar");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -366,7 +483,22 @@ namespace Leave_Management_System.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Leave_Management_System.Models.Class.AllUser", b =>
+            modelBuilder.Entity("Leave_Management_System.Models.Class.Dean", b =>
+                {
+                    b.Navigation("leaveHistory");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.Class.Faculty", b =>
+                {
+                    b.Navigation("leaveHistory");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.Class.Registrar", b =>
+                {
+                    b.Navigation("leaveHistory");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.HOD", b =>
                 {
                     b.Navigation("leaveHistory");
                 });

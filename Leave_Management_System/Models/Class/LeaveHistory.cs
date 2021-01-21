@@ -31,21 +31,11 @@ namespace Leave_Management_System.Models.Class
 
 
 
-        public int Registrar_id { get; set; }
-        [ForeignKey("Registrar_id")]
-        public Registrar ragistrar { get; set; }
+       
 
-        public int HOD_id { get; set; }
-        [ForeignKey("HOD_id")]
-        public HOD hod { get; set; }
-
-        public int Faculty_id { get; set; }
-        [ForeignKey("Faculty_id")]
-        public Faculty faculty { get; set; }
-
-        public int Dean_id { get; set; }
+        public int id { get; set; }
         [ForeignKey("Dean_id")]
-        public Dean dean { get; set; }
+        public AllUser AllUser { get; set; }
 
 
 
