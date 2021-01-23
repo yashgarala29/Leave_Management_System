@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\HOD\" />
     <Folder Include="Views\Dean\" />
     <Folder Include="Views\Registrar\" />
     <Folder Include="Views\Pending\" />

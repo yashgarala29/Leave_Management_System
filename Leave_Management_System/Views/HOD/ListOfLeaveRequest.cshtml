@@ -1,0 +1,73 @@
+﻿@model List<Leave_Management_System.Models.ViewModel.ListOfLeaveRequestHOD>
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Start Frome</th>
+            <th>End Till</th>
+            <th>No Of Day</th>
+            <th>Status</th>
+            <th>Leave Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td> @Model[i].FirstName</td>
+                <td>@Model[i].LastName</td>
+                <td> @Model[i].username</td>
+                <td>@Model[i].LeaveStartFrome</td>
+                <td>@Model[i].LeaveEndTill</td>
+                <td> @Model[i].NoOfDay</td>
+                <td class="drop">
+                    <select name="status" class="status" >
+                        @foreach (var item in Model[i].HODStatus)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </td>
+                <td> @Model[i].LeaveReason</td>
+                <td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+       
+        $("[name=savechange]").on("click", function () {
+            var savechangevalue = $(this).val();
+            var save_change = $(this).closest('td').prev().prev().find('.status').val();
+            $.ajax({
+                type: "POST",
+                url: "/HOD/AjaxMethod",
+                data: { "name": save_change,"leave_id":savechangevalue },
+                success: function (response) {
+                    alert("success");
+                },
+                failure: function (response) {
+                    alert("failure");
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            });
+            //alert(save_change);
+            
+        })
+    </script>
+
+
+}
