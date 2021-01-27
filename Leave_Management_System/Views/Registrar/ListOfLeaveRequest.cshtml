@@ -52,7 +52,7 @@
             var save_change = $(this).closest('td').prev().prev().find('.status').val();
             $.ajax({
                 type: "POST",
-                url: "/HOD/AjaxMethod",
+                url: "/Registrar/AjaxMethod",
                 data: { "name": save_change,"leave_id":savechangevalue },
                 success: function (response) {
                     location.reload();

@@ -1,0 +1,70 @@
+﻿@model Leave_Management_System.Models.ViewModel.OwnProfile
+
+@{
+    ViewData["Title"] = "OwnProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>OwnProfile</h1>
+
+<h4>OwnProfile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="OwnProfile">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            
+            <div class="form-group">
+                <label asp-for="MobileNo" class="control-label"></label>
+                <input asp-for="MobileNo" class="form-control" />
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MobileNo2" class="control-label"></label>
+                <input asp-for="MobileNo2" class="form-control" />
+                <span asp-validation-for="MobileNo2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Addreaddress" class="control-label"></label>
+                <textarea asp-for="Addreaddress" class="form-control"></textarea>
+                <span asp-validation-for="Addreaddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaidLeave" class="control-label"></label>
+                <input asp-for="PaidLeave" class="form-control" />
+                <span asp-validation-for="PaidLeave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

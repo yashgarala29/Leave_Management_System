@@ -20,10 +20,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Dean\" />
-    <Folder Include="Views\Registrar\" />
-    <Folder Include="Views\Pending\" />
-  </ItemGroup>
-
 </Project>

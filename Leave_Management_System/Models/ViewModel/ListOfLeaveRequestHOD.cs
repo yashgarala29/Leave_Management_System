@@ -22,7 +22,7 @@ namespace Leave_Management_System.Models.ViewModel
         [Display(Name ="No Of Day")]
         public int NoOfDay { get; set; }
         [Display(Name = "Status")]
-        public List<string> HODStatus { get; set; }
+        public List<string> Status { get; set; }
         [Display(Name = "Leave Reason")]
         public string LeaveReason { get; set; }
 
