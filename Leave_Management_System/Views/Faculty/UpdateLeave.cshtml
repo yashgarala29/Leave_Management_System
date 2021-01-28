@@ -1,0 +1,37 @@
+﻿@model Leave_Management_System.Models.ViewModel.LeaveRequest
+
+@{
+    ViewData["Title"] = "UpdateLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.leave UpdateLeave</h1>
+
+<h4>LeaveRequest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateLeave" asp-id="@Model.id">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="LeaveReason" class="cont    rol-label"></label>
+                <textarea asp-for="LeaveReason" class="form-control"></textarea>
+                <span asp-validation-for="LeaveReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveStartFrome" class="control-label"></label>
+                <input asp-for="LeaveStartFrome" class="form-control" />
+                <span asp-validation-for="LeaveStartFrome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveEndTill" class="control-label"></label>
+                <input asp-for="LeaveEndTill" class="form-control" />
+                <span asp-validation-for="LeaveEndTill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -203,3 +203,9 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\HomePageFalulty.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\HomePageHOD.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\HomePageRegistrar.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\MyLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\MyLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\MyLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\MyLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\DeleteLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\UpdateLeave.cshtml.g.cs

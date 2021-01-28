@@ -31,9 +31,10 @@ namespace Leave_Management_System.Controllers
         {
             var userLoginDetail =  userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
             var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
-               
+
             OwnProfile ownProfile = new OwnProfile
             {
+                id = userdetail.id,
                 LastName = userdetail.LastName,
                 Addreaddress = userdetail.Addreaddress,
                 Email = userdetail.Email,
@@ -50,12 +51,12 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
         public async Task<IActionResult> OwnProfile(OwnProfile ownProfile)
         {
-            var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
-            var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
+            //var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+            //var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
 
             AllUser allUser = new AllUser
             {
-                id = userdetail.id,
+                id = ownProfile.id,
                 LastName = ownProfile.LastName,
                 Addreaddress = ownProfile.Addreaddress,
                 Email = ownProfile.Email,
