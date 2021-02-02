@@ -1,4 +1,6 @@
 using Leave_Management_System.Models.Context;
+using Leave_Management_System.Models.ViewModel;
+using Leave_Management_System.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +32,8 @@ namespace Leave_Management_System
            opretion.UseSqlServer(Configuration.GetConnectionString("LeaveDbConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<LeaveDbContext>();
-
+            services.AddScoped<IEmailService, EmailService>();
+            services.Configure<SMTPConfigru>(Configuration.GetSection("SMTPConfig"));
             services.AddControllersWithViews();
         }
 

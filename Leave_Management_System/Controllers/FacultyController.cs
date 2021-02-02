@@ -1,6 +1,7 @@
 ﻿using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Leave_Management_System.Models.ViewModel;
+using Leave_Management_System.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +17,15 @@ namespace Leave_Management_System.Controllers
         private readonly LeaveDbContext _context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IEmailService emailService;
+
         public FacultyController(LeaveDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IEmailService emailService)
         {
             _context = context;
             this.signInManager = signInManager;
+            this.emailService = emailService;
             this.userManager = userManager;
         }
 
@@ -109,7 +114,8 @@ namespace Leave_Management_System.Controllers
             int leave_id = id;
             if (leave_id == 0)
                 return NotFound();
-            var leaveHistory = _context.LeaveHistory.Where(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            var leaveHistory = _context.LeaveHistory.Include(l => l.AllUser)
+                .Where(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name).FirstOrDefault();
             if (leaveHistory == null)
             {
                 return NotFound();
@@ -130,8 +136,29 @@ namespace Leave_Management_System.Controllers
                     leaveHistory.EndTill = leaveRequest.LeaveEndTill;
                     leaveHistory.StartFrome = leaveRequest.LeaveStartFrome;
                     leaveHistory.NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
+                    var HODuser = _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
+
                     _context.Update(leaveHistory);
                     await _context.SaveChangesAsync();
+
+                    UserEmail userEmail = new UserEmail
+                    {
+                        ToEmail = HODuser.Email,
+
+                    };
+                    var arr = new List<KeyValuePair<string, string>>();
+                    var temp = new KeyValuePair<string, string>("{{username}}", leaveHistory.AllUser.Email);
+                    var StaringDate = new KeyValuePair<string, string>("{{startfrome}}", leaveRequest.LeaveStartFrome.ToLongDateString());
+                    var TillDate = new KeyValuePair<string, string>("{{endtill}}", leaveRequest.LeaveEndTill.ToLongDateString());
+
+                    //temp.Key = "username";
+                    //temp.Value = "yashgarala29@gmail.com";
+                    arr.Add(temp);
+                    arr.Add(StaringDate);
+                    arr.Add(TillDate);
+                    userEmail.PlaceHolder = arr;
+                    await emailService.SendLeaveUpdateEmail(userEmail);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -181,9 +208,23 @@ namespace Leave_Management_System.Controllers
 
             if (leaveHistory == null)
                 return NotFound();
-            
+            var HODuser =  _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
+            UserEmail userEmail = new UserEmail
+            {
+                ToEmail = HODuser.Email,
+
+            };
+            var arr = new List<KeyValuePair<string, string>>();
+            KeyValuePair<string, string> temp = new KeyValuePair<string, string>("{{username}}", leaveHistory.AllUser.Email);
+            //temp.Key = "username";
+            //temp.Value = "yashgarala29@gmail.com";
+            arr.Add(temp);
+            userEmail.PlaceHolder = arr;
+            await emailService.SendLeaveCancelEmail(userEmail);
+
             _context.LeaveHistory.Remove(leaveHistory);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("MyLeave", "Faculty");
         }
 
