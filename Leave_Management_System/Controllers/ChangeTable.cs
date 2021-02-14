@@ -12,19 +12,19 @@ namespace Leave_Management_System.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly LeaveDbContext _context;
-        public ChangeTable(LeaveDbContext context,UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public ChangeTable(LeaveDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this._context = context;
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
-        Object []alldata = new Object[6];
-        public void changeRole(string user_role,string new_role, IdentityUser user)
+        Object[] alldata = new Object[6];
+        public void changeRole(string user_role, string new_role, IdentityUser user)
         {
             string user_name = user.Email;
             if (user_role == "Dean")
                 removeToDean(user, user_name);
-            else if (user_role == "Faculty") 
+            else if (user_role == "Faculty")
                 removeToFaculty(user, user_name);
             else if (user_role == "HOD")
                 removeToHOD(user, user_name);
@@ -34,7 +34,7 @@ namespace Leave_Management_System.Controllers
             if (user_role == "Dean")
                 addToDean(user, user_name);
             else if (user_role == "Faculty")
-                   addToFaculty(user, user_name);
+                addToFaculty(user, user_name);
             else if (user_role == "HOD")
                 addToHOD(user, user_name);
             else if (user_role == "Registrar")
@@ -43,9 +43,9 @@ namespace Leave_Management_System.Controllers
 
         }
 
-        public void addToHOD(IdentityUser user,string user_name)
+        public void addToHOD(IdentityUser user, string user_name)
         {
-            
+
         }
         public void addToFaculty(IdentityUser user, string user_name)
         {
@@ -62,13 +62,13 @@ namespace Leave_Management_System.Controllers
 
         public void removeToHOD(IdentityUser user, string user_name)
         {
-           //var user_detail= _context.HOD.Where(x => x.Email == user_name).FirstOrDefault();
-           // alldata[0] = user_detail.Email;
-           // alldata[1] = user_detail.FirstName;
-           // alldata[2] = user_detail.LastName;
-           // alldata[3] = user_detail.MobileNo;
-           // alldata[4] = user_detail.Deparment;
-           // alldata[5] = user_detail.FreeLeave;
+            //var user_detail= _context.HOD.Where(x => x.Email == user_name).FirstOrDefault();
+            // alldata[0] = user_detail.Email;
+            // alldata[1] = user_detail.FirstName;
+            // alldata[2] = user_detail.LastName;
+            // alldata[3] = user_detail.MobileNo;
+            // alldata[4] = user_detail.Deparment;
+            // alldata[5] = user_detail.FreeLeave;
 
 
         }

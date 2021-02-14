@@ -5,10 +5,12 @@ using Leave_Management_System.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Leave_Management_System.Controllers
 {
@@ -17,24 +19,35 @@ namespace Leave_Management_System.Controllers
         private readonly LeaveDbContext _context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IEmailService emailService;
 
         public FacultyController(LeaveDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager,
             IEmailService emailService)
         {
             _context = context;
             this.signInManager = signInManager;
             this.emailService = emailService;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         [HttpGet]
+        [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest()
         {
             return View();
         }
+
+        [Authorize(Roles = "Faculty")]
+        public IActionResult HomePageFaculty()
+        {
+            return View();
+        }
+
         [HttpPost]
+        [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest(LeaveRequest leaveRequest)
         {
             string username = User.Identity.Name;
@@ -46,9 +59,9 @@ namespace Leave_Management_System.Controllers
                 LeaveReason = leaveRequest.LeaveReason,
                 NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays),
                 DeanApproveStatus = "Pending",
-                HODApproveStatus= "Pending",
-                RegistrarApproveStatus= "Pending",
-                LeaveStatus= "Pending",
+                HODApproveStatus = "Pending",
+                RegistrarApproveStatus = "Pending",
+                LeaveStatus = "Pending",
                 id = singleUser.id,
             };
             _context.LeaveHistory.Add(leaveHistory);
@@ -56,12 +69,13 @@ namespace Leave_Management_System.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> MyLeave()
+        [Authorize(Roles = "Faculty")]
+        public IActionResult MyLeave()
         {
             string curentUser = User.Identity.Name;
             var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
             List<MyLeave> myLeaves = new List<MyLeave>();
-            foreach(var temp in userlevelist)
+            foreach (var temp in userlevelist)
             {
                 int status = DateTime.Compare(temp.StartFrome, DateTime.Now);
                 var singleLeave = new MyLeave
@@ -78,9 +92,10 @@ namespace Leave_Management_System.Controllers
             }
             return View(myLeaves);
         }
-        
+
         [HttpGet]
-        public async Task<IActionResult> UpdateLeave(int leave_id)
+        [Authorize(Roles = "Faculty")]
+        public IActionResult UpdateLeave(int leave_id)
         {
             if (leave_id == 0)
                 return NotFound();
@@ -106,9 +121,11 @@ namespace Leave_Management_System.Controllers
             };
             //ViewBag.leave = leave_id;
             return View(leareqyest);
-            
+
         }
+
         [HttpPost]
+        [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> UpdateLeave(int id, LeaveRequest leaveRequest)
         {
             int leave_id = id;
@@ -162,16 +179,19 @@ namespace Leave_Management_System.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    
-                        throw;
-                   
+
+                    throw;
+
                 }
                 return RedirectToAction("MyLeave", "Faculty");
             };
-            return View();
+            return View(leaveRequest);
         }
+
+
         [HttpGet]
-        public async Task<IActionResult> DeleteLeave(int leave_id)
+        [Authorize(Roles = "Faculty")]
+        public IActionResult DeleteLeave(int leave_id)
         {
             if (leave_id == 0)
                 return RedirectToAction("MyLeave", "Faculty");
@@ -193,12 +213,14 @@ namespace Leave_Management_System.Controllers
                 LeaveReason = leaveHistory.LeaveReason,
                 LeaveStartFrome = leaveHistory.StartFrome,
                 leave_id = leaveHistory.leave_id,
-                NoOfDay= leaveHistory.NoOfDay,
+                NoOfDay = leaveHistory.NoOfDay,
             };
             ViewBag.id = leave_id;
             return View(deleteLeave);
         }
+
         [HttpPost]
+        [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> DeleteLeave(int leave_id, DeleteLeave deleteLeave)
         {
             //var leaveHistory = await _context.LeaveHistory.FindAsync(leave_id && m.AllUser.Email == User.Identity.Name);
@@ -208,7 +230,7 @@ namespace Leave_Management_System.Controllers
 
             if (leaveHistory == null)
                 return NotFound();
-            var HODuser =  _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
+            var HODuser = _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
             UserEmail userEmail = new UserEmail
             {
                 ToEmail = HODuser.Email,

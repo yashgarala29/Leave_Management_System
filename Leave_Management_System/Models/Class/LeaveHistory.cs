@@ -28,11 +28,6 @@ namespace Leave_Management_System.Models.Class
         [DataType(DataType.Date)]
         [Display(Name = "Leave End Till")]
         public DateTime EndTill { get; set; }
-
-
-
-
-
         public int id { get; set; }
         [ForeignKey("id")]
         public AllUser AllUser { get; set; }

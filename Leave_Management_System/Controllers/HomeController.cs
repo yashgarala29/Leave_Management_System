@@ -27,11 +27,11 @@ namespace Leave_Management_System.Controllers
             UserEmail userEmail = new UserEmail
             {
                 ToEmail = "yashgarala29@gmail.com",
-                
+
 
             };
             var arr = new List<KeyValuePair<string, string>>();
-            KeyValuePair<string, string> temp=new KeyValuePair<string, string>("{{username}}", "yashgarala29@gmail.com");
+            KeyValuePair<string, string> temp = new KeyValuePair<string, string>("{{username}}", "brijesh.chudasama2012@gmail.com");
             //temp.Key = "username";
             //temp.Value = "yashgarala29@gmail.com";
             arr.Add(temp);

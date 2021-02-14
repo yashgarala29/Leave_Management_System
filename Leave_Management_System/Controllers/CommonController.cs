@@ -25,11 +25,12 @@ namespace Leave_Management_System.Controllers
             this.userManager = userManager;
         }
 
-        [HttpGet]
+        static OwnProfile ownProfile_transfer;
+            [HttpGet]
         [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
-        public  IActionResult OwnProfile()
+        public IActionResult OwnProfile()
         {
-            var userLoginDetail =  userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+            var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
             var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
 
             OwnProfile ownProfile = new OwnProfile
@@ -40,11 +41,12 @@ namespace Leave_Management_System.Controllers
                 Email = userdetail.Email,
                 City = userdetail.City,
                 MiddleName = userdetail.MiddleName,
-                MobileNo =userdetail.MobileNo,
-                MobileNo2 = userdetail.MobileNo2,
+                MobileNo = userdetail.MobileNo.ToString(),
+                MobileNo2 = userdetail.MobileNo2.ToString(),
                 Name = userdetail.Name,
                 PaidLeave = userdetail.PaidLeave,
             };
+            ownProfile_transfer = ownProfile;
             return View(ownProfile);
         }
         [HttpPost]
@@ -53,38 +55,37 @@ namespace Leave_Management_System.Controllers
         {
             //var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
             //var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
-
-            AllUser allUser = new AllUser
+            if (ModelState.IsValid)
             {
-                id = ownProfile.id,
-                LastName = ownProfile.LastName,
-                Addreaddress = ownProfile.Addreaddress,
-                Email = ownProfile.Email,
-                City = ownProfile.City,
-                MiddleName = ownProfile.MiddleName,
-                MobileNo = ownProfile.MobileNo,
-                MobileNo2 = ownProfile.MobileNo2,
-                Name = ownProfile.Name,
-                PaidLeave = ownProfile.PaidLeave,
-            };
+                AllUser allUser = new AllUser
+                {
+                    id = ownProfile.id,
+                    LastName = ownProfile.LastName,
+                    Addreaddress = ownProfile.Addreaddress,
+                   Email= User.Identity.Name,
+                    City = ownProfile.City,
+                    MiddleName = ownProfile.MiddleName,
+                    MobileNo =ownProfile.MobileNo.ToString(),
+                    MobileNo2 = ownProfile.MobileNo2.ToString(),
+                    Name = ownProfile.Name,
+                    PaidLeave= ownProfile_transfer.PaidLeave
 
-            try
-            {
-                var curent_user = await userManager.FindByNameAsync(User.Identity.Name);
-                curent_user.Email = ownProfile.Email;
-                curent_user.UserName = ownProfile.Email;
-                var res = await userManager.UpdateAsync(curent_user);
-                _context.Update(allUser);
-                await _context.SaveChangesAsync();
+                };
+
+                try
+                {
+                    
+                    _context.Update(allUser);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                    return View(ownProfile);
+
+                }
             }
-            catch (DbUpdateConcurrencyException)
-            {
-
-                return View(ownProfile);
-
-            }
-           
-            return View();
+            return RedirectToAction(controllerName:"common",actionName: "OwnProfile");
         }
         //[HttpGet]
         //[Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]

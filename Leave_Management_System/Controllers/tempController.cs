@@ -28,6 +28,7 @@ namespace Leave_Management_System.Controllers
         {
             return View();
         }
+        /*
         [Authorize(Roles = "Dean")]
         public IActionResult DeanView()
         {
@@ -54,5 +55,6 @@ namespace Leave_Management_System.Controllers
             
             return View();
         }
+        */
     }
 }

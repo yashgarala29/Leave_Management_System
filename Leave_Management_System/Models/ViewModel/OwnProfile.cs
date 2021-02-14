@@ -16,11 +16,11 @@ namespace Leave_Management_System.Models.ViewModel
         
         [Display(Name = "Mobile Number")]
         [DataType(DataType.Text)]
-        public int MobileNo { get; set; }
+        public string MobileNo { get; set; }
 
         [Display(Name = "Mobile Number 2")]
         [DataType(DataType.Text)]
-        public int MobileNo2 { get; set; }
+        public string MobileNo2 { get; set; }
 
         [Display(Name = "First Name")]
         public string Name { get; set; }

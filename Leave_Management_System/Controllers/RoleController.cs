@@ -15,7 +15,7 @@ namespace Leave_Management_System.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly LeaveDbContext _context;
-        public RoleController(LeaveDbContext context,UserManager<IdentityUser> userManager,RoleManager<IdentityRole> roleManager)
+        public RoleController(LeaveDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             this.userManager = userManager;
@@ -41,7 +41,7 @@ namespace Leave_Management_System.Controllers
                 {
                     return RedirectToAction("index", "home");
                 }
-                foreach(IdentityError error in result.Errors)
+                foreach (IdentityError error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
@@ -55,7 +55,7 @@ namespace Leave_Management_System.Controllers
             var rolelist = roleManager.Roles.ToList();
             var user_role_list = new List<UserRoleViewModel>();
             var department_list = new List<string>();
-            
+
             for (int i = 0; i < userlist.Count; i++)
             {
                 var usermanager = (await userManager.GetRolesAsync(userlist[i])).FirstOrDefault();
@@ -66,7 +66,7 @@ namespace Leave_Management_System.Controllers
                     //RoleName=rolelist.Where(a=>a.Id==usermanager).FirstOrDefault().Id,
                     RoleId = usermanager,
                     CurentDepartment = _context.AllUser.Where(x => x.Email == userlist[i].Email).FirstOrDefault().Deparment
-                    
+
                 };
                 userRoleViewModel.Department = Enum.GetNames(typeof(Department)).ToList();
                 userRoleViewModel.Role = rolelist;
@@ -77,47 +77,48 @@ namespace Leave_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> ListOfAllUser(int? x)
         {
-            try { 
-            string UserId = HttpContext.Request.Query["UserId"];
-            string RoleId=HttpContext.Request.Query["RoleId"];
-            string deparment_name = HttpContext.Request.Query["Deparment"];
-            if (RoleId==null && deparment_name==null)
+            try
             {
+                string UserId = HttpContext.Request.Query["UserId"];
+                string RoleId = HttpContext.Request.Query["RoleId"];
+                string deparment_name = HttpContext.Request.Query["Deparment"];
+                if (RoleId == null && deparment_name == null)
+                {
 
-                return RedirectToAction("ListOfAllUser", "Role");
-            }
-            IdentityUser user = await userManager.FindByIdAsync(UserId); ;
-            if (RoleId != null)
-            { 
-             
-            var new_role = (await roleManager.FindByIdAsync(RoleId)).Name;
-            
-            var user_role = (await userManager.GetRolesAsync(user)).FirstOrDefault();
-            var user_change=_context.AllUser.Where(x => x.Email == user.Email).FirstOrDefault();
-            user_change.Role = new_role;
-            _context.AllUser.Update(user_change);
-            await _context.SaveChangesAsync();
+                    return RedirectToAction("ListOfAllUser", "Role");
+                }
+                IdentityUser user = await userManager.FindByIdAsync(UserId); ;
+                if (RoleId != null)
+                {
 
-            await userManager.RemoveFromRoleAsync(user,user_role);
-            await userManager.AddToRoleAsync(user, new_role);
-            }
-            if(deparment_name!=null)
-            {
-                var user_change = _context.AllUser.Where(x => x.Email == user.Email).FirstOrDefault();
-                user_change.Deparment = deparment_name;
-                _context.AllUser.Update(user_change);
-                await _context.SaveChangesAsync();
-            }
+                    var new_role = (await roleManager.FindByIdAsync(RoleId)).Name;
+
+                    var user_role = (await userManager.GetRolesAsync(user)).FirstOrDefault();
+                    var user_change = _context.AllUser.Where(x => x.Email == user.Email).FirstOrDefault();
+                    user_change.Role = new_role;
+                    _context.AllUser.Update(user_change);
+                    await _context.SaveChangesAsync();
+
+                    await userManager.RemoveFromRoleAsync(user, user_role);
+                    await userManager.AddToRoleAsync(user, new_role);
+                }
+                if (deparment_name != null)
+                {
+                    var user_change = _context.AllUser.Where(x => x.Email == user.Email).FirstOrDefault();
+                    user_change.Deparment = deparment_name;
+                    _context.AllUser.Update(user_change);
+                    await _context.SaveChangesAsync();
+                }
                 //System.Console.WriteLine("svuhfodsifhadhfidfhh");
                 //return View();
             }
-            catch(Exception e)
+            catch (Exception)
             {
 
             }
             return RedirectToAction("ListOfAllUser", "Role");
         }
-        
+
 
 
         //[HttpGet]

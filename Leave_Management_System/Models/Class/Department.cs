@@ -9,8 +9,11 @@ namespace Leave_Management_System.Models.Class
     public enum Department
     {
         Pending,
+        Administrator,
         CE,
         EC,
-        IT
+        IT,
+        IC,
+        MH
     }
 }

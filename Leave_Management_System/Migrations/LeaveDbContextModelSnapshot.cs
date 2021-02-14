@@ -44,13 +44,11 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MobileNo")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
+                    b.Property<string>("MobileNo")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MobileNo2")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
+                    b.Property<string>("MobileNo2")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -107,6 +105,33 @@ namespace Leave_Management_System.Migrations
                     b.ToTable("LeaveHistory");
                 });
 
+            modelBuilder.Entity("Leave_Management_System.Models.ViewModel.DeleteLeave", b =>
+                {
+                    b.Property<int>("leave_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("LeaveEndTill")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LeaveReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LeaveStartFrome")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LeaveStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoOfDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("leave_id");
+
+                    b.ToTable("DeleteLeave");
+                });
+
             modelBuilder.Entity("Leave_Management_System.Models.ViewModel.LeaveRequest", b =>
                 {
                     b.Property<int>("id")
@@ -127,6 +152,45 @@ namespace Leave_Management_System.Migrations
                     b.HasKey("id");
 
                     b.ToTable("LeaveRequest");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.ViewModel.OwnProfile", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Addreaddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNo2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaidLeave")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("OwnProfile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
