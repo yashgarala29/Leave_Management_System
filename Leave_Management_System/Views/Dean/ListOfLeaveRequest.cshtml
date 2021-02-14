@@ -1,10 +1,7 @@
 ﻿@model List<Leave_Management_System.Models.ViewModel.ListOfLeaveRequestHOD>
 
-@{
-
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+@Model.Count
 
 <table class="table">
     <thead>
@@ -22,38 +19,36 @@
     <tbody>
         @for (int i = 0; i < Model.Count; i++)
         {
-            <tr>
-                <td> @Model[i].FirstName</td>
-                <td>@Model[i].LastName</td>
-                <td> @Model[i].username</td>
-                <td>@Model[i].LeaveStartFrome</td>
-                <td>@Model[i].LeaveEndTill</td>
-                <td> @Model[i].NoOfDay</td>
-                <td class="drop">
-                    <select name="status" class="status" >
-                        @foreach (var item in Model[i].Status)
-                        {
-                            <option value="@item">@item</option>
-                        }
-                    </select>
-                </td>
-                <td> @Model[i].LeaveReason</td>
-                <td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>
-            </tr>
-        }
+<tr>
+    <td> @Model[i].FirstName</td>
+    <td>@Model[i].LastName</td>
+    <td> @Model[i].username</td>
+    <td>@Model[i].LeaveStartFrome</td>
+    <td>@Model[i].LeaveEndTill</td>
+    <td> @Model[i].NoOfDay</td>
+    <td class="drop">
+        <select name="status" class="status">
+            @foreach (var item in Model[i].Status)
+            {
+<option value="@item">@item</option>}
+        </select>
+    </td>
+    <td> @Model[i].LeaveReason</td>
+    <td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>
+</tr>}
     </tbody>
 </table>
 
 @section scripts{
     <script>
-       
+
         $("[name=savechange]").on("click", function () {
             var savechangevalue = $(this).val();
             var save_change = $(this).closest('td').prev().prev().find('.status').val();
             $.ajax({
                 type: "POST",
                 url: "/Dean/AjaxMethod",
-                data: { "name": save_change,"leave_id":savechangevalue },
+                data: { "name": save_change, "leave_id": savechangevalue },
                 success: function (response) {
                     location.reload();
 
@@ -66,7 +61,7 @@
                 }
             });
             //alert(save_change);
-            
+
         })
     </script>
 

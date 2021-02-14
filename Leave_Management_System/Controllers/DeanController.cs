@@ -78,15 +78,18 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Dean")]
         public async Task<IActionResult> ListOfLeaveRequest()
         {
-            var hodDeparment = _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
             List<LeaveHistory> leaveHistories = new List<LeaveHistory>();
             var t = await userManager.GetUsersInRoleAsync("HOD");
             foreach (var temp in t)
             {
                 var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
-                .Where(x => (x.AllUser.Email == temp.Email && x.DeanApproveStatus == "Pending")).FirstOrDefault();
+                .Where(x => (x.AllUser.Email == temp.Email && x.DeanApproveStatus == "Pending")).ToList();
+
                 if (requestedleave != null)
-                    leaveHistories.Add(requestedleave);
+                {
+                    foreach(var single in requestedleave)
+                        leaveHistories.Add(single);
+                }
             }
 
             var allrequest = new List<ListOfLeaveRequestHOD>();
@@ -130,11 +133,12 @@ namespace Leave_Management_System.Controllers
         }
         //------------------
         [HttpGet]
-        [Authorize(Roles = "")]
+        [Authorize(Roles = "Dean")]
         public IActionResult MyLeave()
         {
             string curentUser = User.Identity.Name;
             var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
+           
             List<MyLeave> myLeaves = new List<MyLeave>();
             foreach (var temp in userlevelist)
             {

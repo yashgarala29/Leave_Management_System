@@ -83,9 +83,11 @@ namespace Leave_Management_System.Controllers
             foreach (var temp in t)
             {
                 var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
-                .Where(x => (x.AllUser.Email == temp.Email && x.RegistrarApproveStatus == "Pending")).FirstOrDefault();
+                .Where(x => (x.AllUser.Email == temp.Email && x.RegistrarApproveStatus == "Pending")).ToList();
                 if (requestedleave != null)
-                    leaveHistories.Add(requestedleave);
+                    foreach (var single in requestedleave)
+                        leaveHistories.Add(single);
+
             }
 
             var allrequest = new List<ListOfLeaveRequestHOD>();

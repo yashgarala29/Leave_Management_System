@@ -635,3 +635,10 @@ E:\SEM 6\SDP\project\Leave_Management_System-brijesh_chudasama\Leave_Management_
 E:\SEM 6\SDP\project\Leave_Management_System-brijesh_chudasama\Leave_Management_System-brijesh_chudasama\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\UpdateLeave.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System-brijesh_chudasama\Leave_Management_System-brijesh_chudasama\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\DeleteLeave.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System-brijesh_chudasama\Leave_Management_System-brijesh_chudasama\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\UpdateLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\DeleteLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\UpdateLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\HomePageFaculty.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\DeleteLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\UpdateLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\DeleteLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\UpdateLeave.cshtml.g.cs

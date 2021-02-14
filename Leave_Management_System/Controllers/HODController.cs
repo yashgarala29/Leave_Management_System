@@ -79,14 +79,17 @@ namespace Leave_Management_System.Controllers
         {
             var hodDeparment = _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
             List<LeaveHistory> leaveHistories = new List<LeaveHistory>();
-            var t = await userManager.GetUsersInRoleAsync("HOD");
+            var t = await userManager.GetUsersInRoleAsync("Faculty");
             var HODDeparment = _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefault().Deparment;
             foreach (var temp in t)
             {
                 var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
-                .Where(x => (x.AllUser.Email == temp.Email && x.AllUser.Deparment == HODDeparment && x.HODApproveStatus == "Pending")).FirstOrDefault();
+                .Where(x => (x.AllUser.Email == temp.Email && x.AllUser.Deparment == HODDeparment && x.HODApproveStatus == "Pending")).ToList();
                 if (requestedleave != null)
-                    leaveHistories.Add(requestedleave);
+                    foreach (var single in requestedleave)
+                        leaveHistories.Add(single);
+
+                //leaveHistories.Add(requestedleave);
             }
 
             var allrequest = new List<ListOfLeaveRequestHOD>();

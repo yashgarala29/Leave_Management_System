@@ -50,6 +50,8 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest(LeaveRequest leaveRequest)
         {
+            if(ModelState.IsValid)
+                { 
             string username = User.Identity.Name;
             var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
             var leaveHistory = new LeaveHistory
@@ -66,7 +68,10 @@ namespace Leave_Management_System.Controllers
             };
             _context.LeaveHistory.Add(leaveHistory);
             _context.SaveChangesAsync();
-            return View();
+               return RedirectToAction("MyLeave", "Faculty");
+            }
+            return View(leaveRequest);
+
         }
         [HttpGet]
         [Authorize(Roles = "Faculty")]
