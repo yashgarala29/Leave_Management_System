@@ -1,24 +1,44 @@
-﻿@model Leave_Management_System.Models.ViewModel.LoginViewModel
-@{
-    ViewData["Title"] = "Login";
-}
+﻿
+
+@model Leave_Management_System.Models.ViewModel.CombineLoginRegister
+
+
+@{ ViewData["Title"] = "Login"; }
 <div class="row">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+        <form method="post" asp-action="Login" asp-controller="Account">
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email " class="text-danger"></span>
+                <label asp-for="LoginCombine.Email"></label>
+                <input asp-for="LoginCombine.Email" class="form-control" />
+                <span asp-validation-for="LoginCombine.Email " class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="LoginCombine.Password"></label>
+                <input asp-for="LoginCombine.Password" class="form-control" />
+                <span asp-validation-for="LoginCombine.Password" class="text-danger"></span>
             </div>
-            
-            
+
+
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 </div>
+
+<h1>Register</h1>
+<form method="post" asp-action="Register" asp-controller="Account" >
+    <label asp-for="RegisterCombine.Email"></label>
+    <input asp-for="RegisterCombine.Email" />
+    <span asp-validation-for="RegisterCombine.Email" class="text-danger"></span><br>
+
+    <label asp-for="RegisterCombine.Password"></label>
+    <input asp-for="RegisterCombine.Password" />
+    <span asp-validation-for="RegisterCombine.Password" class="text-danger"></span><br>
+
+    <label asp-for="RegisterCombine.ConfirmPassword"></label>
+    <input asp-for="RegisterCombine.ConfirmPassword" />
+    <span asp-validation-for="RegisterCombine.ConfirmPassword" class="text-danger"></span>
+    <br>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
