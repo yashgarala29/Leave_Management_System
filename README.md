@@ -13,7 +13,7 @@
   ```
   
   6) Now run `CreateRole.cshtml` File.
-  7) in this View One text Box are there in this text Box Add this Role one after other.
+  7) In this View One text Box are there in this text Box Add this Role one after other.
       - HOD
       - admin
       - Dean
