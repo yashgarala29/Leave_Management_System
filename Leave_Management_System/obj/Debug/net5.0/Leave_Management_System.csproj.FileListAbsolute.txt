@@ -642,3 +642,15 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\UpdateLeave.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\DeleteLeave.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\DeleteLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\HomePageFalulty.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\DeleteLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\DeleteLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\AdminView.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\DeanView.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\Facultyview.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\HODview.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\RegistrarView.cshtml.g.cs
