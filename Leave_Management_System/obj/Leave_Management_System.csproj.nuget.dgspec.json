@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj": {}
+    "D:\\SDP Backup\\2-18-2021\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj": {
+    "D:\\SDP Backup\\2-18-2021\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
+        "projectUniqueName": "D:\\SDP Backup\\2-18-2021\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
         "projectName": "Leave_Management_System",
-        "projectPath": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
+        "projectPath": "D:\\SDP Backup\\2-18-2021\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\obj\\",
+        "outputPath": "D:\\SDP Backup\\2-18-2021\\Leave_Management_System\\Leave_Management_System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -77,7 +77,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[5.0.2, )"
+              "version": "[5.0.1, )"
             }
           },
           "imports": [

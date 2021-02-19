@@ -64,7 +64,7 @@ namespace Leave_Management_System.Service
             };
             mail.BodyEncoding = Encoding.Default;
             //string format_string = string.Format(builder.Htm "yashgarala29@gmail.com");
-            await smtpClient.SendMailAsync(mail);
+            //await smtpClient.SendMailAsync(mail);
         }
         private string GetEmailBody(string templetName)
         {

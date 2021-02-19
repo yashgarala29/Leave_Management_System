@@ -50,8 +50,6 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest(LeaveRequest leaveRequest)
         {
-            if(ModelState.IsValid)
-                { 
             string username = User.Identity.Name;
             var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
             var leaveHistory = new LeaveHistory
@@ -68,14 +66,11 @@ namespace Leave_Management_System.Controllers
             };
             _context.LeaveHistory.Add(leaveHistory);
             _context.SaveChangesAsync();
-               return RedirectToAction("MyLeave", "Faculty");
-            }
-            return View(leaveRequest);
-
+            return View();
         }
         [HttpGet]
         [Authorize(Roles = "Faculty")]
-        public IActionResult MyLeave()
+        public async Task<IActionResult> MyLeave()
         {
             string curentUser = User.Identity.Name;
             var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
@@ -100,7 +95,7 @@ namespace Leave_Management_System.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Faculty")]
-        public IActionResult UpdateLeave(int leave_id)
+        public async Task<IActionResult> UpdateLeave(int leave_id)
         {
             if (leave_id == 0)
                 return NotFound();
@@ -190,13 +185,13 @@ namespace Leave_Management_System.Controllers
                 }
                 return RedirectToAction("MyLeave", "Faculty");
             };
-            return View(leaveRequest);
+            return View();
         }
 
 
         [HttpGet]
         [Authorize(Roles = "Faculty")]
-        public IActionResult DeleteLeave(int leave_id)
+        public async Task<IActionResult> DeleteLeave(int leave_id)
         {
             if (leave_id == 0)
                 return RedirectToAction("MyLeave", "Faculty");

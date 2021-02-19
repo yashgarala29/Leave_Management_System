@@ -26,7 +26,7 @@ namespace Leave_Management_System.Controllers
         {
             UserEmail userEmail = new UserEmail
             {
-                ToEmail = "yashgarala29@gmail.com",
+                ToEmail = "brijesh.chudasama2012@gmail.com",
 
 
             };

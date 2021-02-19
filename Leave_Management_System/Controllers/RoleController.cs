@@ -70,6 +70,7 @@ namespace Leave_Management_System.Controllers
                 };
                 userRoleViewModel.Department = Enum.GetNames(typeof(Department)).ToList();
                 userRoleViewModel.Role = rolelist;
+
                 user_role_list.Add(userRoleViewModel);
             }
             return View(user_role_list);
@@ -112,7 +113,7 @@ namespace Leave_Management_System.Controllers
                 //System.Console.WriteLine("svuhfodsifhadhfidfhh");
                 //return View();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
             }

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+@inject SignInManager<IdentityUser> signinmanager
+@inject UserManager<IdentityUser> usemanager
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]LMS - Login</title>
+    
+    <link rel="stylesheet" href="~/css/HomePage.css" />
+
+
+</head>
+<body>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    @RenderSection("Scripts", required: false)
+ 
+</body>
+</html>
