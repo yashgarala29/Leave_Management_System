@@ -11,6 +11,7 @@ namespace Leave_Management_System.Models.ViewModel
         [Key]
         public int id { get; set; }
         [DataType(DataType.EmailAddress)]
+        
         public string Email { get; set; }
         
         

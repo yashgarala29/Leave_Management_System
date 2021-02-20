@@ -838,3 +838,17 @@ D:\SDP Backup\2-18-2021\Leave_Management_System\Leave_Management_System\bin\Debu
 D:\SDP Backup\2-18-2021\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.Views.pdb
 D:\SDP Backup\2-18-2021\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.csproj.CopyComplete
 D:\SDP Backup\2-18-2021\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.genruntimeconfig.cache
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\DeleteLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Dean\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\HomePageFalulty.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\DeleteLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Pending\Index.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\DeleteLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Shared\H_Layout.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\AdminView.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\DeanView.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\Facultyview.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\HODview.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\RegistrarView.cshtml.g.cs

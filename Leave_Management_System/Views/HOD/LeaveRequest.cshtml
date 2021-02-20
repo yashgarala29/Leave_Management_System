@@ -17,9 +17,6 @@
             </div>
         </div>
 
-
-
-
         <!-- column -->
         <div class="col-sm-8">
             <div class="card">
@@ -36,13 +33,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="LeaveStartFrome" class="control-label"></label>
-                                    <input asp-for="LeaveStartFrome" class="form-control" />
-                                    <span asp-validation-for="LeaveStartFrome" class="text-danger"></span>
+                                    <input asp-for="LeaveStartFrome" class="form-control" onchange="checkStaringDate()" id="startdate" />
+                                    <span asp-validation-for="LeaveStartFrome" class="text-danger" id="error_in_staring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="LeaveEndTill" class="control-label"></label>
-                                    <input asp-for="LeaveEndTill" class="form-control" />
-                                    <span asp-validation-for="LeaveEndTill" class="text-danger"></span>
+                                    <input asp-for="LeaveEndTill" class="form-control" onchange="checkEndingDate()" id="enddate" />
+                                    <span asp-validation-for="LeaveEndTill" id="error_in_ending" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Request" class="btn btn-primary" />
@@ -51,10 +48,54 @@
                         </div>
 
                     </div>
-                    
+
                 </div>
 
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    function checkStaringDate() {
+        var staring_Date = document.getElementById("startdate").value;
+        var ending_Date = document.getElementById("enddate").value;
+        var todayDate = new Date();
+        //console.log(todayDate);
+        if (new Date(staring_Date).getTime() > new Date(ending_Date).getTime()) {
+            var setErromess = document.getElementById("error_in_staring");
+            setErromess.innerHTML = "Date Must be less than Ending  date";
+            console.log("Date is not change");
+            document.getElementById('startdate').value = '';
+            //document.getElementById("startdate").reset();
+            return false;
+        }
+        //console.log(todayDate);
+        if (new Date(staring_Date).getTime() < new Date(todayDate).getTime()) {
+            //error_in_staring
+            var setErromess = document.getElementById("error_in_staring");
+            setErromess.innerHTML = "Date Must be greater than today`s date";
+            document.getElementById('startdate').value = '';
+            //document.getElementById("startdate").reset();
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function checkEndingDate() {
+        var ending_Date = document.getElementById("enddate").value;
+        var staring_Date = document.getElementById("startdate").value;
+        if (new Date(staring_Date).getTime() >= new Date(ending_Date).getTime()) {
+            var setErromess = document.getElementById("error_in_ending");
+            setErromess.innerHTML = "Date Must be greater than   staring  date";
+            document.getElementById('enddate').value = '';
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+</script>
