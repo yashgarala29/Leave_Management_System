@@ -52,11 +52,15 @@
                 success: function (response) {
                     location.reload();
 
+
+
+
                 },
                 failure: function (response) {
                     alert("failure");
                 },
                 error: function (response) {
+                    console.log(response);
                     alert("error");
                 }
             });

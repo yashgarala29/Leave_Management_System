@@ -1,11 +1,14 @@
 ﻿using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Leave_Management_System.Models.ViewModel;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,10 +19,14 @@ namespace Leave_Management_System.Controllers
         private readonly LeaveDbContext _context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-        public AccountController(LeaveDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public AccountController(LeaveDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager
+            , IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             this.signInManager = signInManager;
+            this.webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
         }
         static List<string> errorList = new List<string>();
@@ -76,7 +83,7 @@ namespace Leave_Management_System.Controllers
                     }
                     return RedirectToAction("index", "home");
                 }
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                //ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
                 errorList.Add("Invalid Login Attempt");
             }
             return View(model);
@@ -113,13 +120,14 @@ namespace Leave_Management_System.Controllers
                     var s = userManager.Users.Where(a => a.Email == registerViewModel.RegisterCombine.Email).FirstOrDefault();
                     IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Pending");
                     //IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Admin");
+                  
 
                     if (identityResult.Succeeded)
                         return RedirectToAction("index", "home");
                 }
                 foreach(var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    //ModelState.AddModelError(string.Empty, error.Description);
                     errorList.Add(error.Description);
                 }
             }

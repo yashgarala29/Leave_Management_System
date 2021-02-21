@@ -115,21 +115,37 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Dean")]
         public async Task<JsonResult> AjaxMethod(string name, string leave_id)
         {
+            try { 
             int leave_id_int = int.Parse(leave_id);
             var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.DeanApproveStatus = name;
             leave.LeaveStatus = name;
+            var noti = new Notification
+            {
+                Heading = "Your Leave is" + name,
+                Body = "",
+                id = leave.AllUser.id,
+                isreaded = false,
+                NotificationDate = DateTime.Now,
+
+
+
+            };
+            _context.Notifications.Add(noti);
+            await _context.SaveChangesAsync();
 
             //try
             //{
             _context.Update(leave);
             await _context.SaveChangesAsync();
-            //}
-            //catch (Exception e)
-            //{
-            //    throw;
-            //}
-            return Json(leave);
+                return Json(true);
+
+            }
+            catch (Exception e)
+            {
+                return Json(false);
+            }
+            
         }
         //------------------
         [HttpGet]

@@ -4,14 +4,16 @@ using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Leave_Management_System.Migrations
 {
     [DbContext(typeof(LeaveDbContext))]
-    partial class LeaveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210218100819_notificationAdd")]
+    partial class notificationAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,37 +61,9 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserImage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("id");
 
                     b.ToTable("AllUser");
-                });
-
-            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveAllocation", b =>
-                {
-                    b.Property<int>("AllocationID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("NoOfLeave")
-                        .HasColumnType("int");
-
-                    b.Property<int>("id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("leaveTypeID")
-                        .HasColumnType("int");
-
-                    b.HasKey("AllocationID");
-
-                    b.HasIndex("id");
-
-                    b.HasIndex("leaveTypeID");
-
-                    b.ToTable("leaveAllocation");
                 });
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
@@ -98,12 +72,6 @@ namespace Leave_Management_System.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<string>("Acknowledgement")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Attachment")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeanApproveStatus")
                         .HasColumnType("nvarchar(max)");
@@ -132,19 +100,14 @@ namespace Leave_Management_System.Migrations
                     b.Property<int>("id")
                         .HasColumnType("int");
 
-                    b.Property<int>("leaveTypeID")
-                        .HasColumnType("int");
-
                     b.HasKey("leave_id");
 
                     b.HasIndex("id");
 
-                    b.HasIndex("leaveTypeID");
-
                     b.ToTable("LeaveHistory");
                 });
 
-            modelBuilder.Entity("Leave_Management_System.Models.Class.Notification", b =>
+            modelBuilder.Entity("Leave_Management_System.Models.ViewModel.Notification", b =>
                 {
                     b.Property<int>("NotificationID")
                         .ValueGeneratedOnAdd()
@@ -171,24 +134,6 @@ namespace Leave_Management_System.Migrations
                     b.HasIndex("id");
 
                     b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("Leave_Management_System.Models.Class.leaveType", b =>
-                {
-                    b.Property<int>("leaveTypeID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("LeaveType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("allcatoToAll")
-                        .HasColumnType("bit");
-
-                    b.HasKey("leaveTypeID");
-
-                    b.ToTable("leaveType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -387,25 +332,6 @@ namespace Leave_Management_System.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveAllocation", b =>
-                {
-                    b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
-                        .WithMany()
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Leave_Management_System.Models.Class.leaveType", "leaveType")
-                        .WithMany()
-                        .HasForeignKey("leaveTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AllUser");
-
-                    b.Navigation("leaveType");
-                });
-
             modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
                 {
                     b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
@@ -414,18 +340,10 @@ namespace Leave_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Leave_Management_System.Models.Class.leaveType", "leaveType")
-                        .WithMany()
-                        .HasForeignKey("leaveTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AllUser");
-
-                    b.Navigation("leaveType");
                 });
 
-            modelBuilder.Entity("Leave_Management_System.Models.Class.Notification", b =>
+            modelBuilder.Entity("Leave_Management_System.Models.ViewModel.Notification", b =>
                 {
                     b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
                         .WithMany()

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Leave_Management_System.Models.Class.Notification>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Heading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Body)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotificationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isreaded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Heading)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotificationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isreaded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllUser.id)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

@@ -8,6 +8,8 @@ namespace Leave_Management_System.Models.Class
     {
         [Key]
         public int id { get; set; }
+        public string UserImage { get; set; }
+
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Display(Name = "Mobile Number")]

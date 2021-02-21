@@ -164,7 +164,6 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\AdminView.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\DeanView.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\Facultyview.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\HODview.cshtml.g.cs
@@ -642,3 +641,5 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\UpdateLeave.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\DeleteLeave.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Registrar\UpdateLeave.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\View.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\Notification.cshtml.g.cs

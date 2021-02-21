@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Leave_Management_System.Service;
+using Microsoft.AspNetCore.Hosting;
+
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Leave_Management_System.Controllers
 {
@@ -20,15 +24,18 @@ namespace Leave_Management_System.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IEmailService emailService;
+        private readonly IWebHostEnvironment webHostEnvironment;
         private readonly RoleManager<IdentityRole> roleManager;
         public HODController(LeaveDbContext context, UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             SignInManager<IdentityUser> signInManager,
-            IEmailService emailService)
+            IEmailService emailService
+            , IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             this.signInManager = signInManager;
             this.emailService = emailService;
+            this.webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
@@ -116,22 +123,39 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "HOD")]
         public async Task<JsonResult> AjaxMethod(string name, string leave_id)
         {
+            try { 
             int leave_id_int = int.Parse(leave_id);
-            var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
+            var leave = _context.LeaveHistory.Include(l => l.AllUser).Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.HODApproveStatus = name;
             leave.LeaveStatus = name;
 
-            //try
-            //{
-            _context.Update(leave);
+            var s = userManager.Users.Where(a => a.Email ==leave.AllUser.Email).FirstOrDefault();
+            var noti = new Notification
+            {
+                Heading = "Your Leave is" + name,
+                Body = "",
+                id = leave.AllUser.id,
+                isreaded = false,
+                NotificationDate = DateTime.Now,
+
+
+
+            };
+            _context.Notifications.Add(noti);
             await _context.SaveChangesAsync();
-            //}
-            //catch (Exception e)
-            //{
-            //    throw;
-            //}
-            return Json(leave);
+
+
+            _context.LeaveHistory.Update(leave);
+            await _context.SaveChangesAsync();
+            
+            return Json(true);
         }
+            catch (Exception e)
+            {
+
+                return Json(false);
+            }
+}
 
         //---------------
         [HttpGet]

@@ -74,7 +74,19 @@ namespace Leave_Management_System.Controllers
 
                 try
                 {
-                    
+                    var noti = new Notification
+                    {
+                        Heading = "Your Profile is updated",
+                        Body = "",
+                        id = ownProfile.id,
+                        isreaded = false,
+                        NotificationDate = DateTime.Now,
+
+
+
+                    };
+                    _context.Notifications.Add(noti);
+                    await _context.SaveChangesAsync();
                     _context.Update(allUser);
                     await _context.SaveChangesAsync();
                 }
