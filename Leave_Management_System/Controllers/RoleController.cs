@@ -3,6 +3,7 @@ using Leave_Management_System.Models.Context;
 using Leave_Management_System.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,13 +63,15 @@ namespace Leave_Management_System.Controllers
                 var usermanager = (await userManager.GetRolesAsync(userlist[i])).FirstOrDefault();
                 string UserId = userlist[i].Id;
                 string Email = userlist[i].Email;
-                //RoleName=rolelist.Where(a=>a.Id==usermanager).FirstOrDefault().Id,
+                //RoleName=rolelist.Where(a=>a.Id==usermanager).FirstOrDefault().Id,s
                 
                 
                 string aa= userlist[i].UserName;
 
             string RoleId = usermanager;
-               var  CurentDepartment = ( _context.AllUser.Where(x => x.Email == aa)).FirstOrDefault();
+                var CurentDepartment = await _context.AllUser.FirstOrDefaultAsync(m => m.Email.Equals(aa.ToString())  ); 
+                //( _context.AllUser.Where(x => x.Email == aa)).FirstOrDefault();
+                //
 
                 var userRoleViewModel = new UserRoleViewModel
                 {

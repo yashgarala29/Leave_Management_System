@@ -16,14 +16,14 @@ namespace Leave_Management_System.Models.ViewModel
         
         
         [Display(Name = "Mobile Number 1")]
-        [DataType(DataType.PhoneNumber)]
+        //[DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
-        public int MobileNo { get; set; }
+        public string MobileNo { get; set; }
 
         [Display(Name = "Mobile Number 2")]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
-        public int MobileNo2 { get; set; }
+        //[DataType(DataType.PhoneNumber)]
+        //[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public string MobileNo2 { get; set; }
 
         [Display(Name = "First Name")]
         public string Name { get; set; }
