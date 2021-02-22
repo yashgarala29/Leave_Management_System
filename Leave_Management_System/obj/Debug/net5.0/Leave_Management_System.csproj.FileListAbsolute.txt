@@ -1310,3 +1310,4 @@ D:\Dashboard\Leave_Management_System-yash_garala\Leave_Management_System\obj\Deb
 D:\Dashboard\Leave_Management_System-yash_garala\Leave_Management_System\obj\Debug\net5.0\ref\Leave_Management_System.dll
 D:\Dashboard\Leave_Management_System-yash_garala\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.pdb
 D:\Dashboard\Leave_Management_System-yash_garala\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.genruntimeconfig.cache
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\View.cshtml.g.cs
