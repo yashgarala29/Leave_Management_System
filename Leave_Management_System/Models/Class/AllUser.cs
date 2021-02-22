@@ -11,6 +11,7 @@ namespace Leave_Management_System.Models.Class
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        public string UserImage { get; set; }
         [Display(Name = "Mobile Number 1")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]

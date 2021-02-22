@@ -55,10 +55,21 @@ namespace Leave_Management_System.Controllers
             var rolelist = roleManager.Roles.ToList();
             var user_role_list = new List<UserRoleViewModel>();
             var department_list = new List<string>();
+                
 
             for (int i = 0; i < userlist.Count; i++)
             {
                 var usermanager = (await userManager.GetRolesAsync(userlist[i])).FirstOrDefault();
+                string UserId = userlist[i].Id;
+                string Email = userlist[i].Email;
+                //RoleName=rolelist.Where(a=>a.Id==usermanager).FirstOrDefault().Id,
+                
+                
+                string aa= userlist[i].UserName;
+
+            string RoleId = usermanager;
+               var  CurentDepartment = ( _context.AllUser.Where(x => x.Email == aa)).FirstOrDefault();
+
                 var userRoleViewModel = new UserRoleViewModel
                 {
                     UserId = userlist[i].Id,
@@ -113,7 +124,7 @@ namespace Leave_Management_System.Controllers
                 //System.Console.WriteLine("svuhfodsifhadhfidfhh");
                 //return View();
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
