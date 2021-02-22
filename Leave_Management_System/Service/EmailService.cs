@@ -33,7 +33,7 @@ namespace Leave_Management_System.Service
         }
         public async Task SendTestEmail(UserEmail userEmail)
         {
-            userEmail.Subject = "this is test";
+            userEmail.Subject = "Test Email";
             userEmail.Body = UpdatePlaceHolder(GetEmailBody("Test"),userEmail.PlaceHolder);
             await sendEmail(userEmail);
         }
@@ -63,7 +63,6 @@ namespace Leave_Management_System.Service
                 Credentials = networkCredential,
             };
             mail.BodyEncoding = Encoding.Default;
-            //string format_string = string.Format(builder.Htm "yashgarala29@gmail.com");
             await smtpClient.SendMailAsync(mail);
         }
         private string GetEmailBody(string templetName)

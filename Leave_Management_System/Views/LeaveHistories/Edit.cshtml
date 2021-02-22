@@ -5,68 +5,88 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
 
-<h4>LeaveHistory</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="leave_id" />
-            <div class="form-group">
-                <label asp-for="LeaveStatus" class="control-label"></label>
-                <input asp-for="LeaveStatus" class="form-control" />
-                <span asp-validation-for="LeaveStatus" class="text-danger"></span>
+<!-- Begin Page Content -->
+<div class="container-fluid px-lg-4">
+    <div class="row">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 ">
+                    Edit Leave Details
+                </h2>
             </div>
-            <div class="form-group">
-                <label asp-for="HODApproveStatus" class="control-label"></label>
-                <input asp-for="HODApproveStatus" class="form-control" />
-                <span asp-validation-for="HODApproveStatus" class="text-danger"></span>
+        </div>
+
+
+
+
+        <!-- column -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class=" align-items-center">
+                        <div>
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="leave_id" />
+                                <div class="form-group">
+                                    <label asp-for="LeaveStatus" class="control-label"></label>
+                                    <input asp-for="LeaveStatus" class="form-control" />
+                                    <span asp-validation-for="LeaveStatus" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="HODApproveStatus" class="control-label"></label>
+                                    <input asp-for="HODApproveStatus" class="form-control" />
+                                    <span asp-validation-for="HODApproveStatus" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DeanApproveStatus" class="control-label"></label>
+                                    <input asp-for="DeanApproveStatus" class="form-control" />
+                                    <span asp-validation-for="DeanApproveStatus" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="RegistrarApproveStatus" class="control-label"></label>
+                                    <input asp-for="RegistrarApproveStatus" class="form-control" />
+                                    <span asp-validation-for="RegistrarApproveStatus" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="NoOfDay" class="control-label"></label>
+                                    <input asp-for="NoOfDay" class="form-control" />
+                                    <span asp-validation-for="NoOfDay" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LeaveReason" class="control-label"></label>
+                                    <textarea asp-for="LeaveReason" class="form-control"></textarea>
+                                    <span asp-validation-for="LeaveReason" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StartFrome" class="control-label"></label>
+                                    <input asp-for="StartFrome" class="form-control" />
+                                    <span asp-validation-for="StartFrome" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EndTill" class="control-label"></label>
+                                    <input asp-for="EndTill" class="form-control" />
+                                    <span asp-validation-for="EndTill" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="id" class="control-label"></label>
+                                    <select asp-for="id" class="form-control" asp-items="ViewBag.id"></select>
+                                    <span asp-validation-for="id" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- title -->
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="DeanApproveStatus" class="control-label"></label>
-                <input asp-for="DeanApproveStatus" class="form-control" />
-                <span asp-validation-for="DeanApproveStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RegistrarApproveStatus" class="control-label"></label>
-                <input asp-for="RegistrarApproveStatus" class="form-control" />
-                <span asp-validation-for="RegistrarApproveStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoOfDay" class="control-label"></label>
-                <input asp-for="NoOfDay" class="form-control" />
-                <span asp-validation-for="NoOfDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeaveReason" class="control-label"></label>
-                <textarea asp-for="LeaveReason" class="form-control"></textarea>
-                <span asp-validation-for="LeaveReason" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartFrome" class="control-label"></label>
-                <input asp-for="StartFrome" class="form-control" />
-                <span asp-validation-for="StartFrome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndTill" class="control-label"></label>
-                <input asp-for="EndTill" class="form-control" />
-                <span asp-validation-for="EndTill" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id" class="control-label"></label>
-                <select asp-for="id" class="form-control" asp-items="ViewBag.id"></select>
-                <span asp-validation-for="id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

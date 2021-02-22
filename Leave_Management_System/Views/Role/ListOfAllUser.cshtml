@@ -1,5 +1,92 @@
 ﻿@*@(async () => await deleteConfirm(@myShoppings))*@
 @model List<Leave_Management_System.Models.ViewModel.UserRoleViewModel>
+
+<!-- Begin Page Content -->
+<div class="container-fluid col-8">
+    <div class="row">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 ">
+                    Role Allocation
+                </h2>
+
+            </div>
+        </div>
+        <!-- column -->
+        <div class="col-md-12 mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class="d-md-flex align-items-center">
+                        <div>
+                            <h5 class="card-subtitle">List Of All Users</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                             @ViewBag.id
+                            @for (int i = 0; i < Model.Count; i++)
+                            {   
+                                <tr>
+                                    <form method="post">
+                                        <td>
+                                            <div class=" card-header">
+                                                @Model[i].Email<br>
+                                                @Model[i].RoleId<br>
+                                                @*<select asp-for="@Model[i].RoleId" asp-items="@(new SelectList(Model[i].Role,,))"></select>*@
+                                                <select name="userRole" id="@Model[i].UserId">
+                                                    @foreach (var item in Model[i].Role)
+                                                    {
+                                                        if (Model[i].RoleId == item.Name)
+                                                        {
+                                                            <option value="@item.Id" selected="selected">@item.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    }
+                                                 </select>
+                                                <select name="DeparmentList">
+                                                    @foreach (var item in Model[i].Department)
+                                                    {
+                                                        if (item == Model[i].CurentDepartment)
+                                                        {
+                                                            <option value="@item" selected="selected">@item</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item">@item</option>
+                                                        }
+                                                    }
+                                                </select>
+                                             </div>
+                                            <div class=" card-body">
+                                                <button type="submit" asp-action="ListOfAllUser" asp-controller="Role" asp-route-UserId="@Model[i].UserId" class="btn btn-primary">Change Role</button>
+                                                @*<a asp-action="ListOfAllUser" asp-route-id="@i">Edit</a>*@
+                                                @*<button class="btn btn-primary" id="@i" asp-controller="RoleController" asp-action="ListOf name="save_change">Save Change</button>*@
+                                            </div>
+                                        </td>
+                                    </form>
+                                </tr>
+                            }
+
+                    </table>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--
 <h1>List Of All User @ViewBag.id</h1>
 @for (int i = 0; i < Model.Count; i++)
 {
@@ -38,7 +125,7 @@
 
             </div>
             <div class=" card-body">
-                <button type="submit" asp-action="ListOfAllUser" asp-controller="Role" asp-route-UserId="@Model[i].UserId" class="btn btn-primary">Change Role</button> 
+                <button type="submit" asp-action="ListOfAllUser" asp-controller="Role" asp-route-UserId="@Model[i].UserId" class="btn btn-primary">Change Role</button>
                 @*<a asp-action="ListOfAllUser" asp-route-id="@i">Edit</a>*@
                 @*<button class="btn btn-primary" id="@i" asp-controller="RoleController" asp-action="ListOf name="save_change">Save Change</button>*@
             </div>
@@ -46,7 +133,7 @@
         </div>
     </form>
 }
-
+-->
 
 
 @section scripts{
@@ -68,6 +155,4 @@
             $(save_change).attr("formAction", t);
         })
     </script>
-    
-   
 }

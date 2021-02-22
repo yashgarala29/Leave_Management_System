@@ -2,7 +2,7 @@
 
 namespace Leave_Management_System.Migrations
 {
-    public partial class attachment : Migration
+    public partial class databaseUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

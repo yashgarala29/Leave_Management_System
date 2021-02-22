@@ -26,7 +26,7 @@ namespace Leave_Management_System.Controllers
         }
 
         static OwnProfile ownProfile_transfer;
-            [HttpGet]
+        [HttpGet]
         [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
         public IActionResult OwnProfile()
         {
@@ -41,8 +41,8 @@ namespace Leave_Management_System.Controllers
                 Email = userdetail.Email,
                 City = userdetail.City,
                 MiddleName = userdetail.MiddleName,
-                MobileNo = userdetail.MobileNo.ToString(),
-                MobileNo2 = userdetail.MobileNo2.ToString(),
+                MobileNo =userdetail.MobileNo,
+                MobileNo2 = userdetail.MobileNo2,
                 Name = userdetail.Name,
                 PaidLeave = userdetail.PaidLeave,
             };
@@ -62,33 +62,22 @@ namespace Leave_Management_System.Controllers
                     id = ownProfile.id,
                     LastName = ownProfile.LastName,
                     Addreaddress = ownProfile.Addreaddress,
-                   Email= User.Identity.Name,
+                    Email = User.Identity.Name,
                     City = ownProfile.City,
                     MiddleName = ownProfile.MiddleName,
-                    MobileNo =ownProfile.MobileNo.ToString(),
+                    MobileNo = ownProfile.MobileNo.ToString(),
                     MobileNo2 = ownProfile.MobileNo2.ToString(),
                     Name = ownProfile.Name,
-                    PaidLeave= ownProfile_transfer.PaidLeave
+                    PaidLeave = ownProfile_transfer.PaidLeave
 
                 };
 
                 try
                 {
-                    var noti = new Notification
-                    {
-                        Heading = "Your Profile is updated",
-                        Body = "",
-                        id = ownProfile.id,
-                        isreaded = false,
-                        NotificationDate = DateTime.Now,
 
-
-
-                    };
-                    _context.Notifications.Add(noti);
-                    await _context.SaveChangesAsync();
                     _context.Update(allUser);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(controllerName: "common", actionName: "OwnProfile");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -97,7 +86,8 @@ namespace Leave_Management_System.Controllers
 
                 }
             }
-            return RedirectToAction(controllerName:"common",actionName: "OwnProfile");
+
+            return View(ownProfile);
         }
         //[HttpGet]
         //[Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]

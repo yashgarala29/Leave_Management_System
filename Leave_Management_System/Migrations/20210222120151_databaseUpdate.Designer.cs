@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leave_Management_System.Migrations
 {
     [DbContext(typeof(LeaveDbContext))]
-    [Migration("20210221053603_leavetype")]
-    partial class leavetype
+    [Migration("20210222120151_databaseUpdate")]
+    partial class databaseUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,11 +46,11 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MobileNo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MobileNo")
+                        .HasColumnType("int");
 
-                    b.Property<string>("MobileNo2")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MobileNo2")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -61,9 +61,37 @@ namespace Leave_Management_System.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("id");
 
                     b.ToTable("AllUser");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveAllocation", b =>
+                {
+                    b.Property<int>("AllocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("NoOfLeave")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("leaveTypeID")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllocationID");
+
+                    b.HasIndex("id");
+
+                    b.HasIndex("leaveTypeID");
+
+                    b.ToTable("leaveAllocation");
                 });
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
@@ -73,7 +101,7 @@ namespace Leave_Management_System.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Acknowledgement")
+                    b.Property<string>("Attachment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeanApproveStatus")
@@ -103,14 +131,9 @@ namespace Leave_Management_System.Migrations
                     b.Property<int>("id")
                         .HasColumnType("int");
 
-                    b.Property<int>("leaveTypeID")
-                        .HasColumnType("int");
-
                     b.HasKey("leave_id");
 
                     b.HasIndex("id");
-
-                    b.HasIndex("leaveTypeID");
 
                     b.ToTable("LeaveHistory");
                 });
@@ -358,10 +381,10 @@ namespace Leave_Management_System.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
+            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveAllocation", b =>
                 {
                     b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
-                        .WithMany("leaveHistory")
+                        .WithMany()
                         .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -375,6 +398,17 @@ namespace Leave_Management_System.Migrations
                     b.Navigation("AllUser");
 
                     b.Navigation("leaveType");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.Class.LeaveHistory", b =>
+                {
+                    b.HasOne("Leave_Management_System.Models.Class.AllUser", "AllUser")
+                        .WithMany("leaveHistory")
+                        .HasForeignKey("id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AllUser");
                 });
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.Notification", b =>

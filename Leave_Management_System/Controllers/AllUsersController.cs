@@ -4,28 +4,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
+using Leave_Management_System.Models.ViewModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Leave_Management_System.Controllers
 {
     public class AllUsersController : Controller
     {
         private readonly LeaveDbContext _context;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public AllUsersController(LeaveDbContext context)
+        public AllUsersController(LeaveDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            this.roleManager = roleManager;
         }
 
         // GET: AllUsers
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.AllUser.ToListAsync());
         }
 
         // GET: AllUsers/Details/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +52,7 @@ namespace Leave_Management_System.Controllers
         }
 
         // GET: AllUsers/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +63,7 @@ namespace Leave_Management_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create([Bind("id,Email,MobileNo,MobileNo2,Name,LastName,MiddleName,Deparment,Role,Addreaddress,City,PaidLeave")] AllUser allUser)
         {
             if (ModelState.IsValid)
@@ -65,7 +75,9 @@ namespace Leave_Management_System.Controllers
             return View(allUser);
         }
 
+
         // GET: AllUsers/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +98,7 @@ namespace Leave_Management_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("id,Email,MobileNo,MobileNo2,Name,LastName,MiddleName,Deparment,Role,Addreaddress,City,PaidLeave")] AllUser allUser)
         {
             if (id != allUser.id)
@@ -117,6 +130,7 @@ namespace Leave_Management_System.Controllers
         }
 
         // GET: AllUsers/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,6 +150,7 @@ namespace Leave_Management_System.Controllers
 
         // POST: AllUsers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

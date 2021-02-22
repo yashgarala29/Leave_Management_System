@@ -11,6 +11,7 @@ namespace Leave_Management_System.Models.Class
     {
         [Key]
         public int leave_id { get; set; }
+
         public string Attachment { get; set; }
 
         public string LeaveStatus { get; set; }
@@ -28,17 +29,10 @@ namespace Leave_Management_System.Models.Class
         [DataType(DataType.Date)]
         [Display(Name = "Leave End Till")]
         public DateTime EndTill { get; set; }
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Acknowledgement")]
-        public string Acknowledgement { get; set; }
-        
         public int id { get; set; }
         [ForeignKey("id")]
         public AllUser AllUser { get; set; }
 
-        public int leaveTypeID { get; set; }
-        [ForeignKey("leaveTypeID")]
-        public leaveType leaveType { get; set; }
 
 
     }

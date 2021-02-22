@@ -1,23 +1,99 @@
-﻿
+﻿@model Leave_Management_System.Models.ViewModel.LoginViewModel
 
-@model Leave_Management_System.Models.ViewModel.CombineLoginRegister
+@{
+    ViewData["Title"] = "LeaveRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid px-lg-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 ">
+                    
+                </h2>
+            </div>
+        </div>
 
 
-@{ ViewData["Title"] = "Login"; }
+
+
+        <!-- column -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class=" align-items-center">
+                        <div>
+                            <form method="post">
+                                <div asp-validation-summary="All" class="text-danger">
+                                    
+                                    
+                                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                        <h2 class="h3 mb-0 text-black-50 ">
+                                            Login
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Email"></label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email " class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password"></label>
+                                    <input asp-for="Password" class="form-control" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-dark btn-block">Login</button>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- title -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--
+<body>
+
+
+
+
+    <label><h4>OR</h4></label>
+    <hr>
+    <label for="email"><b>Forget password</b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+    <button type="submit">Proceed</button> Not Registered Yet? Click To Registration below
+    <label class="next-btn" for="c2">Registration</label>
+
+
+
+
 <div class="row">
-    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="col-md-12">
-        <form method="post" asp-action="Login" asp-controller="Account">
-            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="LoginCombine.Email"></label>
-                <input asp-for="LoginCombine.Email" class="form-control" />
-                <span asp-validation-for="LoginCombine.Email " class="text-danger"></span>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email " class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LoginCombine.Password"></label>
-                <input asp-for="LoginCombine.Password" class="form-control" />
-                <span asp-validation-for="LoginCombine.Password" class="text-danger"></span>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
 
@@ -25,20 +101,5 @@
         </form>
     </div>
 </div>
-
-<h1>Register</h1>
-<form method="post" asp-action="Register" asp-controller="Account" >
-    <label asp-for="RegisterCombine.Email"></label>
-    <input asp-for="RegisterCombine.Email" />
-    <span asp-validation-for="RegisterCombine.Email" class="text-danger"></span><br>
-
-    <label asp-for="RegisterCombine.Password"></label>
-    <input asp-for="RegisterCombine.Password" />
-    <span asp-validation-for="RegisterCombine.Password" class="text-danger"></span><br>
-
-    <label asp-for="RegisterCombine.ConfirmPassword"></label>
-    <input asp-for="RegisterCombine.ConfirmPassword" />
-    <span asp-validation-for="RegisterCombine.ConfirmPassword" class="text-danger"></span>
-    <br>
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+</body>
+     -->

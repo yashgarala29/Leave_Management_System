@@ -39,7 +39,7 @@ namespace Leave_Management_System.Controllers
         {
             //var user_id = User.Identity.Name;
             //var arr =  context.Notifications.Include(l => l.AllUser).Where(x => x.AllUser.Email == user_id).OrderBy(x=>x.isreaded).ToList();
-            
+
             return View();
         }
         [HttpPost]

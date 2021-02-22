@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Leave_Management_System.Models.Context
 {
-    public class LeaveDbContext: IdentityDbContext
+    public class LeaveDbContext : IdentityDbContext
     {
         public LeaveDbContext(DbContextOptions<LeaveDbContext> options)
             : base(options)
