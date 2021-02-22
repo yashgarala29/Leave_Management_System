@@ -1086,3 +1086,6 @@ E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\n
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Shared\H_Layout.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\Notification.cshtml.g.cs
 E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\View.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\CreatLeaveType.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\ListLeaveType.cshtml.g.cs
+E:\SEM 6\SDP\project\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\UpdateLeaveType.cshtml.g.cs

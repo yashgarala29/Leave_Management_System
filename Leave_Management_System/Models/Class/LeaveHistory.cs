@@ -33,7 +33,9 @@ namespace Leave_Management_System.Models.Class
         [ForeignKey("id")]
         public AllUser AllUser { get; set; }
 
-
+        public int leaveTypeID { get; set; }
+        [ForeignKey("leaveTypeID")]
+        public leaveType leaveType { get; set; }
 
     }
 }

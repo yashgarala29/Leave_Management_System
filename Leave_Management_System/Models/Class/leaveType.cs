@@ -13,6 +13,6 @@ namespace Leave_Management_System.Models.Class
         public int leaveTypeID { get; set; }
         public string LeaveType { get; set; }
         public bool allcatoToAll { get; set; }
-          
+        public bool itispersonal { get; set; }
     }
 }
