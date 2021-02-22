@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Leave_Management_System.Models.Class;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +13,9 @@ namespace Leave_Management_System.Models.ViewModel
         public string UserId { get; set; }
         public string RoleId { get; set; }
         public string Email { get; set; }
-       
+        public List<string> Department { get; set; }
+        public string CurentDepartment { get; set; }
+
         public List<IdentityRole> Role { get; set; }
 
     }
