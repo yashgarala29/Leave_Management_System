@@ -37,6 +37,9 @@
                                     @Html.DisplayNameFor(model => model.LeaveStatus)
                                 </th>
                                 <th>
+                                    @Html.DisplayNameFor(model => model.LeaveType)
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.LeaveReason)
                                 </th>
                                 <th>
@@ -58,6 +61,9 @@
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.LeaveStatus)  
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveType)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.LeaveReason)

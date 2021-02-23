@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Leave_Management_System.Controllers
 {
@@ -37,6 +37,7 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest()
         {
+            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x=>x.itispersonal==true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
             return View();
         }
 
@@ -50,6 +51,8 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest(LeaveRequest leaveRequest)
         {
+            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll==true), "leaveTypeID", "LeaveType");
+
             string username = User.Identity.Name;
             var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
             var leaveHistory = new LeaveHistory
@@ -63,7 +66,17 @@ namespace Leave_Management_System.Controllers
                 RegistrarApproveStatus = "Pending",
                 LeaveStatus = "Pending",
                 id = singleUser.id,
+                leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
             };
+            var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID==Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
+            if((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) >leaevupdate.NoOfLeave)
+            {
+                ModelState.AddModelError(string.Empty, "You can not request More than "+leaevupdate.NoOfLeave);
+                return View();
+            }
+            leaevupdate.NoOfLeave -=(int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
+            _context.leaveAllocation.Update(leaevupdate);
+
             _context.LeaveHistory.Add(leaveHistory);
             _context.SaveChangesAsync();
             return View();
@@ -73,7 +86,7 @@ namespace Leave_Management_System.Controllers
         public async Task<IActionResult> MyLeave()
         {
             string curentUser = User.Identity.Name;
-            var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
+            var userlevelist = _context.LeaveHistory.Include(x=>x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
             List<MyLeave> myLeaves = new List<MyLeave>();
             foreach (var temp in userlevelist)
             {
@@ -87,19 +100,21 @@ namespace Leave_Management_System.Controllers
                     NoOfDay = temp.NoOfDay,
                     StartFrome = temp.StartFrome,
                     changeable = (status > 0) ? 1 : 0,
+                    LeaveType= temp.leaveType.LeaveType,
                 };
                 myLeaves.Add(singleLeave);
             }
             return View(myLeaves);
         }
-
+        int noofleavealocated;
         [HttpGet]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> UpdateLeave(int leave_id)
         {
+               
             if (leave_id == 0)
                 return NotFound();
-            var leaveHistory = _context.LeaveHistory.Where(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            var leaveHistory = _context.LeaveHistory.Include(x=>x.leaveType).Where(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name).FirstOrDefault();
             //
             if (leaveHistory == null)
             {
@@ -117,13 +132,36 @@ namespace Leave_Management_System.Controllers
                 id = leaveHistory.leave_id,
                 LeaveEndTill = leaveHistory.EndTill,
                 LeaveReason = leaveHistory.LeaveReason,
-                LeaveStartFrome = leaveHistory.StartFrome
+                LeaveStartFrome = leaveHistory.StartFrome,
+                LeaveType= leaveHistory.leaveType.LeaveType,
+                
             };
+            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
+
             //ViewBag.leave = leave_id;
             return View(leareqyest);
 
         }
+        public bool convertleavetype(string newvalue,string oldvalue,int noofday,int oldday)
+        {
+            int sum = 0;
+            var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x=>x.AllUser)
+                .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email== User.Identity.Name).FirstOrDefault();
+            z.NoOfLeave += oldday;
+            sum = z.NoOfLeave;
+            if(sum<noofday)
+            {
+                return false;
+            }
+            _context.Update(z);
 
+            var y = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
+               .Where(x => x.leaveType.leaveTypeID == Convert.ToInt32(newvalue) && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            y.NoOfLeave =sum- noofday;
+            _context.Update(y);
+            _context.SaveChanges();
+            return true;
+        }
         [HttpPost]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> UpdateLeave(int id, LeaveRequest leaveRequest)
@@ -147,14 +185,22 @@ namespace Leave_Management_System.Controllers
             {
                 try
                 {
+                    var oldallocatedleave = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.id == leaveHistory.id && x.leaveTypeID == leaveHistory.leaveTypeID).FirstOrDefault();
+
+                    var statusOfAllocation=convertleavetype(leaveRequest.LeaveType, oldallocatedleave.leaveType.LeaveType, (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays), leaveHistory.NoOfDay);
+                    if(!statusOfAllocation)
+                    {
+                        ModelState.AddModelError(string.Empty, "You can not request More than " + oldallocatedleave.NoOfLeave+leaveHistory.NoOfDay);
+                        return View(leaveRequest);
+                    }
                     leaveHistory.LeaveReason = leaveRequest.LeaveReason;
                     leaveHistory.LeaveStatus = "Pending";
                     leaveHistory.HODApproveStatus = "Pending";
                     leaveHistory.EndTill = leaveRequest.LeaveEndTill;
                     leaveHistory.StartFrome = leaveRequest.LeaveStartFrome;
+                    leaveHistory.leaveTypeID =Convert.ToInt32(leaveRequest.LeaveType);
                     leaveHistory.NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
                     var HODuser = _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
-
                     _context.Update(leaveHistory);
                     await _context.SaveChangesAsync();
 
@@ -188,7 +234,16 @@ namespace Leave_Management_System.Controllers
             return View();
         }
 
-
+        public bool addtoallocation(string oldvalue, int noofday)
+        {
+            int sum = 0;
+            var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
+                .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            z.NoOfLeave += noofday;
+            _context.Update(z);
+            _context.SaveChanges();
+            return true;
+        }
         [HttpGet]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> DeleteLeave(int leave_id)
@@ -225,15 +280,17 @@ namespace Leave_Management_System.Controllers
         {
             //var leaveHistory = await _context.LeaveHistory.FindAsync(leave_id && m.AllUser.Email == User.Identity.Name);
             var leaveHistory = await _context.LeaveHistory
-                .Include(l => l.AllUser)
+                .Include(l => l.AllUser).Include(l=>l.leaveType)
                 .FirstOrDefaultAsync(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name);
 
             if (leaveHistory == null)
                 return NotFound();
             var HODuser = _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
+            //if(HODuser==null)
+                    
             UserEmail userEmail = new UserEmail
             {
-                ToEmail = HODuser.Email,
+                ToEmail = (HODuser!=null)? HODuser.Email:"yashgarala29@gmail.com",
 
             };
             var arr = new List<KeyValuePair<string, string>>();
@@ -243,7 +300,7 @@ namespace Leave_Management_System.Controllers
             arr.Add(temp);
             userEmail.PlaceHolder = arr;
             await emailService.SendLeaveCancelEmail(userEmail);
-
+            addtoallocation(leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
             _context.LeaveHistory.Remove(leaveHistory);
             await _context.SaveChangesAsync();
 

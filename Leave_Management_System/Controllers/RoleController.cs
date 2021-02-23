@@ -63,7 +63,7 @@ namespace Leave_Management_System.Controllers
                 var usermanager = (await userManager.GetRolesAsync(userlist[i])).FirstOrDefault();
                 string UserId = userlist[i].Id;
                 string Email = userlist[i].Email;
-                //RoleName=rolelist.Where(a=>a.Id==usermanager).FirstOrDefault().Id,s
+                //RoleName=rolelist.Where(a=>a.Id==usermanager).FirstOrDefault().Id,
                 
                 
                 string aa= userlist[i].UserName;
