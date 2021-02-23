@@ -8,13 +8,16 @@
 <h1>ListLeaveType</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreatLeaveType">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.LeaveType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.noofday)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.allcatoToAll)
@@ -26,23 +29,92 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeaveType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.allcatoToAll)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.itispersonal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.leaveTypeID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.leaveTypeID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.leaveTypeID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.noofday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.allcatoToAll)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.itispersonal)
+                </td>
+                <td>
+                    <a asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID">Edit</a> |
+                    <a  id="@item.leaveTypeID" name="Delete" class="text-danger">Delete</a>
+                    @if (!item.allcatoToAll)
+                    {
+                        <a  id="@item.leaveTypeID" name="Allocate">Allocate to all</a>
+
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@section scripts{
+    <script>
+
+        $("[name=Allocate]").on("click", function () {
+            var id = this.id;
+            alert("id="+id);
+            var save_change = "Accept";
+            $.ajax({
+                type: "POST",
+                url: "/admin/AllocattoAll",
+                data: { "id": id },
+                success: function (response) {
+                   //alert("Status Updated Successfully!");
+                    location.reload();
+
+                },
+                failure: function (response) {
+                    alert("failure");
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            });
+            //alert(save_change);
+
+        })
+        $("[name=Delete]").on("click", function () {
+            var deleteid = this.id;
+           // alert("id=" + deleteid);
+            var retVal = confirm("Do you want to Delete this leave Type ?");
+            if (retVal == true) {
+                $.ajax({
+                type: "POST",
+                url: "/admin/Delete",
+                data: { "id": deleteid },
+                success: function (response) {
+                   // alert("Status Updated Successfully!");
+                    location.reload();
+
+                },
+                failure: function (response) {
+                    alert("failure");
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            });
+
+            } else {
+
+                return false;
+            }
+            
+            //alert(save_change);
+
+        })</script>
+
+
+    }

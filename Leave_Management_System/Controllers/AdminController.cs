@@ -29,11 +29,62 @@ namespace Leave_Management_System.Controllers
             this.signInManager = signInManager;
             this.roleManager = roleManager;
         }
+        [HttpPost]
 
+        public async Task<bool> Delete(string id)
+        {
+            int x = Convert.ToInt32(id);
+            var deletetype = await _context.leaveType.FindAsync(x);
+            _context.leaveType.Remove(deletetype);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        [HttpPost]
+        public async Task<bool> AllocattoAll(string id)
+        {
+            int x = Convert.ToInt32(id);
+            return await leaveallocationToALL(x);
+        }
+        public async Task<bool> leaveallocationToALL(int id)
+        {
+            var alluser_list = await _context.AllUser.Where(x=>x.id>0).ToListAsync();
+            var leavetype = await _context.leaveType.FindAsync(id);
+            if (leavetype == null)
+            {
+                return false;
+            }
+            try{
+                for (int i = 0; i < alluser_list.Count; i++)
+                {
+                    var leavealocation = new LeaveAllocation
+                    {
+                        id = alluser_list[i].id,
+                        NoOfLeave = leavetype.noofday,
+                        leaveTypeID = leavetype.leaveTypeID,
+
+                    };
+                   
+
+                   
+                    _context.leaveAllocation.Add(leavealocation);
+                    await _context.SaveChangesAsync();
+                }
+                leavetype.allcatoToAll = true;
+                _context.leaveType.Update(leavetype);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                var x = e;
+                return  false;
+            }
+            return true;
+        }
         //[Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult CreatLeaveType()
         {
+
             return View();
         }
         
@@ -45,6 +96,15 @@ namespace Leave_Management_System.Controllers
             {
                 _context.leaveType.Add(leave);
                 await _context.SaveChangesAsync();
+                if(leave.allcatoToAll)
+                {
+                    var status=await leaveallocationToALL(_context.leaveType.Where(x=>x.LeaveType==leave.LeaveType).FirstOrDefault().leaveTypeID);
+                    if(!status)
+                    {
+                        ViewBag.failmess = "Leave allocation Faile";
+                        return View(leave);
+                    }
+                }
                 ViewBag.succesmess = "Leave is Added";
                 return View();
 
@@ -77,9 +137,9 @@ namespace Leave_Management_System.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> UpdateLeaveType(int id,leaveType leaveType )
+        public async Task<IActionResult> UpdateLeaveType(int id,leaveType leave )
         {
-            if (id != leaveType.leaveTypeID)
+            if (id != leave.leaveTypeID)
             {
                 return NotFound();
             }
@@ -88,12 +148,12 @@ namespace Leave_Management_System.Controllers
             {
                 try
                 {
-                    _context.Update(leaveType);
+                    _context.Update(leave);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LeaveTypeExists(leaveType.leaveTypeID))
+                    if (!LeaveTypeExists(leave.leaveTypeID))
                     {
                         return NotFound();
                     }
@@ -104,20 +164,11 @@ namespace Leave_Management_System.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveType);
+            return View(leave);
         }
 
-        // POST: AllUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        //[Authorize(Roles = "admin")]
-        [ValidateAntiForgeryToken]
-        public async Task<bool> DeleteConfirmed(int id)
-        {
-            var allUser = await _context.AllUser.FindAsync(id);
-            _context.AllUser.Remove(allUser);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+       
+       
 
         private bool LeaveTypeExists(int id)
         {
