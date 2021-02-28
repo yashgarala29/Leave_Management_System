@@ -30,6 +30,7 @@ namespace Leave_Management_System.Models.Class
         public string MiddleName { get; set; }
 
         public string Deparment { get; set; }
+
         public string Role { get; set; }
         
         [DataType(DataType.MultilineText)]

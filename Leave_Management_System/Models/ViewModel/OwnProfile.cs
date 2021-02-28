@@ -13,8 +13,7 @@ namespace Leave_Management_System.Models.ViewModel
         [DataType(DataType.EmailAddress)]
         
         public string Email { get; set; }
-        
-        
+
         [Display(Name = "Mobile Number 1")]
         //[DataType(DataType.PhoneNumber)]
         //[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
@@ -32,8 +31,11 @@ namespace Leave_Management_System.Models.ViewModel
         [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
 
-        [Display(Name = "RoleName")]
-        public string RoleName { get; set; }
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
+        [Display(Name = "Department")]
+        public string Department { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string Addreaddress { get; set; }

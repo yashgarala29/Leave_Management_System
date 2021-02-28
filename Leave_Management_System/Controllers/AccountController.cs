@@ -146,7 +146,7 @@ namespace Leave_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await signInManager.SignOutAsync(); 
             return RedirectToAction("Index", "home");
 
         }

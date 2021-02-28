@@ -51,12 +51,12 @@
                                                                                                                     <li class="nav-link text-left">
                                                                                                                         <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                                                                                                                     </li>
-                                                                                                                                        <li class="nav-link text-left">
-                                                                                                                                            <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Creater Leave Type</a>
-                                                                                                                                        </li>
-                                                                                                                                                            <li class="nav-link text-left">
-                                                                                                                                                                <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">Creater Leave Type</a>
-                                                                                                                                                            </li>}
+                                                                                                                                        <!--  <li class="nav-link text-left">
+                                                                                                                              <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Creater Leave Type</a>
+                                                                                                                          </li>
+                                                                                                                                              <li class="nav-link text-left">
+                                                                                                                                                  <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">Creater Leave Type</a>
+                                                                                                                                              </li>-->}
                                 @if (User.IsInRole("Registrar"))
                                 {
                 <li class="nav-link text-left">
@@ -73,8 +73,7 @@
                                                                             </li>
                                                                                                 <li class="nav-link text-left">
                                                                                                     <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                                </li>
-}
+                                                                                                </li>}
                                                 @if (User.IsInRole("Dean"))
                                                 {
                                 <li class="nav-link text-left">
@@ -91,8 +90,7 @@
                                                                                             </li>
                                                                                                                 <li class="nav-link text-left">
                                                                                                                     <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                                                </li>
-}
+                                                                                                                </li>}
                                                                 @if (User.IsInRole("HOD"))
                                                                 {
                                                 <li class="nav-link text-left">
@@ -109,8 +107,7 @@
                                                                                                             </li>
                                                                                                                                 <li class="nav-link text-left">
                                                                                                                                     <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                                                                </li>
-}
+                                                                                                                                </li>}
                                                                                 @if (User.IsInRole("Faculty"))
                                                                                 {
                                                                 <li class="nav-link text-left">
@@ -124,8 +121,7 @@
                                                                                                         </li>
                                                                                                                             <li class="nav-link text-left">
                                                                                                                                 <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                                                            </li>
-}
+                                                                                                                            </li>}
                                                                                                 @if (User.IsInRole("Pending"))
                                                                                                 {
                                                                                 <li class="nav-link text-left">
@@ -133,8 +129,7 @@
                                                                                 </li>
                                                                                                     <li class="nav-link text-left">
                                                                                                         <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                                    </li>
-}}
+                                                                                                    </li>}}
 
                 </ul>
                 <ul class="navbar-nav  align-self-stretch">

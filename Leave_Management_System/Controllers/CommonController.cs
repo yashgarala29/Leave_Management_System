@@ -45,6 +45,8 @@ namespace Leave_Management_System.Controllers
                 MobileNo2 = userdetail.MobileNo2,
                 Name = userdetail.Name,
                 PaidLeave = userdetail.PaidLeave,
+                Department = userdetail.Deparment,
+                Role= userdetail.Role,
             };
             ownProfile_transfer = ownProfile;
             return View(ownProfile);
@@ -68,7 +70,9 @@ namespace Leave_Management_System.Controllers
                     MobileNo = ownProfile.MobileNo.ToString(),
                     MobileNo2 = ownProfile.MobileNo2.ToString(),
                     Name = ownProfile.Name,
-                    PaidLeave = ownProfile_transfer.PaidLeave
+                    PaidLeave = ownProfile_transfer.PaidLeave,
+                    Deparment = ownProfile_transfer.Department,
+                    Role = ownProfile_transfer.Role,
 
                 };
 
