@@ -124,7 +124,7 @@
             var save_change = "Accept";
             $.ajax({
                 type: "POST",
-                url: "/HOD/AjaxMethod",
+                url: "/Dean/AjaxMethod",
                 data: { "name": save_change, "leave_id": savechangevalue },
                 success: function (response) {
                     alert("Status Updated Successfully!");
@@ -146,7 +146,7 @@
             var save_change = "Reject";
             $.ajax({
                 type: "POST",
-                url: "/HOD/AjaxMethod",
+                url: "/Dean/AjaxMethod",
                 data: { "name": save_change, "leave_id": savechangevalue },
                 success: function (response) {
                     alert("Status Updated Successfully!");

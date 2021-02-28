@@ -1,10 +1,6 @@
 ﻿@model List<Leave_Management_System.Models.ViewModel.ListOfLeaveRequestHOD>
 
-@{
-
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 
 
@@ -15,7 +11,7 @@
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h2 class="h3 mb-0 text-black-50 ">
-                    Leave Requests
+                    My Leave Faculty
                 </h2>
 
             </div>
@@ -50,8 +46,6 @@
                     <!-- title -->
                 </div>
                 <div class="table-responsive">
-
-
                     <table class="table">
                         <thead>
                             <tr>
@@ -61,52 +55,75 @@
                                 <th>Start Frome</th>
                                 <th>End Till</th>
                                 <th>No Of Day</th>
-                                <th>Status</th>
                                 <th>Leave Reason</th>
+                                <th>Operation</th>
                             </tr>
                         </thead>
                         <tbody>
                             @for (int i = 0; i < Model.Count; i++)
                             {
-                                <tr>
-                                    <td> @Model[i].FirstName</td>
-                                    <td>@Model[i].LastName</td>
-                                    <td> @Model[i].username</td>
-                                    <td>@Model[i].LeaveStartFrome</td>
-                                    <td>@Model[i].LeaveEndTill</td>
-                                    <td> @Model[i].NoOfDay</td>
-                                    <td class="drop">
-                                        <select name="status" class="status">
-                                            @foreach (var item in Model[i].Status)
-                                            {
-                                                <option value="@item">@item</option>
-                                            }
-                                        </select>
-                                    </td>
-                                    <td> @Model[i].LeaveReason</td>
-                                    <td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>
-                                </tr>
-                            }
+                <tr>
+                    <td> @Model[i].FirstName</td>
+                    <td>@Model[i].LastName</td>
+                    <td> @Model[i].username</td>
+                    <td>@Model[i].LeaveStartFrome</td>
+                    <td>@Model[i].LeaveEndTill</td>
+                    <td> @Model[i].NoOfDay</td>
+
+
+                    <td> @Model[i].LeaveReason</td>
+                    <!--<td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>-->
+
+                    <td>
+                        <button class="btn btn-success" value="@Model[i].id" name="Accept">Accept</button>
+                        <button class="btn btn-danger" value="@Model[i].id" name="Reject">Reject</button>
+                    </td>
+                    <td></td>
+                </tr>}
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 @section scripts{
     <script>
 
-        $("[name=savechange]").on("click", function () {
+        /* $("[name=savechange]").on("click", function () {
+             var savechangevalue = $(this).val();
+             var save_change = $(this).closest('td').prev().prev().find('.status').val();
+             $.ajax({
+                 type: "POST",
+                 url: "/HOD/AjaxMethod",
+                 data: { "name": save_change, "leave_id": savechangevalue },
+                 success: function (response) {
+                     alert("Status Updated Successfully!");
+                     location.reload();
+
+                 },
+                 failure: function (response) {
+                     alert("failure");
+                 },
+                 error: function (response) {
+                     alert("error");
+                 }
+             });
+             //alert(save_change);
+
+         })*/
+
+        $("[name=Accept]").on("click", function () {
             var savechangevalue = $(this).val();
-            var save_change = $(this).closest('td').prev().prev().find('.status').val();
+            var save_change = "Accept";
             $.ajax({
                 type: "POST",
                 url: "/Registrar/AjaxMethod",
                 data: { "name": save_change, "leave_id": savechangevalue },
                 success: function (response) {
+                    alert("Status Updated Successfully!");
                     location.reload();
 
                 },
@@ -120,7 +137,28 @@
             //alert(save_change);
 
         })
+        $("[name=Reject]").on("click", function () {
+            var savechangevalue = $(this).val();
+            var save_change = "Reject";
+            $.ajax({
+                type: "POST",
+                url: "/Registrar/AjaxMethod",
+                data: { "name": save_change, "leave_id": savechangevalue },
+                success: function (response) {
+                    alert("Status Updated Successfully!");
+                    location.reload();
+
+                },
+                failure: function (response) {
+                    alert("failure");
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            });
+            //alert(save_change);
+
+        })
+
     </script>
-
-
 }

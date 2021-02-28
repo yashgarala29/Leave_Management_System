@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-
 <!-- Begin Page Content -->
 <div class="container-fluid px-lg-4">
     <div class="row">
@@ -20,9 +17,6 @@
             </div>
         </div>
 
-
-
-
         <!-- column -->
         <div class="col-sm-8">
             <div class="card">
@@ -33,14 +27,11 @@
                             <form asp-action="OwnProfile">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="id" />
-
                                 <div class="form-group">
                                     <label asp-for="Email" class="control-label"></label>
                                     <input asp-for="Email" class="form-control" disabled />
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label asp-for="MobileNo" class="control-label"></label>
                                     <input asp-for="MobileNo" class="form-control" />
@@ -77,6 +68,16 @@
                                     <span asp-validation-for="City" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
+                                    <label asp-for="Role" class="control-label"></label>
+                                    <input asp-for="Role" class="form-control" disabled />
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Department" class="control-label"></label>
+                                    <input asp-for="Department" class="form-control" disabled />
+                                    <span asp-validation-for="Department" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
                                     <label asp-for="PaidLeave" class="control-label"></label>
                                     <input asp-for="PaidLeave" class="form-control" disabled />
                                     <span asp-validation-for="PaidLeave" class="text-danger"></span>
@@ -86,13 +87,9 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-

@@ -27,7 +27,7 @@ namespace Leave_Management_System.Controllers
 
         static OwnProfile ownProfile_transfer;
         [HttpGet]
-        [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
+        [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD,Registrar")]
         public IActionResult OwnProfile()
         {
             var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
@@ -50,7 +50,7 @@ namespace Leave_Management_System.Controllers
             return View(ownProfile);
         }
         [HttpPost]
-        [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
+        [Authorize(Roles = "Pending,Dean,Faculty,admin,HOD,Registrar")]
         public async Task<IActionResult> OwnProfile(OwnProfile ownProfile)
         {
             //var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
@@ -66,7 +66,7 @@ namespace Leave_Management_System.Controllers
                     City = ownProfile.City,
                     MiddleName = ownProfile.MiddleName,
                     MobileNo = ownProfile.MobileNo.ToString(),
-                    MobileNo2 = ownProfile.MobileNo2.ToString(),
+                    MobileNo2 = (ownProfile.MobileNo2.ToString()==null)?0.ToString(): ownProfile.MobileNo2.ToString(),
                     Name = ownProfile.Name,
                     PaidLeave = ownProfile_transfer.PaidLeave
 
