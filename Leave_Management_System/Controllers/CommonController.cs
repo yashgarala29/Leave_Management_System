@@ -1,6 +1,7 @@
 ﻿using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Leave_Management_System.Models.ViewModel;
+using Leave_Management_System.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,16 @@ namespace Leave_Management_System.Controllers
         private readonly LeaveDbContext _context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IEmailService emailService;
+
         public CommonController(LeaveDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, IEmailService emailService)
         {
             _context = context;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
+            this.emailService = emailService;
             this.userManager = userManager;
         }
 
@@ -85,12 +91,37 @@ namespace Leave_Management_System.Controllers
 
             return View(ownProfile);
         }
-        //[HttpGet]
-        //[Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
-        //public IActionResult OwnProfile()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        [Authorize(Roles = "Dean,admin,HOD,Registrar")]
+        public async Task<IActionResult> ListLeaveAllocation()
+        {
+            var loginuser = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == loginuser).FirstOrDefaultAsync();
+            List<LeaveAllocation> listof;
+            if(curentuser.Role=="HOD"  )
+            {
+                 listof =await _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType)
+                    .Where(y => y.AllUser.Role == "Faculty" && y.AllUser.Deparment== curentuser.Deparment).ToListAsync();
+                
+            }
+            else if (curentuser.Role == "Dean")
+            {
+                 listof =await _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType)
+                    .Where(y => y.AllUser.Role == "HOD" ).ToListAsync();
 
-    }
+            }
+            else if (curentuser.Role == "Registrar")
+            {
+                 listof =await _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType)
+                                    .Where(y => y.AllUser.Role == "Dean" ).ToListAsync();
+
+            }
+            else
+            {
+                listof = new List<LeaveAllocation>();
+            }
+            return View(listof);
+        }
+        
+        }
 }
