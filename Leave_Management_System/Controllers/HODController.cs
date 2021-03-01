@@ -37,6 +37,18 @@ namespace Leave_Management_System.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize(Roles = "HOD")]
+        public async Task<IActionResult> ListLeaveAllocation()
+        {
+            
+            //string curentUser = User.Identity.Name;
+            //var LeaveTypeName = _context.LeaveHistory.Include(x => x.leaveType.LeaveType).Where(x => x.AllUser.Role == "Faculty");
+            //var userlevelist = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser);
+            var leaveDbContext = _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType).Where(y => y.AllUser.Role == "Faculty");
+            return View(await leaveDbContext.ToListAsync());
+        }
+
         [Authorize(Roles = "HOD")]
         public IActionResult HomePageHOD()
         {
@@ -68,7 +80,7 @@ namespace Leave_Management_System.Controllers
 
         [HttpGet]
         [Authorize(Roles = "HOD")]
-        public async Task<IActionResult> MyLeave()
+        public IActionResult MyLeave()
         {
             string curentUser = User.Identity.Name;
             var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
@@ -90,6 +102,9 @@ namespace Leave_Management_System.Controllers
             }
             return View(myLeaves);
         }
+
+        
+
 
         [HttpGet]
         [Authorize(Roles = "HOD")]

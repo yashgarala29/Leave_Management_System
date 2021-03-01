@@ -106,7 +106,19 @@ namespace Leave_Management_System.Controllers
             }
             return View(myLeaves);
         }
-        int noofleavealocated;
+
+        [HttpGet]
+        [Authorize(Roles = "Faculty")]
+        public async Task<IActionResult> ListLeaveAllocation()
+        {
+            string curentUser = User.Identity.Name;
+            var LeaveTypeName = _context.LeaveHistory.Include(x => x.leaveType.LeaveType).Where(x => x.AllUser.Email == curentUser);
+            var userlevelist = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser);
+            //var leaveDbContext = _context.leaveAllocation.Include(l => l.AllUser);
+            return View(await userlevelist.ToListAsync());
+        }
+
+
         [HttpGet]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> UpdateLeave(int leave_id)
@@ -119,7 +131,7 @@ namespace Leave_Management_System.Controllers
             if (leaveHistory == null)
             {
                 //return RedirectToAction("MyLeave", "Faculty");
-
+                
                 return NotFound();
             }
             int status = DateTime.Compare(leaveHistory.StartFrome, DateTime.Now);

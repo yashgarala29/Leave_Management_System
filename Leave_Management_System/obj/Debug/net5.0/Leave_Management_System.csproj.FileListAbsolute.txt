@@ -1328,3 +1328,13 @@ D:\Project Copy\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System
 D:\Project Copy\Leave_Management_System\obj\Debug\net5.0\ref\Leave_Management_System.dll
 D:\Project Copy\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.pdb
 D:\Project Copy\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.genruntimeconfig.cache
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\Leave_Management_System.StaticWebAssets.xml
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\ListLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\ListLeaveAllocation.cshtml.g.cs
