@@ -93,12 +93,137 @@ namespace Leave_Management_System.Controllers
 
             return View(ownProfile);
         }
-        //[HttpGet]
-        //[Authorize(Roles = "Pending,Dean,Faculty,admin,HOD")]
-        //public IActionResult OwnProfile()
-        //{
-        //    return View();
-        //}
+
+
+
+
+        [HttpGet]
+        [Authorize(Roles = "Dean,admin,HOD,Registrar")]
+        public async Task<IActionResult> ListLeaveAllocation()
+        {
+            var loginuser = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == loginuser).FirstOrDefaultAsync();
+            List<LeaveAllocation> listof;
+            if (curentuser.Role == "HOD")
+            {
+                listof = await _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType)
+                   .Where(y => y.AllUser.Role == "Faculty" && y.AllUser.Deparment == curentuser.Deparment).ToListAsync();
+
+            }
+            else if (curentuser.Role == "Dean")
+            {
+                listof = await _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType)
+                   .Where(y => y.AllUser.Role == "HOD").ToListAsync();
+
+            }
+            else if (curentuser.Role == "Registrar")
+            {
+                listof = await _context.leaveAllocation.Include(l => l.AllUser).Include(x => x.leaveType)
+                                   .Where(y => y.AllUser.Role == "Dean").ToListAsync();
+
+            }
+            else
+            {
+                listof = new List<LeaveAllocation>();
+            }
+            return View(listof);
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Dean,admin,HOD,Registrar,Faculty")]
+        public async Task<IActionResult> ListUserLeaveAllocation()
+        {
+            string curentUser = User.Identity.Name;
+            //var LeaveTypeName = _context.LeaveHistory.Include(x => x.leaveType.LeaveType).Where(x => x.AllUser.Email == curentUser);
+            var userlevelist = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser);
+            //var leaveDbContext = _context.leaveAllocation.Include(l => l.AllUser);
+            return View(await userlevelist.ToListAsync());
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var allUser1 = await _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser).Where(x => x.AllocationID == id).FirstOrDefaultAsync();
+            if (allUser1 == null)
+            {
+                return NotFound();
+            }
+            var loginuser = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == loginuser).FirstOrDefaultAsync();
+            List<LeaveAllocation> listof;
+            if (curentuser.Role == "HOD" && allUser1.AllUser.Role == "Faculty" && allUser1.AllUser.Deparment == curentuser.Deparment)
+            {
+                return View(allUser1);
+
+            }
+            else if (curentuser.Role == "Dean" && allUser1.AllUser.Role == "HOD")
+            {
+                return View(allUser1);
+            }
+            else if (curentuser.Role == "Registrar" && allUser1.AllUser.Role == "Dean")
+            {
+                return View(allUser1);
+
+            }
+            else
+            {
+                return RedirectToAction("","");
+               
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int? id,LeaveAllocation leaveAllocation)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var allUser1 = await _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser).Where(x => x.AllocationID == id).FirstOrDefaultAsync();
+            if (allUser1 == null)
+            {
+                return NotFound();
+            }
+            var loginuser = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == loginuser).FirstOrDefaultAsync();
+            List<LeaveAllocation> listof;
+            if (curentuser.Role == "HOD" && allUser1.AllUser.Role == "Faculty" && allUser1.AllUser.Deparment == curentuser.Deparment)
+            {
+                allUser1.NoOfLeave = leaveAllocation.NoOfLeave;
+                _context.Update(allUser1);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ListLeaveAllocation", "Common");
+
+            }
+            else if (curentuser.Role == "Dean" && allUser1.AllUser.Role == "HOD")
+            {
+                allUser1.NoOfLeave = leaveAllocation.NoOfLeave;
+                _context.Update(allUser1);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ListLeaveAllocation", "Common");
+            }
+            else if (curentuser.Role == "Registrar" && allUser1.AllUser.Role == "Dean")
+            {
+                allUser1.NoOfLeave = leaveAllocation.NoOfLeave;
+                _context.Update(allUser1);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ListLeaveAllocation", "Common");
+
+            }
+            else
+            {
+                return RedirectToAction("", "");
+
+            }
+
+        }
 
     }
+    
 }

@@ -1338,3 +1338,6 @@ C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\De
 C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\ListLeaveAllocation.cshtml.g.cs
 C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\ListLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\ListLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\ListUserLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\Edit.cshtml.g.cs

@@ -112,7 +112,7 @@ namespace Leave_Management_System.Controllers
         public async Task<IActionResult> ListLeaveAllocation()
         {
             string curentUser = User.Identity.Name;
-            var LeaveTypeName = _context.LeaveHistory.Include(x => x.leaveType.LeaveType).Where(x => x.AllUser.Email == curentUser);
+            //var LeaveTypeName = _context.LeaveHistory.Include(x => x.leaveType.LeaveType).Where(x => x.AllUser.Email == curentUser);
             var userlevelist = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser);
             //var leaveDbContext = _context.leaveAllocation.Include(l => l.AllUser);
             return View(await userlevelist.ToListAsync());
