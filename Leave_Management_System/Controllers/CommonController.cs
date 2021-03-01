@@ -45,6 +45,8 @@ namespace Leave_Management_System.Controllers
                 MobileNo2 = userdetail.MobileNo2,
                 Name = userdetail.Name,
                 PaidLeave = userdetail.PaidLeave,
+                Department=userdetail.Deparment,
+                Role=userdetail.Role
             };
             ownProfile_transfer = ownProfile;
             return View(ownProfile);
@@ -54,28 +56,22 @@ namespace Leave_Management_System.Controllers
         public async Task<IActionResult> OwnProfile(OwnProfile ownProfile)
         {
             //var userLoginDetail = userManager.Users.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
-            //var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
+            var userdetail = await _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefaultAsync();
             if (ModelState.IsValid)
             {
-                AllUser allUser = new AllUser
-                {
-                    id = ownProfile.id,
-                    LastName = ownProfile.LastName,
-                    Addreaddress = ownProfile.Addreaddress,
-                    Email = User.Identity.Name,
-                    City = ownProfile.City,
-                    MiddleName = ownProfile.MiddleName,
-                    MobileNo = ownProfile.MobileNo.ToString(),
-                    MobileNo2 = (ownProfile.MobileNo2.ToString()==null)?0.ToString(): ownProfile.MobileNo2.ToString(),
-                    Name = ownProfile.Name,
-                    PaidLeave = ownProfile_transfer.PaidLeave
-
-                };
-
+                    userdetail.LastName = ownProfile.LastName;
+                userdetail.Addreaddress = ownProfile.Addreaddress;
+                userdetail.City = ownProfile.City;
+                userdetail.MiddleName = ownProfile.MiddleName;
+                userdetail.MobileNo = ownProfile.MobileNo.ToString();
+                userdetail.MobileNo2 = (ownProfile.MobileNo2 == null) ? 0.ToString() : ownProfile.MobileNo2.ToString();
+                userdetail.Name = ownProfile.Name;
+                    
                 try
                 {
 
-                    _context.Update(allUser);
+                    _context.AllUser.Update(userdetail);
+
                     await _context.SaveChangesAsync();
                     return RedirectToAction(controllerName: "common", actionName: "OwnProfile");
                 }
