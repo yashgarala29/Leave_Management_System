@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace Leave_Management_System.Models.ViewModel
 {
-    public class OwnProfile
+    public class OwnProfile : EditImageVM
     {
         [Key]
         public int id { get; set; }
         [DataType(DataType.EmailAddress)]
-        
+
         public string Email { get; set; }
-        
-        
+
         [Display(Name = "Mobile Number 1")]
         //[DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        //[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string MobileNo { get; set; }
 
         [Display(Name = "Mobile Number 2")]
@@ -32,12 +31,17 @@ namespace Leave_Management_System.Models.ViewModel
         [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
 
-       
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
+        [Display(Name = "Department")]
+        public string Department { get; set; }
+
         [DataType(DataType.MultilineText)]
         public string Addreaddress { get; set; }
 
         public string City { get; set; }
-        
+
         public int PaidLeave { get; set; }
     }
 }

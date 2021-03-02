@@ -1,6 +1,7 @@
 ﻿using Leave_Management_System.Models.Class;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Leave_Management_System.Models.ViewModel;
 
 
 namespace Leave_Management_System.Models.Context
@@ -25,5 +26,9 @@ namespace Leave_Management_System.Models.Context
             base.OnModelCreating(modelBuilder);
             //modelBuilder.Seed();
         }
+
+
+
+        public DbSet<Leave_Management_System.Models.ViewModel.listofleaveallocation> listofleaveallocation { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Leave_Management_System.Models.Class
     public enum Status
     {
         Pending,
-        Approve,
-        Reject
+        Approved,
+        Rejected
     }
 }

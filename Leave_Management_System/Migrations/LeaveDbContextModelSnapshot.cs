@@ -129,9 +129,14 @@ namespace Leave_Management_System.Migrations
                     b.Property<int>("id")
                         .HasColumnType("int");
 
+                    b.Property<int>("leaveTypeID")
+                        .HasColumnType("int");
+
                     b.HasKey("leave_id");
 
                     b.HasIndex("id");
+
+                    b.HasIndex("leaveTypeID");
 
                     b.ToTable("LeaveHistory");
                 });
@@ -177,6 +182,12 @@ namespace Leave_Management_System.Migrations
 
                     b.Property<bool>("allcatoToAll")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("itispersonal")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("noofday")
+                        .HasColumnType("int");
 
                     b.HasKey("leaveTypeID");
 
@@ -406,7 +417,15 @@ namespace Leave_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Leave_Management_System.Models.Class.leaveType", "leaveType")
+                        .WithMany()
+                        .HasForeignKey("leaveTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AllUser");
+
+                    b.Navigation("leaveType");
                 });
 
             modelBuilder.Entity("Leave_Management_System.Models.Class.Notification", b =>

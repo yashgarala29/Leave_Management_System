@@ -16,6 +16,9 @@ namespace Leave_Management_System.Models.ViewModel
         [DataType(DataType.MultilineText)]
         [Display(Name = "Leave Reason")]
         public string LeaveReason { get; set; }
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Leave Type")]
+        public string LeaveType { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Leave Start Frome")]
         public DateTime StartFrome { get; set; }

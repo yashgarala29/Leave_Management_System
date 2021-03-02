@@ -4,6 +4,7 @@ using Leave_Management_System.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,14 +105,47 @@ namespace Leave_Management_System.Controllers
                     var s = userManager.Users.Where(a => a.Email == registerViewModel.Email).FirstOrDefault();
                     IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Pending");
                     //IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Admin");
-
+                    await leaveallocationToALL(s.Email);
                     if (identityResult.Succeeded)
                         return RedirectToAction("index", "home");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
             return View(registerViewModel);
         }
 
+        public async Task<bool> leaveallocationToALL(string  email)
+        {
+            var alluser_list = await _context.AllUser.FirstOrDefaultAsync(x=>x.Email==email);
+            var leavetype = await _context.leaveType.ToListAsync();
+            if (alluser_list == null)
+            {
+                return false;
+            }
+            try
+            {
+                for (int i = 0; i < leavetype.Count; i++)
+                {
+                    var leavealocation = new LeaveAllocation
+                    {
+                        id = alluser_list.id,
+                        NoOfLeave = leavetype[i].noofday,
+                        leaveTypeID = leavetype[i].leaveTypeID,
+
+                    };
+                    _context.leaveAllocation.Add(leavealocation);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
