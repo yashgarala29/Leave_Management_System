@@ -126,6 +126,9 @@ namespace Leave_Management_System.Migrations
                     b.Property<DateTime>("StartFrome")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("approved_id")
+                        .HasColumnType("int");
+
                     b.Property<int>("id")
                         .HasColumnType("int");
 
@@ -192,6 +195,30 @@ namespace Leave_Management_System.Migrations
                     b.HasKey("leaveTypeID");
 
                     b.ToTable("leaveType");
+                });
+
+            modelBuilder.Entity("Leave_Management_System.Models.ViewModel.listofleaveallocation", b =>
+                {
+                    b.Property<int>("AllocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoOfLeave")
+                        .HasColumnType("int");
+
+                    b.Property<string>("leavetype")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AllocationID");
+
+                    b.ToTable("listofleaveallocation");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

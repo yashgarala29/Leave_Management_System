@@ -31,7 +31,82 @@ namespace Leave_Management_System.Controllers
             this.roleManager = roleManager;
         }
 
-    [HttpPost]
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> ListOfLeaveRequest()
+        {
+            var hodDeparment = _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+            List<LeaveHistory> leaveHistories = new List<LeaveHistory>();
+            var t = await userManager.GetUsersInRoleAsync("Registrar");
+            foreach (var temp in t)
+            {
+                var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
+                .Where(x => (x.AllUser.Email == temp.Email && x.LeaveStatus == "Pending")).ToList();
+                if (requestedleave != null)
+                    foreach (var single in requestedleave)
+                        leaveHistories.Add(single);
+            }
+
+            var allrequest = new List<ListOfLeaveRequestHOD>();
+            for (int i = 0; i < leaveHistories.Count; i++)
+            {
+                var listre = new ListOfLeaveRequestHOD
+                {
+                    id = leaveHistories[i].leave_id,
+                    FirstName = leaveHistories[i].AllUser.Name,
+                    LastName = leaveHistories[i].AllUser.LastName,
+                    LeaveEndTill = leaveHistories[i].EndTill,
+                    LeaveReason = leaveHistories[i].LeaveReason,
+                    LeaveStartFrome = leaveHistories[i].StartFrome,
+                    NoOfDay = leaveHistories[i].NoOfDay,
+                    username = leaveHistories[i].AllUser.Email,
+                    Status = Enum.GetNames(typeof(Status)).ToList()
+                };
+                allrequest.Add(listre);
+            }
+            return View(allrequest);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<JsonResult> AjaxMethod(string name, string leave_id)
+        {
+
+            var currentuser = User.Identity.Name;
+            var currentuserId = _context.AllUser.Where(x => x.Email == currentuser).FirstOrDefault().id;
+
+
+
+            int leave_id_int = int.Parse(leave_id);
+            var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
+            leave.DeanApproveStatus = name;
+            leave.LeaveStatus = name;
+
+
+
+            leave.approved_id = currentuserId;
+            if (name == "Accepted")
+            {
+                var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
+                allocation.NoOfLeave -= leave.NoOfDay;
+                _context.Update(allocation);
+                _context.SaveChanges();
+
+            }
+            //try
+            //{
+            _context.Update(leave);
+            await _context.SaveChangesAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    throw;
+            //}
+            return Json(leave);
+        }
+
+
+        [HttpPost]
         public async Task<List<LeaveHistory>> GetLeaveReposrt(string staringDate,string endingDate)
         {
             DateTime staringDate_new = DateTime.Parse(staringDate);

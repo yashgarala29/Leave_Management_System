@@ -68,6 +68,7 @@ namespace Leave_Management_System.Controllers
             //var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
             if (ModelState.IsValid)
             {
+                
                 string uniqueFileName = ProcessUploadedFile(ownProfile);
                 AllUser allUser = new AllUser
                 {
@@ -99,6 +100,8 @@ namespace Leave_Management_System.Controllers
                     return View(ownProfile);
 
                 }
+               
+
             }
 
             return View(ownProfile);

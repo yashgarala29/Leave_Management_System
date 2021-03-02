@@ -12,6 +12,7 @@ namespace Leave_Management_System.Models.Class
         [Key]
         public int leave_id { get; set; }
 
+        public int approved_id { get; set; }
         public string Attachment { get; set; }
 
         public string LeaveStatus { get; set; }

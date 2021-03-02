@@ -7,7 +7,7 @@
 
 <!-- Begin Page Content -->
 <div class="container-fluid px-lg-4">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-12 mt-lg-4 mt-4">
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -37,7 +37,7 @@
                     <div class=" align-items-center">
                         <div>
                             <form asp-action="OwnProfile" enctype="multipart/form-data">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                
                                 <input type="hidden" asp-for="id" />
                                 <div class="form-group">
                                     <label asp-for="Email" class="control-label"></label>
@@ -98,11 +98,11 @@
                                     <span asp-validation-for="Department" class="text-danger"></span>
                                 </div>
                                 <!--<div class="form-group">
-        <label asp-for="PaidLeave" class="control-label"></label>
-        <input asp-for="PaidLeave" class="form-control" disabled />
-        <span asp-validation-for="PaidLeave" class="text-danger"></span>
-    </div>
-        -->
+                                    <label asp-for="PaidLeave" class="control-label"></label>
+                                    <input asp-for="PaidLeave" class="form-control" disabled />
+                                    <span asp-validation-for="PaidLeave" class="text-danger"></span>
+                                </div>
+                                    -->
                                 <div class="form-group">
                                     <input type="submit" value="Save" class="btn btn-primary" />
                                 </div>
@@ -111,16 +111,16 @@
                     </div>
                 </div>
             </div>
+
         </div>
-    </div>
 </div>
+</div>
+        @section Scripts {
+            <script>
+                // Add the following code if you want the name of the file appear on select
+                $(".custom-file-input").on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                });</script>
 
-@section Scripts {
-    <script>
-// Add the following code if you want the name of the file appear on select
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });</script>
-
-}
+        }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\last Update\\yash_2_3_21\\Leave_Management_System\\Leave_Management_System.csproj": {}
+    "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj": {}
   },
   "projects": {
-    "C:\\last Update\\yash_2_3_21\\Leave_Management_System\\Leave_Management_System.csproj": {
+    "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\last Update\\yash_2_3_21\\Leave_Management_System\\Leave_Management_System.csproj",
+        "projectUniqueName": "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj",
         "projectName": "Leave_Management_System",
-        "projectPath": "C:\\last Update\\yash_2_3_21\\Leave_Management_System\\Leave_Management_System.csproj",
+        "projectPath": "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\last Update\\yash_2_3_21\\Leave_Management_System\\obj\\",
+        "outputPath": "D:\\SDP Backup\\New folder\\Leave_Management_System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

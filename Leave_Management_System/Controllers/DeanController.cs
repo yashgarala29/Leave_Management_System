@@ -148,10 +148,20 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Dean")]
         public async Task<JsonResult> AjaxMethod(string name, string leave_id)
         {
+
+            var currentuser = User.Identity.Name;
+            var currentuserId = _context.AllUser.Where(x => x.Email == currentuser).FirstOrDefault().id;
+
+
+
             int leave_id_int = int.Parse(leave_id);
             var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.DeanApproveStatus = name;
             leave.LeaveStatus = name;
+
+
+
+            leave.approved_id = currentuserId;
             if (name == "Accepted")
             {
                 var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
