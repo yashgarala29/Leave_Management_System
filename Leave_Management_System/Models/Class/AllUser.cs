@@ -32,10 +32,10 @@ namespace Leave_Management_System.Models.Class
         public string Deparment { get; set; }
 
         public string Role { get; set; }
-        
+
         [DataType(DataType.MultilineText)]
         public string Addreaddress { get; set; }
- 
+
         public string City { get; set; }
 
         public int PaidLeave { get; set; }

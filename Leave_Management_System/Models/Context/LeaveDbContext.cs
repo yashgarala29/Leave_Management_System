@@ -29,6 +29,6 @@ namespace Leave_Management_System.Models.Context
 
 
 
-       
+        public DbSet<Leave_Management_System.Models.ViewModel.listofleaveallocation> listofleaveallocation { get; set; }
     }
 }

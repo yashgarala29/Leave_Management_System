@@ -1,12 +1,15 @@
 ﻿using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Leave_Management_System.Models.ViewModel;
+using Leave_Management_System.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,12 +20,17 @@ namespace Leave_Management_System.Controllers
         private readonly LeaveDbContext _context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IEmailService emailService;
+
         public CommonController(LeaveDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             this.signInManager = signInManager;
             this.userManager = userManager;
+            webHostEnvironment = hostEnvironment;
         }
 
         static OwnProfile ownProfile_transfer;
@@ -41,12 +49,13 @@ namespace Leave_Management_System.Controllers
                 Email = userdetail.Email,
                 City = userdetail.City,
                 MiddleName = userdetail.MiddleName,
-                MobileNo =userdetail.MobileNo,
+                MobileNo = userdetail.MobileNo,
                 MobileNo2 = userdetail.MobileNo2,
                 Name = userdetail.Name,
                 PaidLeave = userdetail.PaidLeave,
                 Department = userdetail.Deparment,
-                Role= userdetail.Role,
+                Role = userdetail.Role,
+                ExistingImage = userdetail.UserImage
             };
             ownProfile_transfer = ownProfile;
             return View(ownProfile);
@@ -59,6 +68,7 @@ namespace Leave_Management_System.Controllers
             //var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
             if (ModelState.IsValid)
             {
+                string uniqueFileName = ProcessUploadedFile(ownProfile);
                 AllUser allUser = new AllUser
                 {
                     id = ownProfile.id,
@@ -73,7 +83,7 @@ namespace Leave_Management_System.Controllers
                     PaidLeave = ownProfile_transfer.PaidLeave,
                     Deparment = ownProfile_transfer.Department,
                     Role = ownProfile_transfer.Role,
-
+                    UserImage = uniqueFileName
                 };
 
                 try
@@ -95,6 +105,24 @@ namespace Leave_Management_System.Controllers
         }
 
 
+
+        private string ProcessUploadedFile(OwnProfile ownProfile)
+        {
+            string uniqueFileName = null;
+
+            if (ownProfile.EmployeePicture != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Uploads");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + ownProfile.EmployeePicture.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    ownProfile.EmployeePicture.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
 
 
         [HttpGet]
@@ -171,14 +199,14 @@ namespace Leave_Management_System.Controllers
             }
             else
             {
-                return RedirectToAction("","");
-               
+                return RedirectToAction("", "");
+
             }
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int? id,LeaveAllocation leaveAllocation)
+        public async Task<IActionResult> Edit(int? id, LeaveAllocation leaveAllocation)
         {
 
             if (id == null)
@@ -225,5 +253,5 @@ namespace Leave_Management_System.Controllers
         }
 
     }
-    
+
 }

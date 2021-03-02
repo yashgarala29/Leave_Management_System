@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Leave_Management_System.Controllers
 {
@@ -29,8 +30,42 @@ namespace Leave_Management_System.Controllers
             this.signInManager = signInManager;
             this.roleManager = roleManager;
         }
-        [HttpPost]
 
+    [HttpPost]
+        public async Task<List<LeaveHistory>> GetLeaveReposrt(string staringDate,string endingDate)
+        {
+            DateTime staringDate_new = DateTime.Parse(staringDate);
+
+            //var staringDate_new = DateTime.Parse(staringDate);
+            //DateTime staringDate_new = Convert.ToDateTime(staringDate);
+            DateTime endingDate_new = DateTime.Parse(endingDate);
+
+            //var query = from b in _context.AllUser
+            //            join p in _context.LeaveHistory
+            //            on b.id equals p.id into grouping
+            //            from p in grouping.DefaultIfEmpty()
+            //            select new {
+            //                id = b.id,
+            //                email = b.Email,
+            //                Role = b.Role,
+            //                leavereason = p.LeaveReason,
+            //                leavestaring=p.StartFrome,
+            //                leaveending=p.EndTill,
+            //                noofday=p.NoOfDay,
+
+            //            };
+            var ans = await _context.LeaveHistory.Include(x => x.AllUser).Where(x => (x.EndTill > staringDate_new)
+                && (x.StartFrome < endingDate_new)).ToListAsync();
+            //string ans = "";
+            return ans;
+        }
+
+        [HttpGet]
+        public IActionResult LeaveReport()
+        {
+            return View();
+        }
+        [HttpPost]
         public async Task<bool> Delete(string id)
         {
             int x = Convert.ToInt32(id);
@@ -110,7 +145,7 @@ namespace Leave_Management_System.Controllers
 
             }
             ViewBag.failmess = "Leave is Not Added";
-            return View(leave);
+            return RedirectToAction(nameof(ListLeaveType));
         }
 
         [HttpGet]
@@ -162,7 +197,7 @@ namespace Leave_Management_System.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ListLeaveType));
             }
             return View(leave);
         }

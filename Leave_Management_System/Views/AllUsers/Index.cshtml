@@ -86,7 +86,15 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.PaidLeave)
                                 </th>
-                                <th></th>
+                                <th>
+                                    Edit
+                                </th>
+                                <th>
+                                    Details
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,9 +135,13 @@
                                         @Html.DisplayFor(modelItem => item.PaidLeave)
                                     </td>
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                                        <a class="btn btn-orange" asp-action="Edit" asp-route-id="@item.id">Edit</a>
+                                        </td>
+                                    <td>
+                                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.id">Details</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.id">Delete</a>
                                     </td>
                                 </tr>
                             }

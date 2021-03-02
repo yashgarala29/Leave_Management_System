@@ -121,10 +121,10 @@
 
         $("[name=Accept]").on("click", function () {
             var savechangevalue = $(this).val();
-            var save_change = "Accept";
+            var save_change = "Accepted";
             $.ajax({
                 type: "POST",
-                url: "/HOD/AjaxMethod",
+                url: "/Dean/AjaxMethod",
                 data: { "name": save_change, "leave_id": savechangevalue },
                 success: function (response) {
                     alert("Status Updated Successfully!");
@@ -143,10 +143,10 @@
         })
         $("[name=Reject]").on("click", function () {
             var savechangevalue = $(this).val();
-            var save_change = "Reject";
+            var save_change = "Rejected";
             $.ajax({
                 type: "POST",
-                url: "/HOD/AjaxMethod",
+                url: "/Dean/AjaxMethod",
                 data: { "name": save_change, "leave_id": savechangevalue },
                 success: function (response) {
                     alert("Status Updated Successfully!");

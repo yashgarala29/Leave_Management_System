@@ -23,22 +23,21 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NoOfLeave)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AllUser.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.AllocationID">Edit</a> |
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfLeave)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllUser.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
+            </td>
+            <td>
+                <a class="btn btn-orange" asp-action="Edit" asp-route-id="@item.AllocationID">Edit</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

@@ -17,12 +17,14 @@ namespace Leave_Management_System.Controllers
     public class AllUsersController : Controller
     {
         private readonly LeaveDbContext _context;
+        private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public AllUsersController(LeaveDbContext context, RoleManager<IdentityRole> roleManager)
+        public AllUsersController(LeaveDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
         // GET: AllUsers
@@ -152,12 +154,23 @@ namespace Leave_Management_System.Controllers
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,string email)
         {
             var allUser = await _context.AllUser.FindAsync(id);
             _context.AllUser.Remove(allUser);
             await _context.SaveChangesAsync();
+
+
+            var user = await userManager.FindByEmailAsync(email);
+            IdentityResult result = await userManager.DeleteAsync(user);
+
+
             return RedirectToAction(nameof(Index));
+
+
+
+
+
         }
 
         private bool AllUserExists(int id)

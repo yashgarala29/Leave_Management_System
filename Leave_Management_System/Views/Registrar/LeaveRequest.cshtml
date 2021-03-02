@@ -31,6 +31,10 @@
                                     <span asp-validation-for="LeaveReason" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
+                                    <label asp-for="LeaveType" class="control-label"></label>
+                                    <select asp-for="LeaveType" class="form-control" asp-items="@ViewBag.leavetype"></select>
+                                </div>
+                                <div class="form-group">
                                     <label asp-for="LeaveStartFrome" class="control-label"></label>
                                     <input asp-for="LeaveStartFrome" class="form-control" onchange="checkStaringDate()" id="startdate" />
                                     <span asp-validation-for="LeaveStartFrome" class="text-danger" id="error_in_staring"></span>

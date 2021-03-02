@@ -37,7 +37,7 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest()
         {
-            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x=>x.itispersonal==true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
+            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
             return View();
         }
 
@@ -51,42 +51,45 @@ namespace Leave_Management_System.Controllers
         [Authorize(Roles = "Faculty")]
         public IActionResult LeaveRequest(LeaveRequest leaveRequest)
         {
-            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll==true), "leaveTypeID", "LeaveType");
+            ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
+                var leaveHistory = new LeaveHistory
+                {
+                    StartFrome = leaveRequest.LeaveStartFrome,
+                    EndTill = leaveRequest.LeaveEndTill,
+                    LeaveReason = leaveRequest.LeaveReason,
+                    NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays),
+                    DeanApproveStatus = "Pending",
+                    HODApproveStatus = "Pending",
+                    RegistrarApproveStatus = "Pending",
+                    LeaveStatus = "Pending",
+                    id = singleUser.id,
+                    leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
+                };
+                var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
+                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > leaevupdate.NoOfLeave)
+                {
+                    ModelState.AddModelError(string.Empty, "You can not request More than " + leaevupdate.NoOfLeave);
+                    return View();
+                }
+                //leaevupdate.NoOfLeave -=(int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
+                //_context.leaveAllocation.Update(leaevupdate);
 
-            string username = User.Identity.Name;
-            var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
-            var leaveHistory = new LeaveHistory
-            {
-                StartFrome = leaveRequest.LeaveStartFrome,
-                EndTill = leaveRequest.LeaveEndTill,
-                LeaveReason = leaveRequest.LeaveReason,
-                NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays),
-                DeanApproveStatus = "Pending",
-                HODApproveStatus = "Pending",
-                RegistrarApproveStatus = "Pending",
-                LeaveStatus = "Pending",
-                id = singleUser.id,
-                leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
-            };
-            var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID==Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
-            if((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) >leaevupdate.NoOfLeave)
-            {
-                ModelState.AddModelError(string.Empty, "You can not request More than "+leaevupdate.NoOfLeave);
-                return View();
+                _context.LeaveHistory.Add(leaveHistory);
+                _context.SaveChangesAsync();
+                return RedirectToAction("MyLeave", "Faculty");
             }
-            leaevupdate.NoOfLeave -=(int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
-            _context.leaveAllocation.Update(leaevupdate);
-
-            _context.LeaveHistory.Add(leaveHistory);
-            _context.SaveChangesAsync();
-            return View();
-        }
+            return View(leaveRequest);
+            }
         [HttpGet]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> MyLeave()
         {
             string curentUser = User.Identity.Name;
-            var userlevelist = _context.LeaveHistory.Include(x=>x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
+            var userlevelist = _context.LeaveHistory.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
             List<MyLeave> myLeaves = new List<MyLeave>();
             foreach (var temp in userlevelist)
             {
@@ -100,38 +103,26 @@ namespace Leave_Management_System.Controllers
                     NoOfDay = temp.NoOfDay,
                     StartFrome = temp.StartFrome,
                     changeable = (status > 0) ? 1 : 0,
-                    LeaveType= temp.leaveType.LeaveType,
+                    LeaveType = temp.leaveType.LeaveType,
                 };
                 myLeaves.Add(singleLeave);
             }
             return View(myLeaves);
         }
-
-        [HttpGet]
-        [Authorize(Roles = "Faculty")]
-        public async Task<IActionResult> ListLeaveAllocation()
-        {
-            string curentUser = User.Identity.Name;
-            //var LeaveTypeName = _context.LeaveHistory.Include(x => x.leaveType.LeaveType).Where(x => x.AllUser.Email == curentUser);
-            var userlevelist = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser);
-            //var leaveDbContext = _context.leaveAllocation.Include(l => l.AllUser);
-            return View(await userlevelist.ToListAsync());
-        }
-
-
+        int noofleavealocated;
         [HttpGet]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> UpdateLeave(int leave_id)
         {
-               
+
             if (leave_id == 0)
                 return NotFound();
-            var leaveHistory = _context.LeaveHistory.Include(x=>x.leaveType).Where(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            var leaveHistory = _context.LeaveHistory.Include(x => x.leaveType).Where(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name).FirstOrDefault();
             //
             if (leaveHistory == null)
             {
                 //return RedirectToAction("MyLeave", "Faculty");
-                
+
                 return NotFound();
             }
             int status = DateTime.Compare(leaveHistory.StartFrome, DateTime.Now);
@@ -145,8 +136,8 @@ namespace Leave_Management_System.Controllers
                 LeaveEndTill = leaveHistory.EndTill,
                 LeaveReason = leaveHistory.LeaveReason,
                 LeaveStartFrome = leaveHistory.StartFrome,
-                LeaveType= leaveHistory.leaveType.LeaveType,
-                
+                LeaveType = leaveHistory.leaveType.LeaveType,
+
             };
             ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
 
@@ -154,24 +145,24 @@ namespace Leave_Management_System.Controllers
             return View(leareqyest);
 
         }
-        public bool convertleavetype(string newvalue,string oldvalue,int noofday,int oldday)
+        public bool convertleavetype(string newvalue, string oldvalue, int noofday, int oldday)
         {
             int sum = 0;
-            var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x=>x.AllUser)
-                .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email== User.Identity.Name).FirstOrDefault();
+            var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
+                .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
             z.NoOfLeave += oldday;
             sum = z.NoOfLeave;
-            if(sum<noofday)
+            if (sum < noofday)
             {
                 return false;
             }
-            _context.Update(z);
+            //_context.Update(z);
 
-            var y = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
-               .Where(x => x.leaveType.leaveTypeID == Convert.ToInt32(newvalue) && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
-            y.NoOfLeave =sum- noofday;
-            _context.Update(y);
-            _context.SaveChanges();
+            //var y = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
+            //   .Where(x => x.leaveType.leaveTypeID == Convert.ToInt32(newvalue) && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            //y.NoOfLeave =sum- noofday;
+            //_context.Update(y);
+            //_context.SaveChanges();
             return true;
         }
         [HttpPost]
@@ -199,18 +190,22 @@ namespace Leave_Management_System.Controllers
                 {
                     var oldallocatedleave = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.id == leaveHistory.id && x.leaveTypeID == leaveHistory.leaveTypeID).FirstOrDefault();
 
-                    var statusOfAllocation=convertleavetype(leaveRequest.LeaveType, oldallocatedleave.leaveType.LeaveType, (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays), leaveHistory.NoOfDay);
-                    if(!statusOfAllocation)
+                    var statusOfAllocation = convertleavetype(leaveRequest.LeaveType, oldallocatedleave.leaveType.LeaveType, (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays), leaveHistory.NoOfDay);
+                    if (!statusOfAllocation)
                     {
-                        ModelState.AddModelError(string.Empty, "You can not request More than " + oldallocatedleave.NoOfLeave+leaveHistory.NoOfDay);
+                        ModelState.AddModelError(string.Empty, "You can not request More than " + oldallocatedleave.NoOfLeave + leaveHistory.NoOfDay);
                         return View(leaveRequest);
+                    }
+                    if (leaveHistory.LeaveStatus == "Approve")
+                    {
+                        readdleave(leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
                     }
                     leaveHistory.LeaveReason = leaveRequest.LeaveReason;
                     leaveHistory.LeaveStatus = "Pending";
                     leaveHistory.HODApproveStatus = "Pending";
                     leaveHistory.EndTill = leaveRequest.LeaveEndTill;
                     leaveHistory.StartFrome = leaveRequest.LeaveStartFrome;
-                    leaveHistory.leaveTypeID =Convert.ToInt32(leaveRequest.LeaveType);
+                    leaveHistory.leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType);
                     leaveHistory.NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
                     var HODuser = _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
                     _context.Update(leaveHistory);
@@ -251,7 +246,7 @@ namespace Leave_Management_System.Controllers
             int sum = 0;
             var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
                 .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
-            z.NoOfLeave += noofday;
+            z.NoOfLeave -= noofday;
             _context.Update(z);
             _context.SaveChanges();
             return true;
@@ -285,34 +280,45 @@ namespace Leave_Management_System.Controllers
             ViewBag.id = leave_id;
             return View(deleteLeave);
         }
-
+        public bool readdleave(string oldvalue, int noofday)
+        {
+            int sum = 0;
+            var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
+                .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
+            z.NoOfLeave += noofday;
+            _context.Update(z);
+            _context.SaveChanges();
+            return true;
+        }
         [HttpPost]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> DeleteLeave(int leave_id, DeleteLeave deleteLeave)
         {
             //var leaveHistory = await _context.LeaveHistory.FindAsync(leave_id && m.AllUser.Email == User.Identity.Name);
             var leaveHistory = await _context.LeaveHistory
-                .Include(l => l.AllUser).Include(l=>l.leaveType)
+                .Include(l => l.AllUser).Include(l => l.leaveType)
                 .FirstOrDefaultAsync(m => m.leave_id == leave_id && m.AllUser.Email == User.Identity.Name);
 
             if (leaveHistory == null)
                 return NotFound();
             var HODuser = _context.AllUser.Where(x => x.Role == "HOD" && x.Deparment == leaveHistory.AllUser.Deparment).FirstOrDefault();
             //if(HODuser==null)
-                    
+
             UserEmail userEmail = new UserEmail
             {
-                ToEmail = (HODuser!=null)? HODuser.Email:"yashgarala29@gmail.com",
+                ToEmail = (HODuser != null) ? HODuser.Email : "yashgarala29@gmail.com",
 
             };
             var arr = new List<KeyValuePair<string, string>>();
             KeyValuePair<string, string> temp = new KeyValuePair<string, string>("{{username}}", leaveHistory.AllUser.Email);
+            if (leaveHistory.LeaveStatus == "Accept")
+                readdleave(leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
             //temp.Key = "username";
             //temp.Value = "yashgarala29@gmail.com";
             arr.Add(temp);
             userEmail.PlaceHolder = arr;
             await emailService.SendLeaveCancelEmail(userEmail);
-            addtoallocation(leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
+            //addtoallocation(leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
             _context.LeaveHistory.Remove(leaveHistory);
             await _context.SaveChangesAsync();
 

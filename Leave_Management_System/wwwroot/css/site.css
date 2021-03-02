@@ -1,1 +1,365 @@
-﻿
+﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// for details on configuring this project to bundle and minify static web assets.
+
+// Write your JavaScript code.
+/* The header style */
+.header {
+    background - color: #F1F1F1;
+    text - align: center;
+    padding: 10px;
+    font - family: 'Spectral', serif;
+    font - size: 50px;
+    font - weight: bold;
+}
+
+
+/* The navbar container */
+
+.nav {
+    overflow: hidden;
+    background - color: #333;
+}
+
+
+    /* Navbar links */
+
+    .nav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text - align: center;
+        padding: 15px 25px;
+        text - decoration: none;
+        font - family: 'Spectral', serif;
+        font - size: 20px;
+        transition - property: padding, font - size;
+        transition - duration: 1s;
+    }
+
+
+        /* Navbar Links - change color on hover */
+
+        .nav a: hover {
+            border - style: solid;
+            background - color: #ddd;
+            color: black;
+            padding: 15px 30px;
+            font - size: 30px;
+        }
+
+
+/* Footer */
+
+.footer {
+    background - color: #F1F1F1;
+    text - align: center;
+    padding: 5px;
+    font - family: 'Spectral', serif;
+    font - size: 20px;
+    font - weight: bold;
+}
+
+    .footer a {
+        text - decoration: none;
+        color: black;
+    }
+
+        .footer a: hover {
+            color: red;
+        }
+
+
+/* Image */
+
+.img {
+    align: center;
+}
+
+.img2 {
+    align: center;
+    padding - top: 20px;
+}
+
+
+/* body */
+
+body {
+    font - family: 'Spectral', serif;
+}
+
+
+/* body h2 tag */
+
+h2 {
+    font - size: 50px;
+    font - family: 'Spectral', serif;
+}
+
+h4 {
+    font - size: 40px;
+    font - family: 'Spectral', serif;
+}
+
+
+/* body paragraph tag */
+
+.para {
+    font - size: 35px;
+    font - family: 'Spectral', serif;
+}
+
+.artical {
+    text - align: center;
+    padding - bottom: 50px;
+}
+
+.signin_btn a {
+    background - color: black;
+    color: #f2f2f2;
+    text - align: center;
+    padding: 10px 150px;
+    box - shadow: 5px 10px #888888;
+    text - decoration: none;
+    font - family: 'Spectral', serif;
+    font - size: 35px;
+    transition - property: padding, font - size;
+    transition - duration: 2s;
+}
+
+    .signin_btn a: hover {
+        padding: 20px 300px;
+        font - size: 40px;
+        background - color: whitesmoke;
+        color: black;
+        border - style: solid;
+    }
+
+.form {
+    margin - left: 30px;
+    padding - left: 20px;
+    font - size: 20px;
+    text - align: left;
+}
+
+.form {
+    padding - left: 200px;
+    padding - right: 200px;
+    font - size: 20px;
+    text - align: left;
+}
+
+fieldset {
+    border: none;
+    border - bottom: solid whitesmoke;
+}
+
+input[type = reset],
+input[type = submit] {
+    background - color: black;
+    color: #f2f2f2;
+    text - align: center;
+    margin - top: 25px;
+    padding: 10px 100px;
+    box - shadow: 5px 10px #888888;
+    text - decoration: none;
+    font - family: 'Spectral', serif;
+    font - size: 35px;
+    transition - property: padding, font - size;
+    transition - duration: 2s;
+}
+
+input[type = email],
+input[type = password] {
+    width: 600px;
+    background - color: whitesmoke;
+    text - align: left;
+    margin - top: 25px;
+    font - family: 'Spectral', serif;
+    font - size: 35px;
+}
+
+.form_btn input[type = "submit"],
+input[type = "reset"] {
+    margin - bottom: 40px;
+}
+
+    .form_btn input[type = "submit"]: hover,
+    input[type = "reset"]: hover {
+        background - color: white;
+        color: black;
+    }
+
+.form label {
+    font - size: 40px;
+}
+
+.profile_image {
+    float: left;
+    width: 10px;
+}
+
+.options {
+    overflow: hidden;
+}
+
+
+    /* Navbar links */
+
+    .options a {
+        border: solid;
+        float: left;
+        display: block;
+        background - color: #b2693c;
+        color: #f2f2f2;
+        text - align: center;
+        padding: 80px 100px;
+        margin: 20px;
+        text - decoration: none;
+        font - family: 'Spectral', serif;
+        font - size: 20px;
+        transition - property: padding;
+        transition - duration: 1s;
+        border: solid;
+    }
+
+
+/* Navbar Links - change color on hover */
+
+.wrapper {
+    display: flex;
+    justify - content: center;
+    align - items: center;
+    width: 100vw;
+    height: 100vh;
+    background - color: #b2693c;
+}
+
+.options a: hover {
+    border: solid;
+    border - color: white;
+    background - color: black;
+    color: whitesmoke;
+    padding: 100px 100px;
+}
+
+.options1 {
+    overflow: hidden;
+}
+
+
+    /* Navbar links */
+
+    .options1 a {
+        border: solid;
+        background - color: black;
+        float: left;
+        display: block;
+        background - color: #9744be;
+        color: #f2f2f2;
+        text - align: center;
+        padding: 80px 90px;
+        margin: 20px;
+        text - decoration: none;
+        font - family: 'Spectral', serif;
+        font - size: 20px;
+        transition - property: padding;
+        transition - duration: 1s;
+        border: solid;
+    }
+
+
+        /* Navbar Links - change color on hover */
+
+        .options1 a: hover {
+            background - color: whitesmoke;
+            color: black;
+            padding: 100px 100px;
+        }
+
+.quiz {
+    border: black solid;
+    display: grid;
+    grid - template - rows: 60px auto;
+    width: 900px;
+    height: 600px;
+    background - color: #fff;
+    box - shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);
+    border - radius: 2px;
+}
+
+.quiz_header {
+    display: flex;
+    justify - content: space - between;
+    border - top - left - radius: 3px;
+    border - top - right - radius: 3px;
+    background - color: #fff;
+    box - shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    z - index: 1;
+}
+
+.quiz_body {
+    padding: 30px 30px;
+}
+
+.quiz_user {
+    display: flex;
+    align - items: center;
+    height: 100 %;
+    padding - left: 30px;
+}
+
+.quiz_timer {
+    display: flex;
+    align - items: center;
+    justify - content: center;
+    height: 100 %;
+    width: 100px;
+    background - color: black;
+    color: #fff;
+}
+
+.quiz_body {
+    background - color: #ecf0f1;
+}
+
+.option_group {
+    list - style - type: none;
+    margin: 30px 0;
+}
+
+.option {
+    display: block;
+    width: 300px;
+    background - color: #fff;
+    margin - bottom: 20px;
+    padding: 15px 20px;
+    border - radius: 100px;
+    border: 2px solid transparent;
+    transition: 0.4s all;
+}
+
+    .option: hover {
+        cursor: pointer;
+        /* background-color: rgba(255, 255, 255, 0.1); */
+        border: 2px solid black;
+    }
+
+    .option.active {
+        background - color: black;
+        color: #fff;
+    }
+
+.btn - next {
+    border: none;
+    padding: 15px 50px;
+    background - color: black;
+    color: #fff;
+    transition: 0.4s all;
+}
+
+    .btn - next: hover {
+        border: 1px solid;
+        cursor: pointer;
+        background - color: #fff;
+        color: black;
+    }

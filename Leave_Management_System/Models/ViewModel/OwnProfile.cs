@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Leave_Management_System.Models.ViewModel
 {
-    public class OwnProfile
+    public class OwnProfile : EditImageVM
     {
         [Key]
         public int id { get; set; }
         [DataType(DataType.EmailAddress)]
-        
+
         public string Email { get; set; }
 
         [Display(Name = "Mobile Number 1")]
@@ -41,7 +41,7 @@ namespace Leave_Management_System.Models.ViewModel
         public string Addreaddress { get; set; }
 
         public string City { get; set; }
-        
+
         public int PaidLeave { get; set; }
     }
 }

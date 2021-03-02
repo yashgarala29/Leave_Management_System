@@ -32,13 +32,22 @@
                     @if (signinmanager.IsSignedIn(User))
                     {
                         @if (User.IsInRole("admin"))
-                        {
+                        {   
                             <li class="nav-link text-left">
-                                <a class="" asp-area="" asp-controller="Role" asp-action="ListOfAllUser">Role Allocation</a>
+                                <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Create Leave Type</a>
                             </li>
                             <li class="nav-link text-left">
-                                <a class="" asp-area="" asp-controller="Role" asp-action="CreateRole">Create Role</a>
+                                <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">List Leave Type</a>
                             </li>
+                            
+                            
+                            <li class="nav-link text-left">
+                                <a class="" asp-area="" asp-controller="Role" asp-action="ListOfAllUser">Role Allocation Page</a>
+                            </li>
+                            <!--<li class="nav-link text-left">
+                                <a class="" asp-area="" asp-controller="Role" asp-action="CreateRole">Create New Role</a>
+                            </li>
+                            -->
                             <li class="nav-link text-left">
                                 <a class="" asp-area="" asp-controller="AllUsers" asp-action="Index">List Of All Users</a>
                             </li>
@@ -46,17 +55,12 @@
                                 <a class="" asp-area="" asp-controller="AllUsers" asp-action="Create">Create New User</a>
                             </li>
                             <li class="nav-link text-left">
-                                <a class="" asp-area="" asp-controller="LeaveHistories" asp-action="Index">Leave History</a>
+                                <a class="" asp-area="" asp-controller="LeaveHistories" asp-action="Index">All Leave History</a>
                             </li>
                             <li class="nav-link text-left">
-                                <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Profile Details</a>
                             </li>
-                            <!--  <li class="nav-link text-left">
-                <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Creater Leave Type</a>
-            </li>
-                                <li class="nav-link text-left">
-                                    <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">Creater Leave Type</a>
-                                </li>-->}
+                        }
                         @if (User.IsInRole("Registrar"))
                         {
                             <li class="nav-link text-left">
@@ -73,6 +77,13 @@
                             </li>
                             <li class="nav-link text-left">
                                 <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                            </li>
+                            
+                            <li class="nav-link text-left">
+                                 <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
+                            </li>
+                            <li class="nav-link text-left">
+                                <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List User Leave Allocation</a>
                             </li>
                         }
                         @if (User.IsInRole("Dean"))
@@ -92,6 +103,13 @@
                             <li class="nav-link text-left">
                                 <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                             </li>
+                            
+                            <li class="nav-link text-left">
+                                 <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
+                            </li>
+                            <li class="nav-link text-left">
+                                <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List User Leave Allocation</a>
+                            </li>
                         }
                         @if (User.IsInRole("HOD"))
                         {
@@ -107,14 +125,15 @@
                             <li class="nav-link text-left">
                                 <a class="" asp-area="" asp-controller="HOD" asp-action="ListOfLeaveRequest">Pending Leave Requests</a>
                             </li>
-                            <li class="nav-link text-left">
+                             <li class="nav-link text-left">
                                 <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                             </li>
-
-                            <li class="nav-link text-left">
-                                <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Allocated Leaves</a>
+                             <li class="nav-link text-left">
+                                 <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
                             </li>
-                            
+                            <li class="nav-link text-left">
+                                <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
+                            </li>
                         }
                         @if (User.IsInRole("Faculty"))
                         {
@@ -131,10 +150,11 @@
                                 <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                             </li>
                             <li class="nav-link text-left">
-                                <a class="" asp-area="" asp-controller="Common" asp-action="ListUserleaveAllocation">List Leave</a>
+                                <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
                             </li>
-                            
-}
+                           
+
+                        }
                         @if (User.IsInRole("Pending"))
                         {
                             <li class="nav-link text-left">
@@ -143,7 +163,9 @@
                             <li class="nav-link text-left">
                                 <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                             </li>
-                        }}
+
+                        }
+                    }
 
                 </ul>
                 <ul class="navbar-nav  align-self-stretch">
@@ -247,7 +269,7 @@
 
 
 
-                <footer class="footer fixed-bottom">
+                <footer class="footer">
                     <div class="container-fluid">
                         <div class="row text-muted">
                             <div class="col-6 text-left">

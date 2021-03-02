@@ -1,8 +1,8 @@
 ﻿@model Leave_Management_System.Models.ViewModel.LeaveRequest
 
 @{
-    //ViewData["Title"] = "LeaveRequest";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "LeaveRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Begin Page Content -->
 <div class="container-fluid px-lg-4">
@@ -26,15 +26,16 @@
                             <form asp-action="LeaveRequest">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
+                                    <label asp-for="LeaveType" class="control-label"></label>
+
+                                    <select asp-for="LeaveType" class="form-control" asp-items="ViewBag.leavetype"></select>
+                                </div>
+                                <div class="form-group">
                                     <label asp-for="LeaveReason" class="control-label"></label>
                                     <textarea asp-for="LeaveReason" class="form-control"></textarea>
                                     <span asp-validation-for="LeaveReason" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="LeaveType" class="control-label"></label>
-                                   
-                                    <select asp-for="LeaveType" class="form-control" asp-items="ViewBag.leavetype"></select>
-                                </div>
+
                                 <div class="form-group">
                                     <label asp-for="LeaveStartFrome" class="control-label"></label>
                                     <input asp-for="LeaveStartFrome" class="form-control" onchange="checkStaringDate()" id="startdate" />
@@ -46,7 +47,7 @@
                                     <span asp-validation-for="LeaveEndTill" id="error_in_ending" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Request" class="btn btn-primary" />
+                                    <input type="submit" value="Make Request" class="btn btn-primary" />
                                 </div>
                             </form>
                         </div>

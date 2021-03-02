@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Leave_Management_System.Models.Class.leaveType>
+
+@{
+    ViewData["Title"] = "CreatLeaveType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+staring date
+<input type="date" id="staring" required>
+<label id="staringerror" class="text-danger"></label>
+<br>
+
+ending date
+<input type="date" id="ending" required>
+<label id="endingerro" class="text-danger"></label>
+<br>
+<input type="submit" value="Request" class="btn btn-primary" name="getreport" />
+<table id="report" border="2">
+</table>
+@section scripts{
+
+    <script>
+
+        $("[name=getreport]").on("click", function () {
+            //var valueofstaring = new Date().getDate();
+            var valueofstaring = new Date($('#staring').val());
+            
+            var tempvalofstaring = valueofstaring.getDate().toString() + " "+(valueofstaring.getMonth()+1).toString() + " " + valueofstaring.getFullYear().toString();
+            if (valueofstaring == null) {
+                $('#staringerror').html("Staring Date is requred");
+                return;
+            }
+            console.log(tempvalofstaring);
+            var valueofending =new Date($('#ending').val());
+            console.log(valueofending);
+            var tempvalofending = valueofending.getDate().toString() + " " + (valueofending.getMonth()+1).toString() + " " + valueofending.getFullYear().toString();
+            if (valueofending == null) {
+                $('#endingerro').html("Ending Date is requred");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/admin/GetLeaveReposrt",
+                data: { "staringDate": tempvalofstaring, "endingDate": tempvalofending },
+                success: function (response) {
+                    //location.reload();
+                    console.log(response);
+                   
+                },
+                failure: function (response) {
+                    console.log("response"+response);
+                    alert("failure");
+                },
+                error: function (response) {
+                    console.log(response);
+                    alert("error");
+                }
+            });
+            //alert(save_change);
+
+        })
+    </script>
+
+
+}
