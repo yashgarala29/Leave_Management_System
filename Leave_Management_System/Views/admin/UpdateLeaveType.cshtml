@@ -19,6 +19,11 @@
                 <input asp-for="LeaveType" class="form-control" />
                 <span asp-validation-for="LeaveType" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="noofday" class="control-label"></label>
+                <input asp-for="noofday" class="form-control" />
+                <span asp-validation-for="noofday" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="allcatoToAll" /> @Html.DisplayNameFor(model => model.allcatoToAll)
@@ -37,6 +42,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ListLeaveType">Back to List</a>
 </div>
 

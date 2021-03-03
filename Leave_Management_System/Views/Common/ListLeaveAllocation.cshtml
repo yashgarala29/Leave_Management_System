@@ -1,43 +1,73 @@
 ﻿@model IEnumerable<Leave_Management_System.Models.Class.LeaveAllocation>
 
-@{
-    ViewData["Title"] = "ListLeaveAllocation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@{ ViewData["Title"] = "ListLeaveAllocation";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<h1>ListLeaveAllocation</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NoOfLeave)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AllUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.leaveType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoOfLeave)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AllUser.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AllocationID">Edit</a> |
-            </td>
-        </tr>
+
+<!-- Begin Page Content -->
+<div class="container-fluid px-lg-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 ">
+                </h2>
+            </div>
+        </div>
+
+        <!-- column -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class=" align-items-center">
+                        <div>
+
+                            <h1>ListLeaveAllocation</h1>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.NoOfLeave)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AllUser)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.leaveType)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NoOfLeave)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AllUser.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
+                            </td>
+                            <td>
+                                <a class="btn btn-orange" asp-action="Edit" asp-route-id="@item.AllocationID">Edit</a>
+                            </td>
+                        </tr>
 }
-    </tbody>
-</table>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

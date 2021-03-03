@@ -28,23 +28,27 @@
                     <div class=" align-items-center">
                         <div>
                             <form method="post">
+                              
                                 <div asp-validation-summary="All" class="text-danger">
-                                    
-                                    
+
+                                    <img src="~/Alternate_image/index.jpg" style="display: block; margin-left: auto; margin-right: auto; width:180px; height:180px; border-radius:50%; border:2px solid black; box-shadow:5px 5px #888888;" asp-append-version="true" />
+
                                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                         <h2 class="h3 mb-0 text-black-50 ">
                                             Login
                                         </h2>
+                                        <br />
                                     </div>
+                                    <hr />
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Email"></label>
-                                    <input asp-for="Email" class="form-control" />
-                                    <span asp-validation-for="Email " class="text-danger"></span>
+                                    <!--<label asp-for="Email"></label>-->
+                                    <input asp-for="Email" class="form-control" placeholder="Enter Email"/>
+                                    <span asp-validation-for="Email " class="text-danger" ></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Password"></label>
-                                    <input asp-for="Password" class="form-control" />
+                                    <!--<label asp-for="Password"></label>-->
+                                    <input asp-for="Password" class="form-control" placeholder="Enter Password"/>
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
 

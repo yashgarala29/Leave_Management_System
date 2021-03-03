@@ -72,9 +72,11 @@ namespace Leave_Management_System.Controllers
                     leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
                 };
                 var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
-                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > leaevupdate.NoOfLeave)
+                var totaledayinpending = _context.LeaveHistory.Where(x => x.id == singleUser.id && x.StartFrome > DateTime.Now && x.LeaveStatus == "Pending").Select(x => x.NoOfDay).ToList().Sum();
+
+                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > (leaevupdate.NoOfLeave - totaledayinpending))
                 {
-                    ModelState.AddModelError(string.Empty, "You can not request More than " + leaevupdate.NoOfLeave);
+                    ModelState.AddModelError(string.Empty, "You can not request More than " + (leaevupdate.NoOfLeave - totaledayinpending));
                     return View();
                 }
                 _context.LeaveHistory.Add(leaveHistory);
@@ -120,7 +122,7 @@ namespace Leave_Management_System.Controllers
             foreach (var temp in t)
             {
                 var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
-                .Where(x => (x.AllUser.Email == temp.Email && x.AllUser.Deparment == HODDeparment && x.HODApproveStatus == "Pending")).ToList();
+                .Where(x => (x.AllUser.Email == temp.Email && x.AllUser.Deparment == HODDeparment && x.HODApproveStatus == "Pending" &&  x.StartFrome > DateTime.Now)).ToList();
                 if (requestedleave != null)
                     foreach (var single in requestedleave)
                         leaveHistories.Add(single);
@@ -168,15 +170,26 @@ namespace Leave_Management_System.Controllers
             _context.SaveChanges();
             return true;
         }
+
         [HttpPost]
         [Authorize(Roles = "HOD")]
         public async Task<JsonResult> AjaxMethod(string name, string leave_id)
         {
+            var currentuser = User.Identity.Name;
+            var currentuserId = _context.AllUser.Where(x => x.Email == currentuser).FirstOrDefault().id;
+
+
+
+
             int leave_id_int = int.Parse(leave_id);
             var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.HODApproveStatus = name;
             leave.LeaveStatus = name;
-            if (name == "Accept")
+
+            leave.approved_id = currentuserId;
+
+
+            if (name == "Accepted")
             {
                 var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
                 allocation.NoOfLeave -= leave.NoOfDay;
@@ -273,7 +286,7 @@ namespace Leave_Management_System.Controllers
                         ModelState.AddModelError(string.Empty, "You can not request More than " + oldallocatedleave.NoOfLeave + leaveHistory.NoOfDay);
                         return View(leaveRequest);
                     }
-                    if (leaveHistory.LeaveStatus == "Accept")
+                    if (leaveHistory.LeaveStatus == "Accepted")
                     {
                         readdleave(leaveHistory.AllUser.Email, leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
                     }
@@ -371,7 +384,7 @@ namespace Leave_Management_System.Controllers
             };
             var arr = new List<KeyValuePair<string, string>>();
             KeyValuePair<string, string> temp = new KeyValuePair<string, string>("{{username}}", leaveHistory.AllUser.Email);
-            if (leaveHistory.LeaveStatus == "Accept")
+            if (leaveHistory.LeaveStatus == "Accepted")
                 readdleave(leaveHistory.AllUser.Email, leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
             //temp.Key = "username";
             //temp.Value = "yashgarala29@gmail.com";

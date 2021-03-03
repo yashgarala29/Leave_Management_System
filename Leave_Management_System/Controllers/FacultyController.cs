@@ -70,9 +70,11 @@ namespace Leave_Management_System.Controllers
                     leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
                 };
                 var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
-                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > leaevupdate.NoOfLeave)
+                var totaledayinpending = _context.LeaveHistory.Where(x => x.id == singleUser.id && x.StartFrome > DateTime.Now && x.LeaveStatus == "Pending").Select(x => x.NoOfDay).ToList().Sum();
+
+                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > (leaevupdate.NoOfLeave - totaledayinpending))
                 {
-                    ModelState.AddModelError(string.Empty, "You can not request More than " + leaevupdate.NoOfLeave);
+                    ModelState.AddModelError(string.Empty, "You can not request More than " + (leaevupdate.NoOfLeave - totaledayinpending));
                     return View();
                 }
                 //leaevupdate.NoOfLeave -=(int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
@@ -147,6 +149,7 @@ namespace Leave_Management_System.Controllers
         }
         public bool convertleavetype(string newvalue, string oldvalue, int noofday, int oldday)
         {
+
             int sum = 0;
             var z = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)
                 .Where(x => x.leaveType.LeaveType == oldvalue && x.AllUser.Email == User.Identity.Name).FirstOrDefault();
@@ -156,6 +159,7 @@ namespace Leave_Management_System.Controllers
             {
                 return false;
             }
+
             //_context.Update(z);
 
             //var y = _context.leaveAllocation.Include(x => x.leaveType).Include(x => x.AllUser)

@@ -8,7 +8,7 @@
 <h1>ListLeaveType</h1>
 
 <p>
-    <a asp-action="CreatLeaveType">Create New</a>
+    <a class="btn btn-primary" asp-action="CreatLeaveType">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -45,8 +45,8 @@
                     @Html.DisplayFor(modelItem => item.itispersonal)
                 </td>
                 <td>
-                    <a asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID">Edit</a> |
-                    <a  id="@item.leaveTypeID" name="Delete" class="text-danger">Delete</a>
+                    <a class="btn btn-orange" asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID">Edit</a> |
+                    <a  id="@item.leaveTypeID" name="Delete" class="btn btn-danger">Delete</a>
                     @if (!item.allcatoToAll)
                     {
                         <a  id="@item.leaveTypeID" name="Allocate">Allocate to all</a>

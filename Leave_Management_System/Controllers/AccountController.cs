@@ -109,6 +109,10 @@ namespace Leave_Management_System.Controllers
                     if (identityResult.Succeeded)
                         return RedirectToAction("index", "home");
                 }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
             return View(registerViewModel);
         }

@@ -121,7 +121,7 @@
 
         $("[name=Accept]").on("click", function () {
             var savechangevalue = $(this).val();
-            var save_change = "Accept";
+            var save_change = "Accepted";
             $.ajax({
                 type: "POST",
                 url: "/Dean/AjaxMethod",
@@ -143,7 +143,7 @@
         })
         $("[name=Reject]").on("click", function () {
             var savechangevalue = $(this).val();
-            var save_change = "Reject";
+            var save_change = "Rejected";
             $.ajax({
                 type: "POST",
                 url: "/Dean/AjaxMethod",
