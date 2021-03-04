@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Leave_Management_System.Models.ViewModel
 {
-    public class LeaveRequest
+    public class LeaveRequest : UploadPDF
     {
         public int id { get; set; }
         [Display(Name = "Leave Type")]

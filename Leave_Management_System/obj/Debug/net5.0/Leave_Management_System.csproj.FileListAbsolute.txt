@@ -1557,3 +1557,18 @@ D:\SDP Backup\New folder\Leave_Management_System\obj\Debug\net5.0\ref\Leave_Mana
 D:\SDP Backup\New folder\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.pdb
 D:\SDP Backup\New folder\Leave_Management_System\obj\Debug\net5.0\Leave_Management_System.genruntimeconfig.cache
 D:\SDP Backup\New folder\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\ListOfLeaveRequest.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\CreatLeaveType.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\leaveReport.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\ListLeaveType.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\ListOfLeaveRequest.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\admin\UpdateLeaveType.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\Edit.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\ListLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\ListUserLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\UserleaevAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Faculty\ListLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\HOD\ListLeaveAllocation.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\temp\View.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\PagedList.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\bin\Debug\net5.0\PagedList.Mvc.dll
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\MyLeaveOperation.cshtml.g.cs

@@ -1,7 +1,7 @@
 ﻿@model Leave_Management_System.Models.ViewModel.LeaveRequest
 
 @{ ViewData["Title"] = "UpdateLeave";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <h1>@ViewBag.leave UpdateLeave</h1>
 
@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpdateLeave" asp-id="@Model.id">
+        <form asp-action="UpdateLeave" asp-id="@Model.id" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
@@ -32,6 +32,11 @@
                 <span asp-validation-for="LeaveEndTill" id="error_in_ending" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="FileName" class="control-label"></label>
+                <input asp-for="FileName" type="file" name="file" id="file" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -39,20 +44,21 @@
 </div>
 
 
-<script>function checkStaringDate() {
-    var staring_Date = document.getElementById("startdate").value;
-    var ending_Date = document.getElementById("enddate").value;
+<script>
+    function checkStaringDate() {
+        var staring_Date = document.getElementById("startdate").value;
+        var ending_Date = document.getElementById("enddate").value;
         var todayDate = new Date();
         //console.log(todayDate);
-    if (new Date(staring_Date).getTime() > new Date(ending_Date).getTime()) {
-        var setErromess = document.getElementById("error_in_staring");
-        setErromess.innerHTML = "Date Must be less than Ending  date";
-        console.log("Date is not change");
-        document.getElementById('startdate').value = '';
-        //document.getElementById("startdate").reset();
+        if (new Date(staring_Date).getTime() > new Date(ending_Date).getTime()) {
+            var setErromess = document.getElementById("error_in_staring");
+            setErromess.innerHTML = "Date Must be less than Ending  date";
+            console.log("Date is not change");
+            document.getElementById('startdate').value = '';
+            //document.getElementById("startdate").reset();
 
-        return false;
-    }
+            return false;
+        }
         if (new Date(staring_Date).getTime() < new Date(todayDate).getTime()) {
             //error_in_staring
             var setErromess = document.getElementById("error_in_staring");
@@ -76,11 +82,19 @@
             document.getElementById('enddate').value = '';
             return false;
         }
-        else
-        {
+        else {
             return true;
         }
 
     }</script>
+@section Scripts {
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+
+}
 
 

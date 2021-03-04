@@ -81,7 +81,9 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.EndTill)
                                 </th>
-
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attachment)
+                                </th>
                                 <th>Operation</th>
                             </tr>
                         </thead>
@@ -115,6 +117,15 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.EndTill)
+                                </td>
+                                <td>
+                                    @if (item.Attachment == null)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                            <a href="~/file/@item.Attachment">User Document</a>}
                                 </td>
 
                                 <td>

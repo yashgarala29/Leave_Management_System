@@ -5,32 +5,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ListLeaveType</h1>
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-data__tool-left">
 
-<p>
-    <a class="btn btn-primary" asp-action="CreatLeaveType">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LeaveType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.noofday)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.allcatoToAll)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.itispersonal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+            
+        </div><br />
+        </hr>
+        <!-- DATA TABLE-->
+
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LeaveType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.noofday)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.allcatoToAll)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.itispersonal)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.LeaveType)
@@ -45,19 +50,18 @@
                     @Html.DisplayFor(modelItem => item.itispersonal)
                 </td>
                 <td>
-                    <a class="btn btn-orange" asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID">Edit</a> |
-                    <a  id="@item.leaveTypeID" name="Delete" class="btn btn-danger">Delete</a>
+                    <a class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit" asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID"></a> |
+                    <a id="@item.leaveTypeID" name="Delete" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
                     @if (!item.allcatoToAll)
                     {
-                        <a  id="@item.leaveTypeID" name="Allocate">Allocate to all</a>
-
-                    }
+            <a id="@item.leaveTypeID" name="Allocate">Allocate to all</a>}
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
-
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 @section scripts{
     <script>

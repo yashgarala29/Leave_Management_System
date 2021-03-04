@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj": {}
+    "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj": {}
   },
   "projects": {
-    "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj": {
+    "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
         "projectName": "Leave_Management_System",
-        "projectPath": "D:\\SDP Backup\\New folder\\Leave_Management_System\\Leave_Management_System.csproj",
+        "projectPath": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\SDP Backup\\New folder\\Leave_Management_System\\obj\\",
+        "outputPath": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -78,6 +78,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.1, )"
+            },
+            "PagedList.Mvc": {
+              "target": "Package",
+              "version": "[4.5.0, )"
             }
           },
           "imports": [

@@ -29,9 +29,105 @@ namespace Leave_Management_System.Controllers
 
         // GET: AllUsers
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
         {
-            return View(await _context.AllUser.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+
+            ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
+            ViewData["MobileNoSortParm"] = String.IsNullOrEmpty(sortOrder) ? "MobileNo_desc" : "";
+            ViewData["MobileNo2SortParm"] = String.IsNullOrEmpty(sortOrder) ? "MobileNo2_desc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LastName_desc" : "";
+            ViewData["MiddleNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "MiddleName_desc" : "";
+            ViewData["DeparmentSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Department_desc" : "";
+            ViewData["RoleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Role_desc" : "";
+            ViewData["AddreaddressSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Addreaddress_desc" : "";
+            ViewData["CitySortParm"] = String.IsNullOrEmpty(sortOrder) ? "City_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                //searchString = "Enter some value";
+                searchString = currentFilter;
+            }
+
+           
+
+            var allusers = from s in _context.AllUser select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                allusers = allusers.Where(s => s.Email.Contains(searchString)
+                || s.MobileNo.Contains(searchString)
+                || s.MobileNo2.Contains(searchString)
+                || s.Name.Contains(searchString)
+                || s.LastName.Contains(searchString)
+                || s.MiddleName.Contains(searchString)
+                || s.Deparment.Contains(searchString)
+                || s.Role.Contains(searchString)
+                || s.Addreaddress.Contains(searchString)
+                || s.City.Contains(searchString)
+                
+                );
+            }
+
+           
+
+
+            switch (sortOrder)
+            {
+                case "Email_desc":
+                    allusers = allusers.OrderByDescending(s => s.Email);
+                    break;
+
+                case "MobileNo_desc":
+                    allusers = allusers.OrderByDescending(s => s.MobileNo);
+                    break;
+
+                case "MobileNo2_desc":
+                    allusers = allusers.OrderByDescending(s => s.MobileNo2);
+                    break;
+
+                case "Name_desc":
+                    allusers = allusers.OrderByDescending(s => s.Name);
+                    break;
+
+                case "LastName_desc":
+                    allusers = allusers.OrderByDescending(s => s.LastName);
+                    break;
+
+                case "MiddleName_desc":
+                    allusers = allusers.OrderByDescending(s => s.MiddleName);
+                    break;
+
+                case "Department_desc":
+                    allusers = allusers.OrderByDescending(s => s.Deparment);
+                    break;
+
+                case "Role_desc":
+                    allusers = allusers.OrderByDescending(s => s.Role);
+                    break;
+                case "Addreaddress_desc":
+                    allusers = allusers.OrderByDescending(s => s.Addreaddress);
+                    break;
+                case "City_desc":
+                    allusers = allusers.OrderByDescending(s => s.City);
+                    break;
+                default:
+                    allusers = allusers.OrderBy(s => s.City);
+                    break;
+            }
+            //return View(await allusers.AsNoTracking().ToListAsync());
+            int pageSize = 5;
+            return View(await PaginatedList<AllUser>.CreateAsync(allusers.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: AllUsers/Details/5

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Leave_Management_System.Models.Class.LeaveHistory>
+
+@{ ViewData["Title"] = "MyLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-data__tool-left">
+
+            <form class="form-header" asp-action="Index" method="get">
+                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="au-btn-filter" />
+                &nbsp;&nbsp;
+                <a class="btn btn-primary" asp-action="Index">Back to Full List</a>
+            </form>
+        </div><br />
+        </hr>
+        <!-- DATA TABLE-->
+
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LeaveStatus)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LeaveReason)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NoOfDay)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartFrome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndTill)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeaveStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeaveReason)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NoOfDay)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartFrome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTill)
+                        </td>
+                      </tr> 
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- END DATA TABLE-->
+    </div>
