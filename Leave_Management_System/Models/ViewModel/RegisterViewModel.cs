@@ -16,8 +16,8 @@ namespace Leave_Management_System.Models.ViewModel
         public string Password { get; set;}
         [Required]
         [DataType(DataType.Password)]
-        [Compare("Password",ErrorMessage ="Confirem Password and Pasword must same.")]
-        [Display(Name ="Confirem Password")]
+        [Compare("Password",ErrorMessage = "Confirm Password and Pasword must same.")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
     }
 }

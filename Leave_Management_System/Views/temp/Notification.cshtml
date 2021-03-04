@@ -1,0 +1,44 @@
+﻿
+@{ string s = ""; List<Leave_Management_System.Models.Class.Notification> return_response=null;
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<input type="submit" value="Request" class="btn btn-primary" name="GetNotification" />
+<table id="listonotification" border="2">
+</table>
+@section scripts{
+
+    <script>
+
+        $("[name=GetNotification]").on("click", function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/temp/GetNotification",
+                success: function (response) {
+                    //location.reload();
+                    console.log(response.length);
+                    var n = response.length;
+                    $("#listonotification").empty();
+                    for (var i = 0; i < n; i++)
+                    {
+                        var s = "<tr><td>" + response[i].heading + "</td><td>" + response[i].body + "</td><td>"
+                            + response[i].isreaded + "</td><td>" + response[i].notificationDate+"</td></tr>";
+                        $("#listonotification").append(s);
+                        console.log(response[i]);
+            }       
+                    },
+                failure: function (response) {
+                    alert("failure");
+                },
+                error: function (response) {
+                    console.log(response);
+                    alert("error");
+                }
+            });
+            //alert(save_change);
+
+        })
+    </script>
+
+
+    }

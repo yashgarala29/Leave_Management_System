@@ -2,17 +2,49 @@
 @{
     ViewData["Title"] = "Add new Role";
 }
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RoleName"></label>
-                <input asp-for="RoleName" class="form-control" />
-                <span asp-validation-for="RoleName " class="text-danger"></span>
+
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 "> Create New Role
+                </h2>
             </div>
-            
-            <button type="submit" class="btn btn-primary">Add roll</button>
-        </form>
+        </div>
+
+
+
+
+        <!-- column -->
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class=" align-items-center">
+                        <div>
+                            <form method="post">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="RoleName"></label>
+                                    <input asp-for="RoleName" class="form-control" />
+                                    <span asp-validation-for="RoleName " class="text-danger"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Add roll</button>
+                            </form>
+                        </div>
+
+                    </div>
+                  
+                   
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>

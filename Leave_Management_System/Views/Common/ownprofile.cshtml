@@ -1,0 +1,126 @@
+﻿@model Leave_Management_System.Models.ViewModel.OwnProfile
+
+@{
+    ViewData["Title"] = "OwnProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid px-lg-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 ">
+                    Edit Profile Details
+                </h2>
+            </div>
+        </div>
+
+        <!-- column -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class="col-sm-10">
+                        <!--<i class="fas fa-user-circle fa-9x text-secondary"></i>-->
+                        @if (Model.ExistingImage == null)
+                        {
+
+                            <img src="~/Alternate_image/index.jpg" style="display: block; margin-left: auto; margin-right: auto; width:200px; height:200px; border-radius:50%; border:2px solid; box-shadow:5px 5px #888888;" asp-append-version="true" /> }
+                        else
+                        {
+
+                            <img src="~/Uploads/@Model.ExistingImage" style="display: block; margin-left: auto; margin-right: auto; width:200px; height:200px; border-radius:50%; border:3px solid white; box-shadow:5px 5px #888888;" asp-append-version="true" />}
+
+                    </div>
+                    <div class=" align-items-center">
+                        <div>
+                            <form asp-action="OwnProfile" enctype="multipart/form-data">
+                                
+                                <input type="hidden" asp-for="id" />
+                                <div class="form-group">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" class="form-control" disabled />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MobileNo" class="control-label"></label>
+                                    <input asp-for="MobileNo" class="form-control" />
+                                    <span asp-validation-for="MobileNo" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MobileNo2" class="control-label"></label>
+                                    <input asp-for="MobileNo2" class="form-control" />
+                                    <span asp-validation-for="MobileNo2" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LastName" class="control-label"></label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MiddleName" class="control-label"></label>
+                                    <input asp-for="MiddleName" class="form-control" />
+                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EmployeePicture" class="control-label"></label>
+                                    <div class="custom-file">
+                                        <input asp-for="EmployeePicture" class="custom-file-input" />
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <span asp-validation-for="EmployeePicture" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Addreaddress" class="control-label"></label>
+                                    <textarea asp-for="Addreaddress" class="form-control"></textarea>
+                                    <span asp-validation-for="Addreaddress" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="City" class="control-label"></label>
+                                    <input asp-for="City" class="form-control" />
+                                    <span asp-validation-for="City" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Role" class="control-label"></label>
+                                    <input asp-for="Role" class="form-control" disabled />
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Department" class="control-label"></label>
+                                    <input asp-for="Department" class="form-control" disabled />
+                                    <span asp-validation-for="Department" class="text-danger"></span>
+                                </div>
+                                <!--<div class="form-group">
+                                    <label asp-for="PaidLeave" class="control-label"></label>
+                                    <input asp-for="PaidLeave" class="form-control" disabled />
+                                    <span asp-validation-for="PaidLeave" class="text-danger"></span>
+                                </div>
+                                    -->
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+</div>
+        @section Scripts {
+            <script>
+                // Add the following code if you want the name of the file appear on select
+                $(".custom-file-input").on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                });</script>
+
+        }

@@ -22,7 +22,7 @@ namespace Leave_Management_System.Controllers
         // GET: LeaveHistories
         public async Task<IActionResult> Index()
         {
-            var leaveDbContext = _context.LeaveHistory.Include(l => l.dean).Include(l => l.faculty).Include(l => l.hod).Include(l => l.ragistrar);
+            var leaveDbContext = _context.LeaveHistory.Include(l => l.AllUser);
             return View(await leaveDbContext.ToListAsync());
         }
 
@@ -35,10 +35,7 @@ namespace Leave_Management_System.Controllers
             }
 
             var leaveHistory = await _context.LeaveHistory
-                .Include(l => l.dean)
-                .Include(l => l.faculty)
-                .Include(l => l.hod)
-                .Include(l => l.ragistrar)
+                .Include(l => l.AllUser)
                 .FirstOrDefaultAsync(m => m.leave_id == id);
             if (leaveHistory == null)
             {
@@ -51,10 +48,7 @@ namespace Leave_Management_System.Controllers
         // GET: LeaveHistories/Create
         public IActionResult Create()
         {
-            ViewData["Dean_id"] = new SelectList(_context.Dean, "Dean_id", "Dean_id");
-            ViewData["Faculty_id"] = new SelectList(_context.Faculty, "Faculty_id", "Faculty_id");
-            ViewData["HOD_id"] = new SelectList(_context.HOD, "HOD_id", "HOD_id");
-            ViewData["Registrar_id"] = new SelectList(_context.Registrar, "Registrar_id", "Registrar_id");
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id");
             return View();
         }
 
@@ -63,7 +57,7 @@ namespace Leave_Management_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("leave_id,LeaveStatus,HODApproveStatus,DeanApproveStatus,RegistrarApproveStatus,NoOfDay,LeaveReason,StartFrome,EndTill,Registrar_id,HOD_id,Faculty_id,Dean_id")] LeaveHistory leaveHistory)
+        public async Task<IActionResult> Create([Bind("leave_id,LeaveStatus,HODApproveStatus,DeanApproveStatus,RegistrarApproveStatus,NoOfDay,LeaveReason,StartFrome,EndTill,id")] LeaveHistory leaveHistory)
         {
             if (ModelState.IsValid)
             {
@@ -71,10 +65,7 @@ namespace Leave_Management_System.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Dean_id"] = new SelectList(_context.Dean, "Dean_id", "Dean_id", leaveHistory.Dean_id);
-            ViewData["Faculty_id"] = new SelectList(_context.Faculty, "Faculty_id", "Faculty_id", leaveHistory.Faculty_id);
-            ViewData["HOD_id"] = new SelectList(_context.HOD, "HOD_id", "HOD_id", leaveHistory.HOD_id);
-            ViewData["Registrar_id"] = new SelectList(_context.Registrar, "Registrar_id", "Registrar_id", leaveHistory.Registrar_id);
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id", leaveHistory.id);
             return View(leaveHistory);
         }
 
@@ -91,10 +82,7 @@ namespace Leave_Management_System.Controllers
             {
                 return NotFound();
             }
-            ViewData["Dean_id"] = new SelectList(_context.Dean, "Dean_id", "Dean_id", leaveHistory.Dean_id);
-            ViewData["Faculty_id"] = new SelectList(_context.Faculty, "Faculty_id", "Faculty_id", leaveHistory.Faculty_id);
-            ViewData["HOD_id"] = new SelectList(_context.HOD, "HOD_id", "HOD_id", leaveHistory.HOD_id);
-            ViewData["Registrar_id"] = new SelectList(_context.Registrar, "Registrar_id", "Registrar_id", leaveHistory.Registrar_id);
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id", leaveHistory.id);
             return View(leaveHistory);
         }
 
@@ -103,7 +91,7 @@ namespace Leave_Management_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("leave_id,LeaveStatus,HODApproveStatus,DeanApproveStatus,RegistrarApproveStatus,NoOfDay,LeaveReason,StartFrome,EndTill,Registrar_id,HOD_id,Faculty_id,Dean_id")] LeaveHistory leaveHistory)
+        public async Task<IActionResult> Edit(int id, [Bind("leave_id,LeaveStatus,HODApproveStatus,DeanApproveStatus,RegistrarApproveStatus,NoOfDay,LeaveReason,StartFrome,EndTill,id")] LeaveHistory leaveHistory)
         {
             if (id != leaveHistory.leave_id)
             {
@@ -130,10 +118,7 @@ namespace Leave_Management_System.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Dean_id"] = new SelectList(_context.Dean, "Dean_id", "Dean_id", leaveHistory.Dean_id);
-            ViewData["Faculty_id"] = new SelectList(_context.Faculty, "Faculty_id", "Faculty_id", leaveHistory.Faculty_id);
-            ViewData["HOD_id"] = new SelectList(_context.HOD, "HOD_id", "HOD_id", leaveHistory.HOD_id);
-            ViewData["Registrar_id"] = new SelectList(_context.Registrar, "Registrar_id", "Registrar_id", leaveHistory.Registrar_id);
+            ViewData["id"] = new SelectList(_context.AllUser, "id", "id", leaveHistory.id);
             return View(leaveHistory);
         }
 
@@ -146,10 +131,7 @@ namespace Leave_Management_System.Controllers
             }
 
             var leaveHistory = await _context.LeaveHistory
-                .Include(l => l.dean)
-                .Include(l => l.faculty)
-                .Include(l => l.hod)
-                .Include(l => l.ragistrar)
+                .Include(l => l.AllUser)
                 .FirstOrDefaultAsync(m => m.leave_id == id);
             if (leaveHistory == null)
             {

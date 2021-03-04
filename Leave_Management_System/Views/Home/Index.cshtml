@@ -1,15 +1,71 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to guest.</h1>
-    <a asp-controller="temp" asp-action="AdminView">HOD</a>
-    <a class="nav-link " asp-controller="account" asp-action="register">Register</a>
-    <a asp-controller="temp" asp-action="AdminView">Admin</a>
-    <a asp-controller="Role" asp-action="ListOfAllUser">List OF All User</a>
-    <a asp-controller="temp" asp-action="DeanView">Dean</a>
-    <a asp-controller="temp" asp-action="pendingView">pendingView</a>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Online Test Portal</title>
+    </script>
+    <style>
+        
 
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg-4 {
+            background-color: #2f2f2f;
+            /* Black Gray */
+            color: #fff;
+        }
+
+        
+    </style>
+
+</head>
+    
+        <div id="cor1" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                <li data-target="#cor1" data-slide-to="0" class="active"></li>
+                <li data-target="#cor1" data-slide-to="1"></li>
+                <li data-target="#cor1" data-slide-to="2"></li>
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/slider_image/test.jpg" alt="Los Angeles" width="1100" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/slider_image/test.jpg" alt="Chicago" width="1100" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/slider_image/test.jpg" alt="New York" width="1100" height="500">
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#cor1" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#cor1" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    
+
+    <!--Jumbotron-->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1>Welcome to Leave Management System </h1>
+        </div>
+    </div>
+
+
+
+
+
+
+

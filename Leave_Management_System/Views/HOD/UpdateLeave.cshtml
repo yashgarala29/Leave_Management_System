@@ -1,0 +1,86 @@
+﻿@model Leave_Management_System.Models.ViewModel.LeaveRequest
+
+@{ ViewData["Title"] = "UpdateLeave";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h1>@ViewBag.leave UpdateLeave</h1>
+
+<h4>LeaveRequest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateLeave" asp-id="@Model.id">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="LeaveReason" class="cont    rol-label"></label>
+                <textarea asp-for="LeaveReason" class="form-control"></textarea>
+                <span asp-validation-for="LeaveReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveType" class="control-label"></label>
+                <select asp-for="LeaveType" class="form-control" asp-items="@ViewBag.leavetype"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveStartFrome" class="control-label"></label>
+                <input asp-for="LeaveStartFrome" class="form-control" onchange="checkStaringDate()" id="startdate" />
+                <span asp-validation-for="LeaveStartFrome" id="error_in_staring" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveEndTill" class="control-label"></label>
+                <input asp-for="LeaveEndTill" class="form-control" onchange="checkEndingDate()" id="enddate" />
+                <span asp-validation-for="LeaveEndTill" id="error_in_ending" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>function checkStaringDate() {
+    var staring_Date = document.getElementById("startdate").value;
+    var ending_Date = document.getElementById("enddate").value;
+        var todayDate = new Date();
+        //console.log(todayDate);
+    if (new Date(staring_Date).getTime() > new Date(ending_Date).getTime()) {
+        var setErromess = document.getElementById("error_in_staring");
+        setErromess.innerHTML = "Date Must be less than Ending  date";
+        console.log("Date is not change");
+        document.getElementById('startdate').value = '';
+        //document.getElementById("startdate").reset();
+
+        return false;
+    }
+        if (new Date(staring_Date).getTime() < new Date(todayDate).getTime()) {
+            //error_in_staring
+            var setErromess = document.getElementById("error_in_staring");
+            setErromess.innerHTML = "Date Must be greater than today`s date";
+
+            document.getElementById('startdate').value = '';
+            //document.getElementById("startdate").reset();
+
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function checkEndingDate() {
+        var ending_Date = document.getElementById("enddate").value;
+        var staring_Date = document.getElementById("startdate").value;
+        if (new Date(staring_Date).getTime() >= new Date(ending_Date).getTime()) {
+            var setErromess = document.getElementById("error_in_ending");
+            setErromess.innerHTML = "Date Must be greater than   staring  date";
+            document.getElementById('enddate').value = '';
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }</script>
+
+
