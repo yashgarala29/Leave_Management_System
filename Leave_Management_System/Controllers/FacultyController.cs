@@ -131,6 +131,7 @@ namespace Leave_Management_System.Controllers
             }
             return View(myLeaves);
         }
+
         int noofleavealocated;
         [HttpGet]
         [Authorize(Roles = "Faculty")]

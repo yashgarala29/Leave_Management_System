@@ -30,13 +30,12 @@ namespace Leave_Management_System.Controllers
         // GET: AllUsers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index(
-    string sortOrder,
-    string currentFilter,
-    string searchString,
-    int? pageNumber)
+        string sortOrder,
+        string currentFilter,
+        string searchString,
+        int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
-
             ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
             ViewData["MobileNoSortParm"] = String.IsNullOrEmpty(sortOrder) ? "MobileNo_desc" : "";
             ViewData["MobileNo2SortParm"] = String.IsNullOrEmpty(sortOrder) ? "MobileNo2_desc" : "";
@@ -48,7 +47,6 @@ namespace Leave_Management_System.Controllers
             ViewData["AddreaddressSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Addreaddress_desc" : "";
             ViewData["CitySortParm"] = String.IsNullOrEmpty(sortOrder) ? "City_desc" : "";
             ViewData["CurrentFilter"] = searchString;
-
 
             if (searchString != null)
             {
@@ -78,9 +76,6 @@ namespace Leave_Management_System.Controllers
                 
                 );
             }
-
-           
-
 
             switch (sortOrder)
             {
@@ -125,7 +120,7 @@ namespace Leave_Management_System.Controllers
                     allusers = allusers.OrderBy(s => s.City);
                     break;
             }
-            //return View(await allusers.AsNoTracking().ToListAsync());
+            
             int pageSize = 5;
             return View(await PaginatedList<AllUser>.CreateAsync(allusers.AsNoTracking(), pageNumber ?? 1, pageSize));
         }

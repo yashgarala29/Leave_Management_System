@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Leave_Management_System.Models.Class.LeaveHistory>
-
+﻿@model PaginatedList<Leave_Management_System.Models.Class.LeaveHistory>
+@using PagedList.Mvc;
 @{ ViewData["Title"] = "MyLeave";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
@@ -8,12 +8,12 @@
     <div class="col-md-12">
         <div class="table-data__tool-left">
 
-            <form class="form-header" asp-action="Index" method="get">
+            <form class="form-header" asp-action="MyLeaveOperation" method="get">
                 <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
                 &nbsp;&nbsp;
                 <input type="submit" value="Search" class="au-btn-filter" />
                 &nbsp;&nbsp;
-                <a class="btn btn-primary" asp-action="Index">Back to Full List</a>
+                <a class="btn btn-primary" asp-action="MyLeaveOperation">Back to Full List</a>
             </form>
         </div><br />
         </hr>
@@ -24,47 +24,93 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveStatus)
+                            <a asp-action="MyLeaveOperation" asp-route-sortOrder="@ViewData["LeaveStatusSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅LeaveStatus</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveReason)
+                            <a asp-action="MyLeaveOperation" asp-route-sortOrder="@ViewData["LeaveReasonSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅LeaveReason</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.NoOfDay)
+                            <a asp-action="MyLeaveOperation" asp-route-sortOrder="@ViewData["NoOfDaySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅NoOfDay</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.StartFrome)
+                            <a asp-action="MyLeaveOperation" asp-route-sortOrder="@ViewData["StartFromeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅StartFrome</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.EndTill)
+                            <a asp-action="MyLeaveOperation" asp-route-sortOrder="@ViewData["EndTillSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅EndTill</h5></a>
+
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveReason)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NoOfDay)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartFrome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EndTill)
-                        </td>
-                      </tr> 
-                    }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveReason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartFrome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTill)
+            </td>
+        </tr>}
                 </tbody>
             </table>
         </div>
+        @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.HasNextPage ? "disabled" : ""; }
+        <center>
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-outline-primary @prevDisabled">
+                Previous
+            </a>
 
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @prevDisabled">
+                @(Model.PageIndex - 1)
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-primary">
+                @(Model.PageIndex)
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @nextDisabled">
+                @(Model.PageIndex + 1)
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-outline-primary @nextDisabled">
+                Next
+            </a>
+        </center>
 
         <!-- END DATA TABLE-->
     </div>

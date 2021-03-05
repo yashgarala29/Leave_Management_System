@@ -1,34 +1,42 @@
-﻿@model IEnumerable<Leave_Management_System.Models.Class.leaveType>
-
-@{
-    ViewData["Title"] = "ListLeaveType";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model PaginatedList<Leave_Management_System.Models.Class.leaveType>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{ ViewData["Title"] = "ListLeaveType";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <div class="row m-t-30">
     <div class="col-md-12">
         <div class="table-data__tool-left">
 
-            
+            <form class="form-header" asp-action="ListLeaveType" method="get">
+                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required  placeholder="Search With Keayword" />
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="au-btn-filter" />
+                &nbsp;&nbsp;
+                <a class="btn btn-primary" asp-action="ListLeaveType">Full List</a>
+            </form>
         </div><br />
         </hr>
-        <!-- DATA TABLE-->
 
         <div class="table-responsive m-b-40">
             <table class="table table-borderless table-data3">
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveType)
+                            <a asp-action="ListLeaveType" asp-route-sortOrder="@ViewData["LeaveTypeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅LeaveType</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.noofday)
+                            <a asp-action="ListLeaveType" asp-route-sortOrder="@ViewData["noofdaySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅noofday</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.allcatoToAll)
+                            <a asp-action="ListLeaveType" asp-route-sortOrder="@ViewData["allcatoToAllSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅allcatoToAll</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.itispersonal)
+                            <a asp-action="ListLeaveType" asp-route-sortOrder="@ViewData["itispersonalSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅itispersonal</h5></a>
+
                         </th>
                         <th></th>
                     </tr>
@@ -36,89 +44,132 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeaveType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.noofday)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.allcatoToAll)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.itispersonal)
-                </td>
-                <td>
-                    <a class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit" asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID"></a> |
-                    <a id="@item.leaveTypeID" name="Delete" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
-                    @if (!item.allcatoToAll)
-                    {
-            <a id="@item.leaveTypeID" name="Allocate">Allocate to all</a>}
-                </td>
-            </tr>
-}
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.noofday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.allcatoToAll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.itispersonal)
+            </td>
+            <td>
+                <a class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit" asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID"></a> |
+                <a id="@item.leaveTypeID" name="Delete" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
+                @if (!item.allcatoToAll)
+                {
+    <a id="@item.leaveTypeID" name="Allocate">Allocate to all</a>}
+            </td>
+        </tr>}
                 </tbody>
             </table>
+
+            @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.HasNextPage ? "disabled" : ""; }
+            <center>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-outline-primary @prevDisabled">
+                    Previous
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @prevDisabled">
+                    @(Model.PageIndex - 1)
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-primary">
+                    @(Model.PageIndex)
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @nextDisabled">
+                    @(Model.PageIndex + 1)
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-outline-primary @nextDisabled">
+                    Next
+                </a>
+            </center>
         </div>
     </div>
 
-@section scripts{
-    <script>
+    @section scripts{
+        <script>
 
-        $("[name=Allocate]").on("click", function () {
-            var id = this.id;
-            alert("id="+id);
-            var save_change = "Accept";
-            $.ajax({
-                type: "POST",
-                url: "/admin/AllocattoAll",
-                data: { "id": id },
-                success: function (response) {
-                   //alert("Status Updated Successfully!");
-                    location.reload();
-
-                },
-                failure: function (response) {
-                    alert("failure");
-                },
-                error: function (response) {
-                    alert("error");
-                }
-            });
-            //alert(save_change);
-
-        })
-        $("[name=Delete]").on("click", function () {
-            var deleteid = this.id;
-           // alert("id=" + deleteid);
-            var retVal = confirm("Do you want to Delete this leave Type ?");
-            if (retVal == true) {
+            $("[name=Allocate]").on("click", function () {
+                var id = this.id;
+                alert("id=" + id);
+                var save_change = "Accept";
                 $.ajax({
-                type: "POST",
-                url: "/admin/Delete",
-                data: { "id": deleteid },
-                success: function (response) {
-                   // alert("Status Updated Successfully!");
-                    location.reload();
+                    type: "POST",
+                    url: "/admin/AllocattoAll",
+                    data: { "id": id },
+                    success: function (response) {
+                        //alert("Status Updated Successfully!");
+                        location.reload();
 
-                },
-                failure: function (response) {
-                    alert("failure");
-                },
-                error: function (response) {
-                    alert("error");
+                    },
+                    failure: function (response) {
+                        alert("failure");
+                    },
+                    error: function (response) {
+                        alert("error");
+                    }
+                });
+                //alert(save_change);
+
+            })
+            $("[name=Delete]").on("click", function () {
+                var deleteid = this.id;
+                // alert("id=" + deleteid);
+                var retVal = confirm("Do you want to Delete this leave Type ?");
+                if (retVal == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/Delete",
+                        data: { "id": deleteid },
+                        success: function (response) {
+                            // alert("Status Updated Successfully!");
+                            location.reload();
+
+                        },
+                        failure: function (response) {
+                            alert("failure");
+                        },
+                        error: function (response) {
+                            alert("error");
+                        }
+                    });
+
+                } else {
+
+                    return false;
                 }
-            });
 
-            } else {
+                //alert(save_change);
 
-                return false;
-            }
-            
-            //alert(save_change);
-
-        })</script>
+            })</script>
 
 
     }

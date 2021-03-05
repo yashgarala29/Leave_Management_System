@@ -1,0 +1,82 @@
+﻿@model Leave_Management_System.Models.ViewModel.LeaveRequest
+
+@{
+    ViewData["Title"] = "UpdateLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid px-lg-4">
+    <div class="row">
+        <div class="col-md-12 mt-lg-4 mt-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-black-50 ">
+                    Edit Leave
+                </h2>
+            </div>
+        </div>
+
+
+
+
+        <!-- column -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class=" align-items-center">
+                        <div>
+                            <form asp-action="UpdateLeave" asp-id="@Model.id" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="id" />
+                                <div class="form-group">
+                                    <label asp-for="LeaveReason" class="cont    rol-label"></label>
+                                    <textarea asp-for="LeaveReason" class="form-control"></textarea>
+                                    <span asp-validation-for="LeaveReason" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LeaveType" class="control-label"></label>
+                                    <select asp-for="LeaveType" class="form-control" asp-items="@ViewBag.leavetype"></select>
+
+                                    <span asp-validation-for="LeaveType" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LeaveStartFrome" class="control-label"></label>
+                                    <input asp-for="LeaveStartFrome" class="form-control" />
+                                    <span asp-validation-for="LeaveStartFrome" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LeaveEndTill" class="control-label"></label>
+                                    <input asp-for="LeaveEndTill" class="form-control" />
+                                    <span asp-validation-for="LeaveEndTill" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FileName" class="control-label"></label>
+                                    <input asp-for="FileName" type="file" name="file" id="file" class="form-control" />
+                                    <span asp-validation-for="FileName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- title -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+
+}
