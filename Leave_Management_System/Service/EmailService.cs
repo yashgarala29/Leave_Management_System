@@ -19,6 +19,12 @@ namespace Leave_Management_System.Service
         {
             _smtpconfigru = smtpconfig.Value;
         }
+        public async Task ForgotpasswordEmail(UserEmail userEmail)
+        {
+            userEmail.Subject = "Forgot Password link";
+            userEmail.Body = UpdatePlaceHolder(GetEmailBody("ForgotPassword"), userEmail.PlaceHolder);
+            await sendEmail(userEmail);
+        }
         public async Task SendLeaveUpdateEmail(UserEmail userEmail)
         {
             userEmail.Subject = "Update Leave";

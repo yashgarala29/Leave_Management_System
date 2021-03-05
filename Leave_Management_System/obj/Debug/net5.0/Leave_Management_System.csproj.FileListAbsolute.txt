@@ -1575,3 +1575,5 @@ C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\De
 C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\MyLeave.cshtml.g.cs
 C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\DeleteLeave.cshtml.g.cs
 C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Common\UpdateLeave.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Account\forgotpassword.cshtml.g.cs
+C:\Users\Lenovo\Documents\Leave_Management_System\Leave_Management_System\obj\Debug\net5.0\Razor\Views\Account\resetPassword.cshtml.g.cs

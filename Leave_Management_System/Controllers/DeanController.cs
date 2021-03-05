@@ -49,9 +49,22 @@ namespace Leave_Management_System.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Dean")]
-        public IActionResult HomePageDean()
+        public async Task<IActionResult> HomePageDean()
         {
-            return View();
+            var curentuseremail = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == curentuseremail).FirstOrDefaultAsync();
+            var leavedata = await _context.LeaveHistory.Include(x => x.AllUser)
+                .Include(x => x.leaveType).Where(x => x.AllUser.Role == "HOD").ToListAsync();
+            var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accepted").Count();
+            var pandingleavecount = leavedata.Where(x => x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now).Count();
+            var Rejectedleavecount = leavedata.Count() - succesleavecount - pandingleavecount;
+            var newhomepageviewmodel = new HomePageDatapass
+            {
+                approveleave = succesleavecount,
+                Peandingeave = pandingleavecount,
+                Rejectedleave = Rejectedleavecount,
+            };
+            return View(newhomepageviewmodel);
         }
 
         [HttpPost]

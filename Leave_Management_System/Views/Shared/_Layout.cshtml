@@ -365,7 +365,7 @@
                                         <li>
                                             <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Profile Details</a>
                                         </li>
-                                        <li >
+                                        <li>
                                             <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">My Leaves</a>
                                         </li>
                                     </ul>
@@ -480,10 +480,10 @@
                                         <i class="fas fa-copy"></i>My Profile
                                     </a>
                                     <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                        <li >
+                                        <li>
                                             <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                                         </li>
-                                        <li >
+                                        <li>
                                             <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
                                         </li>
                                     </ul>
@@ -497,10 +497,10 @@
                                     </a>
                                     <ul class="list-unstyled navbar__sub-list js-sub-list">
 
-                                        <li >
+                                        <li>
                                             <a class="nav-link text-white" asp-area="" asp-controller="temp" asp-action="pendingView">Home</a>
                                         </li>
-                                        <li >
+                                        <li>
                                             <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
                                         </li>
                                     </ul>
@@ -527,91 +527,91 @@
                             </form>
                             <div class="header-button">
                                 <div class="noti-wrap">
-                                <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
+                                    <div class="account-wrap">
+                                        <div class="account-item clearfix js-item-menu">
 
-                                        @if (signinmanager.IsSignedIn(User))
-                                        {
+                                            @if (signinmanager.IsSignedIn(User))
+                                            {
 
 
-                                            <div class="image">
-                                                <img alt="John Doe" src="" id="nav_image" />
-                                            </div>
-                                            <div class="content">
-                                                <a class="js-acc-btn" href="#">@User.Identity.Name</a>
-                                            </div>
-                                            <div class="account-dropdown js-dropdown">
-                                                <div class="info clearfix">
-                                                    <div class="image">
-                                                        <a href="#">
-                                                            <img alt="John Doe" src="" id="drop_nav_image" />
-                                                        </a>
+                                                <div class="image">
+                                                    <img alt="John Doe" src="" id="nav_image" />
+                                                </div>
+                                                <div class="content">
+                                                    <a class="js-acc-btn" href="#">@User.Identity.Name</a>
+                                                </div>
+                                                <div class="account-dropdown js-dropdown">
+                                                    <div class="info clearfix">
+                                                        <div class="image">
+                                                            <a href="#">
+                                                                <img alt="John Doe" src="" id="drop_nav_image" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="content">
+                                                            <h5 class="name">
+                                                                <a>@User.Identity.Name</a>
+                                                            </h5>
+                                                            <span class="email">
+                                                                @{var x = (
+                                                                        await signinmanager.UserManager
+                                                                        .GetRolesAsync(await signinmanager.UserManager.FindByNameAsync(User.Identity.Name)));
+                                                                }
+                                                                @x[0]
+                                                            </span>
+
+
+                                                        </div>
                                                     </div>
-                                                    <div class="content">
-                                                        <h5 class="name">
-                                                            <a>@User.Identity.Name</a>
-                                                        </h5>
-                                                        <span class="email">
-                                                           @{var x = (
-                                                                 await signinmanager.UserManager
-                                                                 .GetRolesAsync(await signinmanager.UserManager.FindByNameAsync(User.Identity.Name)));
-                                                           }
-                                                            @x[0]
-                                                        </span>
+                                                    <div class="account-dropdown__body">
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
+                                                                <i class="zmdi zmdi-account"></i>Account
+                                                            </a>
+                                                        </div>
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
+                                                                <i class="zmdi zmdi-settings"></i>Setting
+                                                            </a>
+                                                        </div>
 
+                                                    </div>
+                                                    <div class="account-dropdown__footer">
+                                                        <form asp-controller="account" asp-action="Logout">
+                                                            <a>
+                                                                <i class="zmdi zmdi-power"></i><button type="submit">Logout</button>
+                                                            </a>
+                                                        </form>
+                                                    </div>
 
+                                                </div>
+                                            }
+                                            else
+                                            {
+
+                                                <div class="content">
+                                                    Login
+                                                </div>
+                                                <div class="account-dropdown js-dropdown">
+                                                    <div class="account-dropdown__body">
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="login">
+                                                                <i class="zmdi zmdi-account"></i>Login
+                                                            </a>
+                                                        </div>
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="register">
+                                                                <i class="zmdi zmdi-settings"></i>Register
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="account-dropdown__body">
-                                                    <div class="account-dropdown__item">
-                                                        <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
-                                                            <i class="zmdi zmdi-account"></i>Account
-                                                        </a>
-                                                    </div>
-                                                    <div class="account-dropdown__item">
-                                                        <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
-                                                            <i class="zmdi zmdi-settings"></i>Setting
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                                <div class="account-dropdown__footer">
-                                                    <form asp-controller="account" asp-action="Logout">
-                                                        <a>
-                                                            <i class="zmdi zmdi-power"></i><button type="submit">Logout</button>
-                                                        </a>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        }
-                                        else
-                                        {
-
-                                            <div class="content">
-                                                Login
-                                            </div>
-                                            <div class="account-dropdown js-dropdown">
-                                                <div class="account-dropdown__body">
-                                                    <div class="account-dropdown__item">
-                                                        <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="login">
-                                                            <i class="zmdi zmdi-account"></i>Login
-                                                        </a>
-                                                    </div>
-                                                    <div class="account-dropdown__item">
-                                                        <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="register">
-                                                            <i class="zmdi zmdi-settings"></i>Register
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </header>
             <!-- MAIN CONTENT-->
             <div class="main-content">
@@ -629,9 +629,8 @@
                 </div>
             </div>
             <!-- END HEADER DESKTOP-->
-            
             <!-- MAIN CONTENT-->
-            
+
         </div>
         <!-- END PAGE CONTAINER-->
 
@@ -657,29 +656,30 @@
     <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/vendor/select2/select2.min.js">
     </script>
-     
-        <script>
-            $(window).on("load", function () {
-                console.log("Hello Image");
-                if ($("#nav_image").length) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/Common/GetUserImage",
-                        success: function (response) {
-                            $('#nav_image').attr('src', response);
-                            $('#drop_nav_image').attr('src', response);
-                        },
-                        failure: function (response) {
-                            alert("failure");
-                        },
-                        error: function (response) {
-                            alert("error");
-                        }
-                    });
-                }
-            });
-        </script>
-    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        $(window).on("load", function () {
+            console.log("Hello Image");
+            if ($("#nav_image").length) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/GetUserImage",
+                    success: function (response) {
+                        $('#nav_image').attr('src', response);
+                        $('#drop_nav_image').attr('src', response);
+                    },
+                    failure: function (response) {
+                        alert("failure");
+                    },
+                    error: function (response) {
+                        alert("error");
+                    }
+                });
+            }
+        });
+    </script>
+
     <!-- Main JS-->
     <script src="~/js/main.js"></script>
     @RenderSection("Scripts", required: false)

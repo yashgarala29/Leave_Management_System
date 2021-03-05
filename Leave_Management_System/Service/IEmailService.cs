@@ -8,5 +8,7 @@ namespace Leave_Management_System.Service
         Task SendTestEmail(UserEmail userEmail);
         Task SendLeaveCancelEmail(UserEmail userEmail);
         Task SendLeaveUpdateEmail(UserEmail userEmail);
+        Task ForgotpasswordEmail(UserEmail userEmail);
+
     }
 }

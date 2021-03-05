@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Leave_Management_System.Models.ViewModel.MyLeave>
-
+﻿@model PaginatedList< Leave_Management_System.Models.ViewModel.MyLeave>
+@using PagedList.Mvc;
 @{
     ViewData["Title"] = "MyLeave";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,12 +9,12 @@
     <div class="col-md-12">
         <div class="table-data__tool-left">
 
-            <form class="form-header" asp-action="Index" method="get">
+            <form class="form-header" asp-action="MyLeave" method="get">
                 <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
                 &nbsp;&nbsp;
                 <input type="submit" value="Search" class="au-btn-filter" />
                 &nbsp;&nbsp;
-                <a class="btn btn-primary" asp-action="Index">Back to Full List</a>
+                <a class="btn btn-primary" asp-action="MyLeave">Back to Full List</a>
             </form>
         </div><br />
         </hr>
@@ -25,25 +25,32 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveStatus)
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["LeaveStatusSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅LeaveStatus</h5></a>
+
+                        </th>
+                        <th
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["LeaveTypeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅LeaveType</h5></a>
+
+                        </th>
+                        <th
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["LeaveReasonSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅LeaveReason</h5></a>
+
+                        </th>
+                        <th
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["NoOfDaySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅NoOfDay</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveType)
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["StartFromeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅StartFrome</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveReason)
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["EndTillSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅EndTill</h5></a>
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.NoOfDay)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.StartFrome)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.EndTill)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Attachment)
+                            <a asp-action="MyLeave" asp-route-sortOrder="@ViewData["AttachmentSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅Attachment</h5></a>
+
                         </th>
                         <th>Operations</th>
                     </tr>
@@ -51,52 +58,95 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveReason)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NoOfDay)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartFrome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EndTill)
-                        </td>
-                        <td>
-                            @if (item.Attachment == null)
-                            {
-
-
-                            }
-                            else
-                            {
-                                <a href="~/file/@item.Attachment">User Document</a>}
-
-                        </td>
-                        @if (item.changeable == 1)
-                        {
+                        <tr>
                             <td>
+                                @Html.DisplayFor(modelItem => item.LeaveStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaveType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaveReason)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NoOfDay)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartFrome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndTill)
+                            </td>
+                            <td>
+                                @if (item.Attachment == null)
+                                {
 
-                                <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
-                                <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
+
+                                }
+                                else
+                                {
+                                    <a href="~/file/@item.Attachment">User Document</a>}
 
                             </td>
-                        }
-                    </tr>
+                            @if (item.changeable == 1)
+                            {
+                                <td>
+
+                                    <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
+                                    <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
+
+                                </td>
+                            }
+                        </tr>
                     }
                 </tbody>
             </table>
+            @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : ""; }
+            <center>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-outline-primary @prevDisabled">
+                    Previous
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @prevDisabled">
+                    @(Model.PageIndex - 1)
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-primary">
+                    @(Model.PageIndex)
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @nextDisabled">
+                    @(Model.PageIndex + 1)
+                </a>
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-outline-primary @nextDisabled">
+                    Next
+                </a>
+            </center>
         </div>
 
-        
+
         <!-- END DATA TABLE-->
     </div>
 </div>

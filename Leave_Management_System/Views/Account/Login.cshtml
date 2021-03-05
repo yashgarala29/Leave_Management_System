@@ -28,10 +28,10 @@
                     <div class=" align-items-center">
                         <div>
                             <form method="post">
-                              
+
                                 <div asp-validation-summary="All" class="text-danger">
 
-                                    
+
                                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                         <h2 class="h3 mb-0 text-black-50 ">
                                             Login
@@ -42,17 +42,18 @@
                                 </div>
                                 <div class="form-group">
                                     <!--<label asp-for="Email"></label>-->
-                                    <input asp-for="Email" class="form-control" placeholder="Enter Email"/>
-                                    <span asp-validation-for="Email " class="text-danger" ></span>
+                                    <input asp-for="Email" class="form-control" placeholder="Enter Email" />
+                                    <span asp-validation-for="Email " class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <!--<label asp-for="Password"></label>-->
-                                    <input asp-for="Password" class="form-control" placeholder="Enter Password"/>
+                                    <input asp-for="Password" class="form-control" placeholder="Enter Password" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
 
 
                                 <button type="submit" class="btn btn-dark btn-block">Login</button>
+                                <a asp-action="forgotpassword">Forgot Password ? </a>
                             </form>
                         </div>
 
@@ -65,44 +66,3 @@
     </div>
 </div>
 
-
-
-
-<!--
-<body>
-
-
-
-
-    <label><h4>OR</h4></label>
-    <hr>
-    <label for="email"><b>Forget password</b></label>
-    <input type="text" placeholder="Enter Email" name="email" required>
-    <button type="submit">Proceed</button> Not Registered Yet? Click To Registration below
-    <label class="next-btn" for="c2">Registration</label>
-
-
-
-
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email " class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </div>
-</div>
-</body>
-     -->
