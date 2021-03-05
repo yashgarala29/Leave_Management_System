@@ -11,6 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Leave_Management_System.Service;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Leave_Management_System.Controllers
 {
@@ -21,24 +24,39 @@ namespace Leave_Management_System.Controllers
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IEmailService emailService;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public RegistrarController(LeaveDbContext context,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<IdentityUser> signInManager, IEmailService emailService)
+            SignInManager<IdentityUser> signInManager, IEmailService emailService, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             this.signInManager = signInManager;
             this.emailService = emailService;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            webHostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
         [Authorize(Roles = "Registrar")]
-        public IActionResult HomePageRegistrar()
+        public async Task<IActionResult> HomePageRegistrar()
         {
-            return View();
+            var curentuseremail = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == curentuseremail).FirstOrDefaultAsync();
+            var leavedata = await _context.LeaveHistory.Include(x => x.AllUser)
+                .Include(x => x.leaveType).Where(x => x.AllUser.Role == "Dean").ToListAsync();
+            var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accept").Count();
+            var pandingleavecount = leavedata.Where(x => x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now).Count();
+            var Rejectedleavecount = leavedata.Count() - succesleavecount - pandingleavecount;
+            var newhomepageviewmodel = new HomePageDatapass
+            {
+                approveleave = succesleavecount,
+                Peandingeave = pandingleavecount,
+                Rejectedleave = Rejectedleavecount,
+            };
+            return View(newhomepageviewmodel);
         }
         [HttpGet]
         [Authorize(Roles = "Registrar")]
@@ -50,12 +68,27 @@ namespace Leave_Management_System.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Registrar")]
-        public async Task<IActionResult> LeaveRequest(LeaveRequest leaveRequest)
+        public async Task<IActionResult> LeaveRequest(LeaveRequest leaveRequest, IFormFile file)
         {
             ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
 if(ModelState.IsValid)
-            { 
-            string username = User.Identity.Name;
+            {
+
+                string uniqueFileName = null;
+
+                if (file != null)
+                {
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "file");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                }
+
+
+                string username = User.Identity.Name;
             var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
             var leaveHistory = new LeaveHistory
             {
@@ -68,16 +101,18 @@ if(ModelState.IsValid)
                 RegistrarApproveStatus = "Pending",
                 LeaveStatus = "Pending",
                 id = singleUser.id,
+                leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
+                Attachment = uniqueFileName
             };
-            var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
-           var totaledayinpending = _context.LeaveHistory.Where(x => x.id == singleUser.id && x.StartFrome > DateTime.Now && x.LeaveStatus == "Pending").Select(x => x.NoOfDay).ToList().Sum();
-                    
-            if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > (leaevupdate.NoOfLeave-totaledayinpending))
-            {
-                ModelState.AddModelError(string.Empty, "You can not request More than " + (leaevupdate.NoOfLeave - totaledayinpending));
-                return View();
-            }
-            _context.LeaveHistory.Add(leaveHistory);
+                var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
+                var totaledayinpending = _context.LeaveHistory.Where(x => x.id == singleUser.id && x.StartFrome > DateTime.Now && x.LeaveStatus == "Pending").Select(x => x.NoOfDay).ToList().Sum();
+
+                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > (leaevupdate.NoOfLeave - totaledayinpending))
+                {
+                    ModelState.AddModelError(string.Empty, "You can not request More than " + (leaevupdate.NoOfLeave - totaledayinpending));
+                    return View();
+                }
+                _context.LeaveHistory.Add(leaveHistory);
            await _context.SaveChangesAsync();
             return RedirectToAction("MyLeave", "Registrar");
             }
@@ -93,7 +128,7 @@ if(ModelState.IsValid)
             foreach (var temp in t)
             {
                 var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
-                .Where(x => (x.AllUser.Email == temp.Email && x.RegistrarApproveStatus == "Pending" && x.StartFrome > DateTime.Now)).ToList();
+                .Where(x => (x.AllUser.Email == temp.Email && x.RegistrarApproveStatus == "Pending")).ToList();
                 if (requestedleave != null)
                     foreach (var single in requestedleave)
                         leaveHistories.Add(single);
@@ -112,6 +147,7 @@ if(ModelState.IsValid)
                     LeaveStartFrome = leaveHistories[i].StartFrome,
                     NoOfDay = leaveHistories[i].NoOfDay,
                     username = leaveHistories[i].AllUser.Email,
+                    Attachment = leaveHistories[i].Attachment,
                     Status = Enum.GetNames(typeof(Status)).ToList()
                 };
                 allrequest.Add(listre);
@@ -136,6 +172,7 @@ if(ModelState.IsValid)
                     leave_id = temp.leave_id,
                     NoOfDay = temp.NoOfDay,
                     StartFrome = temp.StartFrome,
+                    Attachment = temp.Attachment,
                     changeable = (status > 0) ? 1 : 0,
                 };
                 myLeaves.Add(singleLeave);
@@ -159,7 +196,7 @@ if(ModelState.IsValid)
 
 
             leave.approved_id = currentuserId;
-            if (name == "Accepted")
+            if (name == "Accept")
             {
                 var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
                 allocation.NoOfLeave -= leave.NoOfDay;
@@ -230,7 +267,7 @@ if(ModelState.IsValid)
                 LeaveReason = leaveHistory.LeaveReason,
                 LeaveStartFrome = leaveHistory.StartFrome,
                 LeaveType = leaveHistory.leaveType.LeaveType,
-
+                FileName = leaveHistory.Attachment
             };
             ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
 
@@ -240,7 +277,7 @@ if(ModelState.IsValid)
         }
         [HttpPost]
         [Authorize(Roles = "Registrar")]
-        public async Task<IActionResult> UpdateLeave(int id, LeaveRequest leaveRequest)
+        public async Task<IActionResult> UpdateLeave(int id, LeaveRequest leaveRequest, IFormFile file)
         {
             int leave_id = id;
             if (leave_id == 0)
@@ -259,6 +296,18 @@ if(ModelState.IsValid)
             }
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                if (file != null)
+                {
+
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "file");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                }
                 try
                 {
                     var oldallocatedleave = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.id == leaveHistory.id && x.leaveTypeID == leaveHistory.leaveTypeID).FirstOrDefault();
@@ -269,7 +318,7 @@ if(ModelState.IsValid)
                         ModelState.AddModelError(string.Empty, "You can not request More than " + oldallocatedleave.NoOfLeave + leaveHistory.NoOfDay);
                         return View(leaveRequest);
                     }
-                    if (leaveHistory.LeaveStatus == "Accepted")
+                    if (leaveHistory.LeaveStatus == "Accept")
                     {
                         readdleave(leaveHistory.AllUser.Email, leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
                     }
@@ -280,6 +329,7 @@ if(ModelState.IsValid)
                     leaveHistory.StartFrome = leaveRequest.LeaveStartFrome;
                     leaveHistory.leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType);
                     leaveHistory.NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
+                    leaveHistory.Attachment = uniqueFileName;
                     var HODuser = _context.AllUser.Where(x => x.Role == "Registrar").FirstOrDefault();
                     _context.Update(leaveHistory);
                     await _context.SaveChangesAsync();
@@ -375,7 +425,7 @@ if(ModelState.IsValid)
             };
             var arr = new List<KeyValuePair<string, string>>();
             KeyValuePair<string, string> temp = new KeyValuePair<string, string>("{{username}}", leaveHistory.AllUser.Email);
-            if (leaveHistory.LeaveStatus == "Accepted")
+            if (leaveHistory.LeaveStatus == "Accept")
                 readdleave(leaveHistory.AllUser.Email, leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
             //temp.Key = "username";
             //temp.Value = "yashgarala29@gmail.com";

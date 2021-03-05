@@ -68,7 +68,7 @@ namespace Leave_Management_System.Controllers
             //var userdetail = _context.AllUser.Where(x => x.Email == userLoginDetail.Email).FirstOrDefault();
             if (ModelState.IsValid)
             {
-                
+
                 string uniqueFileName = ProcessUploadedFile(ownProfile);
                 AllUser allUser = new AllUser
                 {
@@ -100,7 +100,7 @@ namespace Leave_Management_System.Controllers
                     return View(ownProfile);
 
                 }
-               
+
 
             }
 
@@ -172,6 +172,7 @@ namespace Leave_Management_System.Controllers
             return View(await userlevelist.ToListAsync());
         }
         [HttpGet]
+        [Authorize(Roles = "Dean,admin,HOD,Registrar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -209,6 +210,7 @@ namespace Leave_Management_System.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Dean,admin,HOD,Registrar")]
         public async Task<IActionResult> Edit(int? id, LeaveAllocation leaveAllocation)
         {
 
@@ -255,6 +257,39 @@ namespace Leave_Management_System.Controllers
 
         }
 
+
+        [HttpPost]
+        [Authorize]
+        public string GetUserImage()
+        {
+            string UserImage = null;
+            var Image = _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefault().UserImage;
+            if (Image == null)
+            {
+                UserImage = "/Alternate_image/index.jpg";
+
+            }
+            else
+            {
+                UserImage = "/Uploads/" + Image;
+
+            }
+            return (UserImage);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "HOD,Registrar,Dean,Admin")]
+        public async Task<IActionResult> MyLeaveOperation()
+        {
+           
+            var curentuser = await _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefaultAsync();
+            List<LeaveHistory> listof;
+            
+                listof = await _context.LeaveHistory.Include(l => l.AllUser).Include(x => x.leaveType)
+                   .Where(y => y.approved_id == curentuser.id).ToListAsync();
+
+            return View(listof);
+        }
     }
 
 }

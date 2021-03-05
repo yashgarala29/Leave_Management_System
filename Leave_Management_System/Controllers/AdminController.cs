@@ -41,7 +41,7 @@ namespace Leave_Management_System.Controllers
             foreach (var temp in t)
             {
                 var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
-                .Where(x => (x.AllUser.Email == temp.Email && x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now)).ToList();
+                .Where(x => (x.AllUser.Email == temp.Email && x.LeaveStatus == "Pending")).ToList();
                 if (requestedleave != null)
                     foreach (var single in requestedleave)
                         leaveHistories.Add(single);
@@ -85,7 +85,7 @@ namespace Leave_Management_System.Controllers
 
 
             leave.approved_id = currentuserId;
-            if (name == "Accepted")
+            if (name == "Accept")
             {
                 var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
                 allocation.NoOfLeave -= leave.NoOfDay;
