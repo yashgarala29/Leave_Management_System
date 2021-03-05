@@ -5,35 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ListLeaveAllocation</h1>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NoOfLeave)
-            </th>
+<div class="row m-t-30">
+    <div class="col-md-4">
+        <div class="table-data__tool-left">
 
-            <th>
-                @Html.DisplayNameFor(model => model.leaveType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NoOfLeave)
-                </td>
+            <form class="form-header" asp-action="Index" method="get">
+                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="au-btn-filter" />
+                &nbsp;&nbsp;
+                <a class="btn btn-primary" asp-action="Index">Back to Full List</a>
+            </form>
+        </div><br />
+        </hr>
+        <!-- DATA TABLE-->
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
-                </td>
-               
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3">
+                <thead>
+                    <tr>
+
+                        <th>
+                           Leave Type
+                        </th>
+                        <th>
+                            Number Of Leaves
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NoOfLeave)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- END DATA TABLE-->
+    </div>
+</div>

@@ -1,120 +1,102 @@
 ﻿@model IEnumerable<Leave_Management_System.Models.ViewModel.MyLeave>
 
-
-
 @{
     ViewData["Title"] = "MyLeave";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Begin Page Content -->
-<div class="container-fluid px-lg-4">
-    <div class="row">
-        <div class="col-md-12 mt-lg-4 mt-4">
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h2 class="h3 mb-0 text-black-50 ">
-                    My Leave Faculty
-                </h2>
-                
-            </div>
-        </div>
-        <!-- column -->
-        <div class="col-md-12 mt-4">
-            <div class="card">
-                <div class="card-body">
-                    <!-- title -->
-                    <div class="d-md-flex align-items-center">
-                        <div>
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-data__tool-left">
 
-                            <h5 class="card-subtitle">List Of All Leave Requests</h5>
-                        </div>
-                     </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table v-middle">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.LeaveStatus)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.LeaveType)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.LeaveReason)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.NoOfDay)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.StartFrome)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.EndTill)
-                                </th>
+            <form class="form-header" asp-action="Index" method="get">
+                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="au-btn-filter" />
+                &nbsp;&nbsp;
+                <a class="btn btn-primary" asp-action="Index">Back to Full List</a>
+            </form>
+        </div><br />
+        </hr>
+        <!-- DATA TABLE-->
 
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Attachment)
-                                </th>
-
-
-                                <th>Operations</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LeaveStatus)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LeaveType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LeaveReason)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NoOfDay)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartFrome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndTill)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Attachment)
+                        </th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeaveStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeaveType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeaveReason)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NoOfDay)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartFrome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTill)
+                        </td>
+                        <td>
+                            @if (item.Attachment == null)
                             {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LeaveStatus)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LeaveType)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LeaveReason)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NoOfDay)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StartFrome)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EndTill)
-                                </td>
 
-                                <td>
-                                    @if (item.Attachment == null)
-                                    {
 
-                                        
-                                }
+                            }
                             else
                             {
-                                        <a href="~/file/@item.Attachment">User Document</a>
+                                <a href="~/file/@item.Attachment">User Document</a>}
 
-                               }
-
-                                </td>
-
-                                @if (item.changeable == 1)
-                                {
+                        </td>
+                        @if (item.changeable == 1)
+                        {
                             <td>
 
-                                <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-info">Update leave</a>
-                                <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger">Delete Leave</a>
+                                <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
+                                <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
 
                             </td>
-}
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        }
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
+
+        
+        <!-- END DATA TABLE-->
     </div>
 </div>
-

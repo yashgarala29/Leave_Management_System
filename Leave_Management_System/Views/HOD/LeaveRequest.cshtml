@@ -1,69 +1,53 @@
 ﻿@model Leave_Management_System.Models.ViewModel.LeaveRequest
 
-@{ ViewData["Title"] = "LeaveRequest";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+@{
+    ViewData["Title"] = "LeaveRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<!-- Begin Page Content -->
-<div class="container-fluid px-lg-4">
-    <div class="row">
-        <div class="col-md-12 mt-lg-4 mt-4">
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h2 class="h3 mb-0 text-black-50 ">
-                    Create Leave Request
-                </h2>
-            </div>
+
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            <strong>Leave Request</strong> Form
         </div>
+        <div class="card-body card-block">
+            <form asp-action="LeaveRequest" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="LeaveType" class="control-label"></label>
 
-        <!-- column -->
-        <div class="col-sm-8">
-            <div class="card">
-                <div class="card-body">
-                    <!-- title -->
-                    <div class=" align-items-center">
-                        <div>
-                            <form asp-action="LeaveRequest" enctype="multipart/form-data">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group">
-                                    <label asp-for="LeaveReason" class="control-label"></label>
-                                    <textarea asp-for="LeaveReason" class="form-control"></textarea>
-                                    <span asp-validation-for="LeaveReason" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LeaveType" class="control-label"></label>
-                                    <select asp-for="LeaveType" class="form-control" asp-items="@ViewBag.leavetype"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LeaveStartFrome" class="control-label"></label>
-                                    <input asp-for="LeaveStartFrome" class="form-control" onchange="checkStaringDate()" id="startdate" />
-                                    <span asp-validation-for="LeaveStartFrome" class="text-danger" id="error_in_staring"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LeaveEndTill" class="control-label"></label>
-                                    <input asp-for="LeaveEndTill" class="form-control" onchange="checkEndingDate()" id="enddate" />
-                                    <span asp-validation-for="LeaveEndTill" id="error_in_ending" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="FileName" class="control-label"></label>
-                                    <input asp-for="FileName" type="file" name="file" id="file" class="form-control" />
-                                    <span asp-validation-for="FileName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Request" class="btn btn-primary" />
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-
+                    <select asp-for="LeaveType" class="form-control" asp-items="ViewBag.leavetype"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LeaveReason" class="control-label"></label>
+                    <textarea asp-for="LeaveReason" class="form-control"></textarea>
+                    <span asp-validation-for="LeaveReason" class="text-danger"></span>
                 </div>
 
-            </div>
+                <div class="form-group">
+                    <label asp-for="LeaveStartFrome" class="control-label"></label>
+                    <input asp-for="LeaveStartFrome" class="form-control" onchange="checkStaringDate()" id="startdate" />
+                    <span asp-validation-for="LeaveStartFrome" class="text-danger" id="error_in_staring"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LeaveEndTill" class="control-label"></label>
+                    <input asp-for="LeaveEndTill" class="form-control" onchange="checkEndingDate()" id="enddate" />
+                    <span asp-validation-for="LeaveEndTill" id="error_in_ending" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FileName" class="control-label"></label>
+                    <input asp-for="FileName" type="file" name="file" id="file" class="form-control" />
+                    <span asp-validation-for="FileName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Make Request" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-
 <script>
     function checkStaringDate() {
         var staring_Date = document.getElementById("startdate").value;

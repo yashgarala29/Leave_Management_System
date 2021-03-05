@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Leave_Management_System.Models.ViewModel
 {
-    public class MyLeave
+    public class MyLeave 
     {
         [Key]
         public int leave_id { get; set; }
@@ -26,8 +26,6 @@ namespace Leave_Management_System.Models.ViewModel
         [Display(Name = "Leave End Till")]
         public DateTime EndTill { get; set; }
 
-        //public string Attachment { get; set; }
-        
         public string Attachment { get; set; }
         public int changeable { get; set; } 
 

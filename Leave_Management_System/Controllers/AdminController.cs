@@ -224,9 +224,65 @@ namespace Leave_Management_System.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListLeaveType()
+        public async Task<IActionResult> ListLeaveType(string sortOrder,
+        string currentFilter,
+        string searchString,
+        int? pageNumber)
         {
-            return View(await _context.leaveType.ToListAsync());
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["LeaveTypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveType_desc" : "";
+                ViewData["noofdaySortParm"] = String.IsNullOrEmpty(sortOrder) ? "noofday_desc" : "";
+                ViewData["allcatoToAllSortParm"] = String.IsNullOrEmpty(sortOrder) ? "allcatoToAll_desc" : "";
+                ViewData["itispersonalSortParm"] = String.IsNullOrEmpty(sortOrder) ? "itispersonal_desc" : "";
+                
+                ViewData["CurrentFilter"] = searchString;
+
+                if (searchString != null)
+                {
+                    pageNumber = 1;
+                }
+                else
+                {
+                    //searchString = "Enter some value";
+                    searchString = currentFilter;
+                }
+
+
+
+                var allusers = from s in _context.leaveType select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    allusers = allusers.Where(s => s.LeaveType.Contains(searchString)
+                    || s.noofday.ToString().Contains(searchString)
+                    );
+                }
+
+                switch (sortOrder)
+                {
+                    case "LeaveType_desc":
+                        allusers = allusers.OrderByDescending(s => s.LeaveType);
+                        break;
+
+                    case "noofday_desc":
+                        allusers = allusers.OrderByDescending(s => s.noofday);
+                        break;
+
+                    case "allcatoToAll_desc":
+                        allusers = allusers.OrderByDescending(s => s.allcatoToAll);
+                        break;
+
+                    case "itispersonal_desc":
+                        allusers = allusers.OrderByDescending(s => s.itispersonal);
+                        break;
+
+                   
+                    default:
+                        allusers = allusers.OrderBy(s => s.LeaveType);
+                        break;
+                }
+                //return View(await allusers.AsNoTracking().ToListAsync());
+                int pageSize = 5;
+                return View(await PaginatedList<leaveType>.CreateAsync(allusers.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> UpdateLeaveType(int? id)

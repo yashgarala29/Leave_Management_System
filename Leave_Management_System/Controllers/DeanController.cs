@@ -25,12 +25,10 @@ namespace Leave_Management_System.Controllers
         private readonly IEmailService emailService;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IWebHostEnvironment webHostEnvironment;
-
-
         public DeanController(LeaveDbContext context,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<IdentityUser> signInManager, IEmailService emailService, IWebHostEnvironment hostEnvironment)
+            SignInManager<IdentityUser> signInManager, IEmailService emailService , IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             this.signInManager = signInManager;
@@ -58,14 +56,14 @@ namespace Leave_Management_System.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Dean")]
-        public IActionResult LeaveRequest(LeaveRequest leaveRequest,IFormFile file)
+        public IActionResult LeaveRequest(LeaveRequest leaveRequest, IFormFile file)
         {
             ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
-        if(ModelState.IsValid)
+            if(ModelState.IsValid)
             {
                 string uniqueFileName = null;
 
-                if (file.FileName != null)
+                if (file != null)
                 {
                     string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "file");
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
@@ -75,7 +73,6 @@ namespace Leave_Management_System.Controllers
                         file.CopyTo(fileStream);
                     }
                 }
-
 
                 string username = User.Identity.Name;
             var singleUser = _context.AllUser.Where(x => x.Email == username).FirstOrDefault();
@@ -91,15 +88,17 @@ namespace Leave_Management_System.Controllers
                 LeaveStatus = "Pending",
                 id = singleUser.id,
                 leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType),
-                Attachment=uniqueFileName
+                Attachment = uniqueFileName
             };
-            var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
-            if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > leaevupdate.NoOfLeave)
-            {
-                ModelState.AddModelError(string.Empty, "You can not request More than " + leaevupdate.NoOfLeave);
-                return View();
-            }
-            _context.LeaveHistory.Add(leaveHistory);
+                var leaevupdate = _context.leaveAllocation.Where(x => x.id == singleUser.id && x.leaveTypeID == Convert.ToInt32(leaveRequest.LeaveType)).FirstOrDefault();
+                var totaledayinpending = _context.LeaveHistory.Where(x => x.id == singleUser.id && x.StartFrome > DateTime.Now && x.LeaveStatus == "Pending").Select(x => x.NoOfDay).ToList().Sum();
+
+                if ((int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays) > (leaevupdate.NoOfLeave - totaledayinpending))
+                {
+                    ModelState.AddModelError(string.Empty, "You can not request More than " + (leaevupdate.NoOfLeave - totaledayinpending));
+                    return View();
+                }
+                _context.LeaveHistory.Add(leaveHistory);
             _context.SaveChangesAsync();
              return RedirectToAction("MyLeave", "Dean");
             }
@@ -160,8 +159,7 @@ namespace Leave_Management_System.Controllers
                     LeaveStartFrome = leaveHistories[i].StartFrome,
                     NoOfDay = leaveHistories[i].NoOfDay,
                     username = leaveHistories[i].AllUser.Email,
-                    Attachment=leaveHistories[i].Attachment,
-
+                    Attachment = leaveHistories[i].Attachment,
                     Status = Enum.GetNames(typeof(Status)).ToList()
                 };
                 allrequest.Add(listre);
@@ -257,7 +255,7 @@ namespace Leave_Management_System.Controllers
                 LeaveReason = leaveHistory.LeaveReason,
                 LeaveStartFrome = leaveHistory.StartFrome,
                 LeaveType = leaveHistory.leaveType.LeaveType,
-
+                FileName = leaveHistory.Attachment
             };
             ViewBag.leavetype = new SelectList(_context.leaveType.Where(x => x.itispersonal == true && x.allcatoToAll == true), "leaveTypeID", "LeaveType");
 
@@ -267,7 +265,7 @@ namespace Leave_Management_System.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Dean")]
-        public async Task<IActionResult> UpdateLeave(int id, LeaveRequest leaveRequest)
+        public async Task<IActionResult> UpdateLeave(int id, LeaveRequest leaveRequest, IFormFile file)
         {
             int leave_id = id;
             if (leave_id == 0)
@@ -286,6 +284,18 @@ namespace Leave_Management_System.Controllers
             }
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                if (file != null)
+                {
+
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "file");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                }
                 try
                 {
                     var oldallocatedleave = _context.leaveAllocation.Include(x => x.leaveType).Where(x => x.id == leaveHistory.id && x.leaveTypeID == leaveHistory.leaveTypeID).FirstOrDefault();
@@ -307,6 +317,7 @@ namespace Leave_Management_System.Controllers
                     leaveHistory.StartFrome = leaveRequest.LeaveStartFrome;
                     leaveHistory.leaveTypeID = Convert.ToInt32(leaveRequest.LeaveType);
                     leaveHistory.NoOfDay = (int)((leaveRequest.LeaveEndTill - leaveRequest.LeaveStartFrome).TotalDays);
+                    leaveHistory.Attachment = uniqueFileName;
                     var HODuser = _context.AllUser.Where(x => x.Role == "Registrar").FirstOrDefault();
                     _context.Update(leaveHistory);
                     await _context.SaveChangesAsync();

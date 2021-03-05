@@ -35,6 +35,8 @@ namespace Leave_Management_System
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<SMTPConfigru>(Configuration.GetSection("SMTPConfig"));
             services.AddControllersWithViews();
+            
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
