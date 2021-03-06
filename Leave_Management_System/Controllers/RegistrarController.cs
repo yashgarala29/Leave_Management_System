@@ -50,11 +50,13 @@ namespace Leave_Management_System.Controllers
             var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accepted").Count();
             var pandingleavecount = leavedata.Where(x => x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now).Count();
             var Rejectedleavecount = leavedata.Count() - succesleavecount - pandingleavecount;
+            var TotalLeaveCount = succesleavecount + pandingleavecount + Rejectedleavecount;
             var newhomepageviewmodel = new HomePageDatapass
             {
                 approveleave = succesleavecount,
                 Peandingeave = pandingleavecount,
                 Rejectedleave = Rejectedleavecount,
+                TotalLeave = TotalLeaveCount
             };
             return View(newhomepageviewmodel);
         }
@@ -189,13 +191,34 @@ if(ModelState.IsValid)
 
 
             int leave_id_int = int.Parse(leave_id);
-            var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
+            var leave = _context.LeaveHistory.Include(x => x.AllUser).Include(x => x.leaveType).Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.RegistrarApproveStatus = name;
             leave.LeaveStatus = name;
-
-
-
             leave.approved_id = currentuserId;
+
+
+
+            UserEmail userEmail = new UserEmail
+            {
+                ToEmail = leave.AllUser.Email,
+
+            };
+            var arr = new List<KeyValuePair<string, string>>();
+            var leavereason = new KeyValuePair<string, string>("{{leavereason}}", leave.LeaveReason);
+            var leavestart = new KeyValuePair<string, string>("{{leavestart}}", leave.StartFrome.ToString());
+            var leaveend = new KeyValuePair<string, string>("{{leaveend}}", leave.EndTill.ToString());
+            var leavetype = new KeyValuePair<string, string>("{{leavetype}}", leave.leaveType.LeaveType);
+            var leavestatus = new KeyValuePair<string, string>("{{leavestatus}}", leave.LeaveStatus);
+
+            //temp.Key = "username";
+            //temp.Value = "yashgarala29@gmail.com";
+            arr.Add(leavereason);
+            arr.Add(leavestart);
+            arr.Add(leaveend);
+            arr.Add(leavetype);
+            arr.Add(leavestatus);
+            userEmail.PlaceHolder = arr;
+            await emailService.LeaveStatusChangeEmail(userEmail);
             if (name == "Accepted")
             {
                 var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
@@ -213,6 +236,11 @@ if(ModelState.IsValid)
             //{
             //    throw;
             //}
+
+            
+
+
+
             return Json(leave);
         }
         public bool convertleavetype(string email, string newvalue, string oldvalue, int noofday, int oldday)

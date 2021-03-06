@@ -116,6 +116,7 @@ namespace Leave_Management_System.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+
             return View();
         }
 

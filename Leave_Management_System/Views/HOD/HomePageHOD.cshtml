@@ -1,31 +1,56 @@
 ﻿@model Leave_Management_System.Models.ViewModel.HomePageDatapass
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<!-- Begin Page Content -->
-<div class="container-fluid px-lg-4">
-    <div class="row">
-        <div class="col-md-12 mt-lg-4 mt-4">
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h2 class="h3 mb-0 text-black-50 ">
-                    Home Page HOD
-
-
-
-                </h2>
-                <div id="piechart"></div>
+<div class="row">
+    <div class="col-md-6 col-lg-3">
+        <div class="statistic__item">
+            <h2 class="number"> @Model.Peandingeave</h2>
+            <span class="desc">Pending Requests</span>
+            <div class="icon">
+                <i class="zmdi zmdi-spinner"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="statistic__item">
+            <h2 class="number"> @Model.approveleave</h2>
+            <span class="desc">Accepted Requests</span>
+            <div class="icon">
+                <i class="zmdi zmdi-badge-check"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="statistic__item">
+            <h2 class="number">@Model.Rejectedleave</h2>
+            <span class="desc">Rejected Requests</span>
+            <div class="icon">
+                <i class="zmdi zmdi-block"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="statistic__item">
+            <h2 class="number">@Model.TotalLeave </h2>
+            <span class="desc">Total Request</span>
+            <div class="icon">
+                <i class="zmdi zmdi-account-o"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="au-card recent-report">
+            <div class="au-card-inner">
+                <h3 class="title-2">recent reports For Leave Requests</h3>
+                <div id="piechart"> </div>
                 @*@await Html.PartialAsync("../Common/CalenderPartial.cshtml");*@
             </div>
         </div>
-
-
-
-
-        <!-- column -->
-
     </div>
+    
 </div>
-
 @section scripts{
 
     <script type="text/javascript">
@@ -40,7 +65,7 @@
                 ['Accepted Leave', @Model.approveleave],
                 ['Rejected Leave', @Model.Rejectedleave],
                 ['Pending  Leave',@Model.Peandingeave],
-
+               
             ]);
 
             // Optional; add a title and set the width and height of the chart
@@ -51,4 +76,4 @@
             chart.draw(data, options);
         }
     </script>
-}ss
+}

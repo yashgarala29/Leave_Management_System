@@ -107,6 +107,7 @@ namespace Leave_Management_System.Controllers
             }
 
         [HttpGet]
+        [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> MyLeave()
         {
             string curentUser = User.Identity.Name;

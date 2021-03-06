@@ -10,6 +10,7 @@ using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using Leave_Management_System.Service;
 
 namespace Leave_Management_System.Controllers
 {
@@ -18,16 +19,18 @@ namespace Leave_Management_System.Controllers
 
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IEmailService emailService;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly LeaveDbContext _context;
 
         public AdminController(LeaveDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            SignInManager<IdentityUser> signInManager, IEmailService emailService,
             RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.emailService = emailService;
             this.roleManager = roleManager;
         }
 
@@ -78,13 +81,32 @@ namespace Leave_Management_System.Controllers
 
 
             int leave_id_int = int.Parse(leave_id);
-            var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
+            var leave = _context.LeaveHistory.Include(x => x.AllUser).Include(x => x.leaveType).Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.DeanApproveStatus = name;
             leave.LeaveStatus = name;
-
-
-
             leave.approved_id = currentuserId;
+
+            UserEmail userEmail = new UserEmail
+            {
+                ToEmail = leave.AllUser.Email,
+
+            };
+            var arr = new List<KeyValuePair<string, string>>();
+            var leavereason = new KeyValuePair<string, string>("{{leavereason}}", leave.LeaveReason);
+            var leavestart = new KeyValuePair<string, string>("{{leavestart}}", leave.StartFrome.ToString());
+            var leaveend = new KeyValuePair<string, string>("{{leaveend}}", leave.EndTill.ToString());
+            var leavetype = new KeyValuePair<string, string>("{{leavetype}}", leave.leaveType.LeaveType);
+            var leavestatus = new KeyValuePair<string, string>("{{leavestatus}}", leave.LeaveStatus);
+
+            //temp.Key = "username";
+            //temp.Value = "yashgarala29@gmail.com";
+            arr.Add(leavereason);
+            arr.Add(leavestart);
+            arr.Add(leaveend);
+            arr.Add(leavetype);
+            arr.Add(leavestatus);
+            userEmail.PlaceHolder = arr;
+            await emailService.LeaveStatusChangeEmail(userEmail);
             if (name == "Accepted")
             {
                 var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
@@ -102,6 +124,12 @@ namespace Leave_Management_System.Controllers
             //{
             //    throw;
             //}
+
+           
+
+
+
+
             return Json(leave);
         }
 
@@ -139,6 +167,27 @@ namespace Leave_Management_System.Controllers
         public IActionResult LeaveReport()
         {
             return View();
+        }
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> HomePageAdmin()
+        {
+            var curentuseremail = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == curentuseremail).FirstOrDefaultAsync();
+            var leavedata = await _context.LeaveHistory.Include(x => x.AllUser)
+                .Include(x => x.leaveType).Where(x => x.AllUser.Role == "Registrar").ToListAsync();
+            var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accepted").Count();
+            var pandingleavecount = leavedata.Where(x => x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now).Count();
+            var Rejectedleavecount = leavedata.Count() - succesleavecount - pandingleavecount;
+            var TotalLeaveCount = succesleavecount + pandingleavecount + Rejectedleavecount;
+            var newhomepageviewmodel = new HomePageDatapass
+            {
+                approveleave = succesleavecount,
+                Peandingeave = pandingleavecount,
+                Rejectedleave = Rejectedleavecount,
+                TotalLeave = TotalLeaveCount
+            };
+            return View(newhomepageviewmodel);
         }
         [HttpPost]
         public async Task<bool> Delete(string id)
@@ -204,6 +253,8 @@ namespace Leave_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                leave.itispersonal = true;
+                leave.allcatoToAll = false;
                 _context.leaveType.Add(leave);
                 await _context.SaveChangesAsync();
                 if(leave.allcatoToAll)

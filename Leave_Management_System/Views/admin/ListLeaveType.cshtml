@@ -34,11 +34,8 @@
                             <a asp-action="ListLeaveType" asp-route-sortOrder="@ViewData["allcatoToAllSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅allcatoToAll</h5></a>
 
                         </th>
-                        <th>
-                            <a asp-action="ListLeaveType" asp-route-sortOrder="@ViewData["itispersonalSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅itispersonal</h5></a>
-
-                        </th>
-                        <th></th>
+                        
+                        <th colspan="2">Operation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,18 +52,18 @@
                 @Html.DisplayFor(modelItem => item.allcatoToAll)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.itispersonal)
+                @if (!item.allcatoToAll)
+                {
+                    <a id="@item.leaveTypeID" class="btn btn-success text-white" name="Allocate">Allocate to all</a>                }
             </td>
             <td>
                 <a class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit" asp-action="UpdateLeaveType" asp-route-id="@item.leaveTypeID"></a> |
                 <a id="@item.leaveTypeID" name="Delete" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
-                @if (!item.allcatoToAll)
-                {
-    <a id="@item.leaveTypeID" name="Allocate">Allocate to all</a>}
+                
             </td>
         </tr>}
-                </tbody>
-            </table>
+    </tbody>
+</table>
 
             @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
                             var nextDisabled = !Model.HasNextPage ? "disabled" : ""; }

@@ -34,6 +34,7 @@ namespace Leave_Management_System.Controllers
             arr.Add(temp);
             userEmail.PlaceHolder = arr;
             await emailService.SendTestEmail(userEmail);
+            
             return View();
         }
 

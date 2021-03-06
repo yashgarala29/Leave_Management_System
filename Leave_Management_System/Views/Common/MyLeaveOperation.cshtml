@@ -7,13 +7,22 @@
 <div class="row m-t-30">
     <div class="col-md-12">
         <div class="table-data__tool-left">
+            <div class="table-data__tool-left">
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1">Leave Responces History</h2>
+                        </div>
+                    </div>
+                </div>
+            </div><br />
             <form class="form-header" asp-action="MyLeaveOperation" method="get">
                 <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
                 &nbsp;&nbsp;
                 <input type="submit" value="Search" class="au-btn-filter" />
                 &nbsp;&nbsp;
-                <a class="btn btn-primary" asp-action="MyLeaveOperation">Back to Full List</a>
+                <a class="btn btn-primary" asp-action="MyLeaveOperation">Full List</a>
             </form>
         </div><br />
         </hr>
