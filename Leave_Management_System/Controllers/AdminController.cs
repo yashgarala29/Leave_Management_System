@@ -10,6 +10,7 @@ using Leave_Management_System.Models.Class;
 using Leave_Management_System.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using Leave_Management_System.Service;
 
 namespace Leave_Management_System.Controllers
 {
@@ -18,20 +19,122 @@ namespace Leave_Management_System.Controllers
 
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IEmailService emailService;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly LeaveDbContext _context;
 
         public AdminController(LeaveDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            SignInManager<IdentityUser> signInManager, IEmailService emailService,
             RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.emailService = emailService;
             this.roleManager = roleManager;
         }
 
-    [HttpPost]
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> ListOfLeaveRequest()
+        {
+            var hodDeparment = _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+            List<LeaveHistory> leaveHistories = new List<LeaveHistory>();
+            var t = await userManager.GetUsersInRoleAsync("Registrar");
+            foreach (var temp in t)
+            {
+                var requestedleave = _context.LeaveHistory.Include(l => l.AllUser)
+                .Where(x => (x.AllUser.Email == temp.Email && x.LeaveStatus == "Pending")).ToList();
+                if (requestedleave != null)
+                    foreach (var single in requestedleave)
+                        leaveHistories.Add(single);
+            }
+
+            var allrequest = new List<ListOfLeaveRequestHOD>();
+            for (int i = 0; i < leaveHistories.Count; i++)
+            {
+                var listre = new ListOfLeaveRequestHOD
+                {
+                    id = leaveHistories[i].leave_id,
+                    FirstName = leaveHistories[i].AllUser.Name,
+                    LastName = leaveHistories[i].AllUser.LastName,
+                    LeaveEndTill = leaveHistories[i].EndTill,
+                    LeaveReason = leaveHistories[i].LeaveReason,
+                    LeaveStartFrome = leaveHistories[i].StartFrome,
+                    NoOfDay = leaveHistories[i].NoOfDay,
+                    username = leaveHistories[i].AllUser.Email,
+                    Status = Enum.GetNames(typeof(Status)).ToList()
+                };
+                allrequest.Add(listre);
+            }
+            return View(allrequest);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<JsonResult> AjaxMethod(string name, string leave_id)
+        {
+
+            var currentuser = User.Identity.Name;
+            var currentuserId = _context.AllUser.Where(x => x.Email == currentuser).FirstOrDefault().id;
+
+
+
+            int leave_id_int = int.Parse(leave_id);
+            var leave = _context.LeaveHistory.Include(x => x.AllUser).Include(x => x.leaveType).Where(x => x.leave_id == leave_id_int).FirstOrDefault();
+            leave.DeanApproveStatus = name;
+            leave.LeaveStatus = name;
+            leave.approved_id = currentuserId;
+
+            UserEmail userEmail = new UserEmail
+            {
+                ToEmail = leave.AllUser.Email,
+
+            };
+            var arr = new List<KeyValuePair<string, string>>();
+            var leavereason = new KeyValuePair<string, string>("{{leavereason}}", leave.LeaveReason);
+            var leavestart = new KeyValuePair<string, string>("{{leavestart}}", leave.StartFrome.ToString());
+            var leaveend = new KeyValuePair<string, string>("{{leaveend}}", leave.EndTill.ToString());
+            var leavetype = new KeyValuePair<string, string>("{{leavetype}}", leave.leaveType.LeaveType);
+            var leavestatus = new KeyValuePair<string, string>("{{leavestatus}}", leave.LeaveStatus);
+
+            //temp.Key = "username";
+            //temp.Value = "yashgarala29@gmail.com";
+            arr.Add(leavereason);
+            arr.Add(leavestart);
+            arr.Add(leaveend);
+            arr.Add(leavetype);
+            arr.Add(leavestatus);
+            userEmail.PlaceHolder = arr;
+            await emailService.LeaveStatusChangeEmail(userEmail);
+            if (name == "Accepted")
+            {
+                var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
+                allocation.NoOfLeave -= leave.NoOfDay;
+                _context.Update(allocation);
+                _context.SaveChanges();
+
+            }
+            //try
+            //{
+            _context.Update(leave);
+            await _context.SaveChangesAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    throw;
+            //}
+
+           
+
+
+
+
+            return Json(leave);
+        }
+
+
+        [HttpPost]
         public async Task<List<LeaveHistory>> GetLeaveReposrt(string staringDate,string endingDate)
         {
             DateTime staringDate_new = DateTime.Parse(staringDate);
@@ -64,6 +167,27 @@ namespace Leave_Management_System.Controllers
         public IActionResult LeaveReport()
         {
             return View();
+        }
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> HomePageAdmin()
+        {
+            var curentuseremail = User.Identity.Name;
+            var curentuser = await _context.AllUser.Where(x => x.Email == curentuseremail).FirstOrDefaultAsync();
+            var leavedata = await _context.LeaveHistory.Include(x => x.AllUser)
+                .Include(x => x.leaveType).Where(x => x.AllUser.Role == "Registrar").ToListAsync();
+            var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accepted").Count();
+            var pandingleavecount = leavedata.Where(x => x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now).Count();
+            var Rejectedleavecount = leavedata.Count() - succesleavecount - pandingleavecount;
+            var TotalLeaveCount = succesleavecount + pandingleavecount + Rejectedleavecount;
+            var newhomepageviewmodel = new HomePageDatapass
+            {
+                approveleave = succesleavecount,
+                Peandingeave = pandingleavecount,
+                Rejectedleave = Rejectedleavecount,
+                TotalLeave = TotalLeaveCount
+            };
+            return View(newhomepageviewmodel);
         }
         [HttpPost]
         public async Task<bool> Delete(string id)
@@ -129,6 +253,8 @@ namespace Leave_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                leave.itispersonal = true;
+                leave.allcatoToAll = false;
                 _context.leaveType.Add(leave);
                 await _context.SaveChangesAsync();
                 if(leave.allcatoToAll)
@@ -149,9 +275,65 @@ namespace Leave_Management_System.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListLeaveType()
+        public async Task<IActionResult> ListLeaveType(string sortOrder,
+        string currentFilter,
+        string searchString,
+        int? pageNumber)
         {
-            return View(await _context.leaveType.ToListAsync());
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["LeaveTypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveType_desc" : "";
+                ViewData["noofdaySortParm"] = String.IsNullOrEmpty(sortOrder) ? "noofday_desc" : "";
+                ViewData["allcatoToAllSortParm"] = String.IsNullOrEmpty(sortOrder) ? "allcatoToAll_desc" : "";
+                ViewData["itispersonalSortParm"] = String.IsNullOrEmpty(sortOrder) ? "itispersonal_desc" : "";
+                
+                ViewData["CurrentFilter"] = searchString;
+
+                if (searchString != null)
+                {
+                    pageNumber = 1;
+                }
+                else
+                {
+                    //searchString = "Enter some value";
+                    searchString = currentFilter;
+                }
+
+
+
+                var allusers = from s in _context.leaveType select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    allusers = allusers.Where(s => s.LeaveType.Contains(searchString)
+                    || s.noofday.ToString().Contains(searchString)
+                    );
+                }
+
+                switch (sortOrder)
+                {
+                    case "LeaveType_desc":
+                        allusers = allusers.OrderByDescending(s => s.LeaveType);
+                        break;
+
+                    case "noofday_desc":
+                        allusers = allusers.OrderByDescending(s => s.noofday);
+                        break;
+
+                    case "allcatoToAll_desc":
+                        allusers = allusers.OrderByDescending(s => s.allcatoToAll);
+                        break;
+
+                    case "itispersonal_desc":
+                        allusers = allusers.OrderByDescending(s => s.itispersonal);
+                        break;
+
+                   
+                    default:
+                        allusers = allusers.OrderBy(s => s.LeaveType);
+                        break;
+                }
+                //return View(await allusers.AsNoTracking().ToListAsync());
+                int pageSize = 5;
+                return View(await PaginatedList<leaveType>.CreateAsync(allusers.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> UpdateLeaveType(int? id)

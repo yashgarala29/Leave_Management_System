@@ -7,160 +7,146 @@
 
 
 
-<!-- Begin Page Content -->
-<div class="container-fluid px-lg-4">
-    <div class="row">
-        <div class="col-md-12 mt-lg-4 mt-4">
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h2 class="h3 mb-0 text-black-50 ">
-                    My Leave Faculty
-                </h2>
 
-            </div>
-        </div>
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-data__tool-left">
 
+            <div class="table-data__tool-left">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">List of Leave Request of HOD</h2>
 
-
-
-        <!-- column -->
-        <div class="col-md-12 mt-4">
-            <div class="card">
-                <div class="card-body">
-                    <!-- title -->
-                    <div class="d-md-flex align-items-center">
-                        <div>
-
-                            <h5 class="card-subtitle">List Of All Leave Requests</h5>
-                        </div>
-                        <!--
-                        <div class="ml-auto">
-                            <div class="dl">
-                                <select class="custom-select">
-                                    <option value="0" selected="">Monthly</option>
-                                    <option value="1">Daily</option>
-                                    <option value="2">Weekly</option>
-                                    <option value="3">Yearly</option>
-                                </select>
-                            </div>
-                        </div>
-                            -->
                     </div>
-                    <!-- title -->
-                </div>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                                <th>Start Frome</th>
-                                <th>End Till</th>
-                                <th>No Of Day</th>
-                                <th>Leave Reason</th>
-                                <th>Operation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.Count; i++)
-                            {
-                            <tr>
-                                <td> @Model[i].FirstName</td>
-                                <td>@Model[i].LastName</td>
-                                <td> @Model[i].username</td>
-                                <td>@Model[i].LeaveStartFrome</td>
-                                <td>@Model[i].LeaveEndTill</td>
-                                <td> @Model[i].NoOfDay</td>
-
-
-                                <td> @Model[i].LeaveReason</td>
-                                <!--<td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>-->
-
-                                <td><button class="btn btn-success" value="@Model[i].id" name="Accept">Accept</button>
-                                <button class="btn btn-danger" value="@Model[i].id" name="Reject">Reject</button></td>
-                                <td></td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
                 </div>
             </div>
+
+        </div><br />
+        </hr>
+        <!-- DATA TABLE-->
+
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                        <th>Start Frome</th>
+                        <th>End Till</th>
+                        <th>No Of Day</th>
+                        <th>Leave Reason</th>
+                        <th>Attachment</th>
+                        <th colspan="2">Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                    <tr>
+                        <td> @Model[i].FirstName</td>
+                        <td>@Model[i].LastName</td>
+                        <td> @Model[i].username</td>
+                        <td>@Model[i].LeaveStartFrome</td>
+                        <td>@Model[i].LeaveEndTill</td>
+                        <td> @Model[i].NoOfDay</td>
+
+
+                        <td> @Model[i].LeaveReason</td>
+
+                        <td>
+                            @if (Model[i].Attachment == null)
+                            {
+
+                            }
+                            else
+                            {
+                    <a href="~/file/@Model[i].Attachment">User Document</a>}
+
+                        </td>
+                        <!--<td> <button class="btn btn-primary" value="@Model[i].id" name="savechange"> Save Change </button></td>-->
+
+                        <td>
+                            <button class="btn btn-success" value="@Model[i].id"  class="btn btn-success zmdi zmdi-badge-check" data-toggle="tooltip" data-placement="top" title="Accept" name="Accept">Accept</button>
+                            </td>
+                        <td>
+                            <button class="btn btn-danger" value="@Model[i].id" class="btn btn-danger zmdi zmdi-check-circle" data-toggle="tooltip" data-placement="top" title="Accept"name="Reject">Reject</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-    </div>
-</div>
 
+    @section scripts{
+        <script>
 
-@section scripts{
-    <script>
+            /* $("[name=savechange]").on("click", function () {
+                 var savechangevalue = $(this).val();
+                 var save_change = $(this).closest('td').prev().prev().find('.status').val();
+                 $.ajax({
+                     type: "POST",
+                     url: "/HOD/AjaxMethod",
+                     data: { "name": save_change, "leave_id": savechangevalue },
+                     success: function (response) {
+                         alert("Status Updated Successfully!");
+                         location.reload();
 
-       /* $("[name=savechange]").on("click", function () {
-            var savechangevalue = $(this).val();
-            var save_change = $(this).closest('td').prev().prev().find('.status').val();
-            $.ajax({
-                type: "POST",
-                url: "/HOD/AjaxMethod",
-                data: { "name": save_change, "leave_id": savechangevalue },
-                success: function (response) {
-                    alert("Status Updated Successfully!");
-                    location.reload();
+                     },
+                     failure: function (response) {
+                         alert("failure");
+                     },
+                     error: function (response) {
+                         alert("error");
+                     }
+                 });
+                 //alert(save_change);
 
-                },
-                failure: function (response) {
-                    alert("failure");
-                },
-                error: function (response) {
-                    alert("error");
-                }
-            });
-            //alert(save_change);
+             })*/
 
-        })*/
+            $("[name=Accept]").on("click", function () {
+                var savechangevalue = $(this).val();
+                var save_change = "Accepted";
+                $.ajax({
+                    type: "POST",
+                    url: "/HOD/AjaxMethod",
+                    data: { "name": save_change, "leave_id": savechangevalue },
+                    success: function (response) {
+                        location.reload();
 
-        $("[name=Accept]").on("click", function () {
-            var savechangevalue = $(this).val();
-            var save_change = "Accepted";
-            $.ajax({
-                type: "POST",
-                url: "/HOD/AjaxMethod",
-                data: { "name": save_change, "leave_id": savechangevalue },
-                success: function (response) {
-                    alert("Status Updated Successfully!");
-                    location.reload();
+                    },
+                    failure: function (response) {
+                        alocation.reload();
+                    },
+                    error: function (response) {
+                        location.reload();
+                    }
+                });
+                //alert(save_change);
 
-                },
-                failure: function (response) {
-                    alert("failure");
-                },
-                error: function (response) {
-                    alert("error");
-                }
-            });
-            //alert(save_change);
+            })
+            $("[name=Reject]").on("click", function () {
+                var savechangevalue = $(this).val();
+                var save_change = "Rejected";
+                $.ajax({
+                    type: "POST",
+                    url: "/HOD/AjaxMethod",
+                    data: { "name": save_change, "leave_id": savechangevalue },
+                    success: function (response) {
+                        location.reload();
 
-        })
-        $("[name=Reject]").on("click", function () {
-            var savechangevalue = $(this).val();
-            var save_change = "Rejected";
-            $.ajax({
-                type: "POST",
-                url: "/HOD/AjaxMethod",
-                data: { "name": save_change, "leave_id": savechangevalue },
-                success: function (response) {
-                    alert("Status Updated Successfully!");
-                    location.reload();
+                    },
+                    failure: function (response) {
+                        location.reload();
+                    },
+                    error: function (response) {
+                        location.reload();
+                    }
+                });
+                //alert(save_change);
 
-                },
-                failure: function (response) {
-                    alert("failure");
-                },
-                error: function (response) {
-                    alert("error");
-                }
-            });
-            //alert(save_change);
+            })
 
-        })
-        
-    </script>
-}
+        </script>
+    }

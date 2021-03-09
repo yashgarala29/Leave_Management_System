@@ -31,10 +31,12 @@ namespace Leave_Management_System
             services.AddDbContext<LeaveDbContext>(opretion =>
            opretion.UseSqlServer(Configuration.GetConnectionString("LeaveDbConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<LeaveDbContext>();
+                .AddEntityFrameworkStores<LeaveDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<SMTPConfigru>(Configuration.GetSection("SMTPConfig"));
             services.AddControllersWithViews();
+            
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +63,7 @@ namespace Leave_Management_System
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }

@@ -1,43 +1,62 @@
 ﻿@model IEnumerable<Leave_Management_System.Models.Class.LeaveAllocation>
 
-@{
-    ViewData["Title"] = "ListLeaveAllocation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@{ ViewData["Title"] = "ListLeaveAllocation";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<h1>ListLeaveAllocation</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NoOfLeave)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AllUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.leaveType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoOfLeave)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AllUser.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
-            </td>
-            <td>
-                <a class="btn btn-orange" asp-action="Edit" asp-route-id="@item.AllocationID">Edit</a>
-            </td>
-        </tr>
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-data__tool-left">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Allocated Leaves To Users</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </hr>
+        <!-- DATA TABLE-->
+
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NoOfLeave)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AllUser)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.leaveType)
+                        </th>
+                        <th>
+                            Operation
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfLeave)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AllUser.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.leaveType.LeaveType)
+                </td>
+                <td>
+                    <a class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit" asp-action="Edit" asp-route-id="@item.AllocationID"></a>
+                </td>
+            </tr>
 }
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+        <!-- END DATA TABLE-->
+    </div>
+</div>

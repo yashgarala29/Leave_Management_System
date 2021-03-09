@@ -25,6 +25,6 @@ namespace Leave_Management_System.Models.ViewModel
         public List<string> Status { get; set; }
         [Display(Name = "Leave Reason")]
         public string LeaveReason { get; set; }
-
+        public string Attachment { get; set; }
     }
 }

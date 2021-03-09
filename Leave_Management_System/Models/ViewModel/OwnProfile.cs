@@ -10,24 +10,27 @@ namespace Leave_Management_System.Models.ViewModel
     {
         [Key]
         public int id { get; set; }
-        [DataType(DataType.EmailAddress)]
 
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Required]
         [Display(Name = "Mobile Number 1")]
-        //[DataType(DataType.PhoneNumber)]
-        //[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string MobileNo { get; set; }
 
+        [Required]
         [Display(Name = "Mobile Number 2")]
-        //[DataType(DataType.PhoneNumber)]
-        //[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string MobileNo2 { get; set; }
 
+        [Required]
         [Display(Name = "First Name")]
         public string Name { get; set; }
+
+        [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Required]
         [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
 
@@ -37,9 +40,11 @@ namespace Leave_Management_System.Models.ViewModel
         [Display(Name = "Department")]
         public string Department { get; set; }
 
+        [Required]
         [DataType(DataType.MultilineText)]
         public string Addreaddress { get; set; }
 
+        [Required]
         public string City { get; set; }
 
         public int PaidLeave { get; set; }

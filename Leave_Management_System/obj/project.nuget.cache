@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "H6ipA3R/44Y344CJ3I1dDzjYSwVY2gajbFbIJsZ4oIR/c7ffehSGTT+rj8ItouWBXxE8KsPhQAbY8cUGj4eckg==",
+  "dgSpecHash": "ZyIliYU0/PkQ1sAJrAwcLBKszFbA16UVm3/VdJrhvpCJwvEbKfII/7FtTKN9yG76gnw3xiZy+dQRWcZlF8dd8Q==",
   "success": true,
-  "projectFilePath": "C:\\last Update\\yash_2_3_21\\Leave_Management_System\\Leave_Management_System.csproj",
+  "projectFilePath": "C:\\Users\\Lenovo\\Documents\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\mailkit\\2.10.1\\mailkit.2.10.1.nupkg.sha512",
@@ -63,18 +63,20 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.identitymodel.tokens\\5.6.0\\microsoft.identitymodel.tokens.5.6.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\5.0.2\\microsoft.visualstudio.web.codegeneration.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\5.0.2\\microsoft.visualstudio.web.codegeneration.contracts.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\5.0.2\\microsoft.visualstudio.web.codegeneration.core.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\5.0.2\\microsoft.visualstudio.web.codegeneration.design.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.entityframeworkcore\\5.0.2\\microsoft.visualstudio.web.codegeneration.entityframeworkcore.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.templating\\5.0.2\\microsoft.visualstudio.web.codegeneration.templating.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\5.0.2\\microsoft.visualstudio.web.codegeneration.utils.5.0.2.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\5.0.2\\microsoft.visualstudio.web.codegenerators.mvc.5.0.2.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\5.0.1\\microsoft.visualstudio.web.codegeneration.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\5.0.1\\microsoft.visualstudio.web.codegeneration.contracts.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\5.0.1\\microsoft.visualstudio.web.codegeneration.core.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\5.0.1\\microsoft.visualstudio.web.codegeneration.design.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.entityframeworkcore\\5.0.1\\microsoft.visualstudio.web.codegeneration.entityframeworkcore.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.templating\\5.0.1\\microsoft.visualstudio.web.codegeneration.templating.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\5.0.1\\microsoft.visualstudio.web.codegeneration.utils.5.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\5.0.1\\microsoft.visualstudio.web.codegenerators.mvc.5.0.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\mimekit\\2.10.1\\mimekit.2.10.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\pagedlist\\1.17.0\\pagedlist.1.17.0.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\pagedlist.mvc\\4.5.0\\pagedlist.mvc.4.5.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\portable.bouncycastle\\1.8.8\\portable.bouncycastle.1.8.8.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.4\\sqlitepclraw.bundle_e_sqlite3.2.0.4.nupkg.sha512",
@@ -158,5 +160,26 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PagedList 1.17.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PagedList",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PagedList.Mvc 4.5.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PagedList.Mvc",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }
