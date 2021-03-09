@@ -114,8 +114,38 @@ namespace Leave_Management_System.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            if (signInManager.IsSignedIn(User))
+            {
+                var x = (await signInManager.UserManager.GetRolesAsync(await signInManager.UserManager.FindByNameAsync(User.Identity.Name)));
+
+                string role_user = x[0];
+                if (role_user == "HOD")
+                {
+                    return RedirectToAction("HomePageHOD", "HOD");
+                }
+                else if (role_user == "admin")
+                {
+                    return RedirectToAction("Index", "AllUsers");
+                }
+                else if (role_user == "Dean")
+                {
+                    return RedirectToAction("HomePageDean", "Dean");
+                }
+                else if (role_user == "Faculty")
+                {
+                    return RedirectToAction("HomePageFaculty", "Faculty");
+                }
+                else if (role_user == "Registrar")
+                {
+                    return RedirectToAction("HomePageRegistrar", "Registrar");
+                }
+                else if (role_user == "Pending")
+                {
+                    return RedirectToAction("pendingView", "temp");
+                }
+            }
 
             return View();
         }
