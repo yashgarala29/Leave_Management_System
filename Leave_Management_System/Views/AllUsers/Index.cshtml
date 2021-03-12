@@ -5,173 +5,214 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-                <div class="row m-t-30">
-                    <div class="col-md-12">
-                        <div class="table-data__tool-left">
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-data__tool-left">
 
-                            <form class="form-header" asp-action="Index" method="get">
-                                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
-                                &nbsp;&nbsp;
-                                <input type="submit" value="Search" class="au-btn-filter" />
-                                &nbsp;&nbsp;
-                                <a class="btn btn-primary" asp-action="Index">Full List</a>
-                            </form>
-                        </div><br />
-                        </hr>
-                        <!-- DATA TABLE-->
-                       
-                        <div class="table-responsive m-b-40">
-                            <table class="table table-borderless table-data3">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["EmailSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅Email</h5></a>
+            <form class="form-header" asp-action="Index" method="get">
+                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="au-btn-filter" />
+                &nbsp;&nbsp;
+                <a class="btn btn-primary" asp-action="Index">Full List</a>
+            </form>
+        </div><br />
+        </hr>
+        <!-- DATA TABLE-->
+        <button type="button" class="btn btn-primary" onclick="generate()" value="Export To PDF">Export as PDF</button>
+        <button type="button" class="btn btn-success" onclick="exportTableToCSV('Leave_Status.csv')">Export as CSV</button>
+        <div class="table-responsive m-b-40">
+            <table class="table table-borderless table-data3" id="tblmyleave">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["EmailSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white"> ⇅Email</h5></a>
 
-                                        </th>
+                        </th>
 
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MobileNoSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅MobileNo</h5></a>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MobileNoSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅MobileNo</h5></a>
 
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MobileNo2SortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅MobileNo2</h5></a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MobileNo2SortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅MobileNo2</h5></a>
 
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Name</h5></a>
-
-
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅LastName</h5></a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Name</h5></a>
 
 
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MiddleNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅MiddleName</h5></a>
-
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["DeparmentSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Deparment</h5></a>
-
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["RoleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Role</h5></a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅LastName</h5></a>
 
 
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["AddreaddressSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Addreaddress</h5></a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MiddleNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅MiddleName</h5></a>
+
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["DeparmentSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Deparment</h5></a>
+
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["RoleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Role</h5></a>
 
 
-                                        </th>
-                                        <th>
-                                            <a asp-action="Index" asp-route-sortOrder="@ViewData["CitySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅City</h5></a>
-
-                                        </th>
-
-                                        <th colspan="3">
-                                            <h5 class="text text-white"> Operations</h5>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr class="tr-shadow">
-
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Email)
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MobileNo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MobileNo2)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Name)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.LastName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MiddleName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Deparment)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Role)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Addreaddress)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.City)
-                                            </td>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["AddreaddressSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅Addreaddress</h5></a>
 
 
-                                            
-                                            <td>
-                                                <a class="btn btn-info zmdi zmdi-info" data-toggle="tooltip" data-placement="top" title="Details" asp-action="Details" asp-route-id="@item.id"></a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete" asp-action="Delete" asp-route-id="@item.id"></a>
-                                            </td>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["CitySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><h5 class="text-white">⇅City</h5></a>
 
-                                        </tr>
-                                    }
+                        </th>
 
-                                </tbody>
-                            </table>
-                        </div>
+                        <th colspan="3">
+                            <h5 class="text text-white"> Operations</h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="tr-shadow">
 
-                        @{
-                            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-                        }
-                        <center>
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex - 1)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn btn-outline-primary @prevDisabled">
-                                Previous
-                            </a>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNo2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Deparment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Role)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Addreaddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
 
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex - 1)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn btn-default @prevDisabled">
-                                @(Model.PageIndex - 1)
-                            </a>
 
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn btn-primary">
-                                @(Model.PageIndex)
-                            </a>
 
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex + 1)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn btn-default @nextDisabled">
-                                @(Model.PageIndex + 1)
-                            </a>
+                            <td>
+                                <a class="btn btn-info zmdi zmdi-info" data-toggle="tooltip" data-placement="top" title="Details" asp-action="Details" asp-route-id="@item.id"></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete" asp-action="Delete" asp-route-id="@item.id"></a>
+                            </td>
 
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex + 1)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn btn-outline-primary @nextDisabled">
-                                Next
-                            </a>
-                        </center>
-                        <!-- END DATA TABLE-->
-                    </div>
-                </div>
-            
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <center>
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-outline-primary @prevDisabled">
+                Previous
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @prevDisabled">
+                @(Model.PageIndex - 1)
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-primary">
+                @(Model.PageIndex)
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @nextDisabled">
+                @(Model.PageIndex + 1)
+            </a>
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-outline-primary @nextDisabled">
+                Next
+            </a>
+        </center>
+        <!-- END DATA TABLE-->
+    </div>
+</div>
+<button class="btn btn-success" id="json">JSON</button>
+
+@section Scripts {
+    <script>
+        function generate() {
+            var y = 20;
+            var doc = new jsPDF('l', 'pt', 'a4');
+            doc.setLineWidth(2);
+            doc.text(200, y = y + 30, "All Users");
+            var res = doc.autoTableHtmlToJson(document.getElementById("tblmyleave"));
+            var cols = res.columns;
+            cols.splice(6, 1);
+            doc.autoTable(res.columns, res.data, {
+                startY: 60
+            });
+            doc.save('MY_Leave_Status.pdf');
+        }
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+            csvFile = new Blob([csv], { type: "text/csv" });
+            downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        }
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                for (var j = 0; j < cols.length - 1; j++)
+                    row.push(cols[j].innerText);
+                csv.push(row.join(","));
+            }
+            downloadCSV(csv.join("\n"), filename);
+        }
+    </script>
+}

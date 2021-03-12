@@ -3,7 +3,6 @@
 @{ ViewData["Title"] = "MyLeave";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-
 <div class="row m-t-30">
     <div class="col-md-12">
         <div class="table-data__tool-left">
@@ -19,28 +18,37 @@
         </div><br />
         </hr>
         <!-- DATA TABLE-->
-
+        <button type="button" class="btn btn-primary" onclick="generate()" value="Export To PDF">Export as PDF</button>
+        <button type="button" class="btn btn-success" onclick="exportTableToCSV('Leave_Status.csv')">Export as CSV</button>
         <div class="table-responsive m-b-40">
-            <table class="table table-borderless table-data3">
+            <table class="table table-borderless table-data3" id="tblmyleave">
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveStatus)
+                            Leave Type
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.LeaveReason)
+                            LeaveStatus
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.NoOfDay)
+                            LeaveReason
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.StartFrome)
+                            NoOfDay
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.EndTill)
+                            StartFrome
+
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Attachment)
+                            EndTill
+
+                        </th>
+                        <th>
+                            Attachment
+
                         </th>
 
                         <th colspan="2">Operations</th>
@@ -51,11 +59,15 @@
                     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.LeaveType)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.LeaveStatus)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LeaveReason)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.NoOfDay)
             </td>
@@ -72,22 +84,57 @@
                 }
                 else
                 {
-<a href="~/file/@item.Attachment" class="btn btn-info zmdi zmdi-attachment"></a>}
+<a href="~/file/@item.Attachment">User Document</a>}
             </td>
-            @if (item.changeable == 1)
-            {
-<td>
 
-    <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
-    <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
-
-</td>}
+            <td>
+                @if (item.changeable == 1)
+                {
+<a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
+                    <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>}
+            </td>
         </tr>}
                 </tbody>
             </table>
         </div>
-
-
-        <!-- END DATA TABLE-->
     </div>
 </div>
+
+@section Scripts {
+    <script>function generate() {
+            var y = 20;
+            var doc = new jsPDF('l', 'pt', 'a4');
+            doc.setLineWidth(2);
+            doc.text(200, y = y + 30, "MY Leave Status");
+            var res = doc.autoTableHtmlToJson(document.getElementById("tblmyleave"));
+            var cols = res.columns;
+            cols.splice(6, 1);
+            doc.autoTable(res.columns, res.data, {
+                startY: 60
+            });
+            doc.save('MY_Leave_Status.pdf');
+        }
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+            csvFile = new Blob([csv], { type: "text/csv" });
+            downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        }
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                for (var j = 0; j < cols.length - 1; j++)
+                    row.push(cols[j].innerText);
+                csv.push(row.join(","));
+            }
+            downloadCSV(csv.join("\n"), filename);
+        }</script>
+
+}

@@ -119,31 +119,7 @@ namespace Leave_Management_System.Controllers
             return View(leaveRequest);
         }
 
-        [HttpGet]
-        [Authorize(Roles = "HOD")]
-        public async Task<IActionResult> MyLeave()
-        {
-            string curentUser = User.Identity.Name;
-            var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
-            List<MyLeave> myLeaves = new List<MyLeave>();
-            foreach (var temp in userlevelist)
-            {
-                int status = DateTime.Compare(temp.StartFrome, DateTime.Now);
-                var singleLeave = new MyLeave
-                {
-                    EndTill = temp.EndTill,
-                    LeaveReason = temp.LeaveReason,
-                    LeaveStatus = temp.LeaveStatus,
-                    leave_id = temp.leave_id,
-                    NoOfDay = temp.NoOfDay,
-                    StartFrome = temp.StartFrome,
-                    Attachment = temp.Attachment,
-                    changeable = (status > 0) ? 1 : 0,
-                };
-                myLeaves.Add(singleLeave);
-            }
-            return View(myLeaves);
-        }
+        
 
         [HttpGet]
         [Authorize(Roles = "HOD")]
@@ -317,6 +293,32 @@ namespace Leave_Management_System.Controllers
             //ViewBag.leave = leave_id;
             return View(leareqyest);
 
+        }
+        [HttpGet]
+        [Authorize(Roles = "HOD")]
+        public async Task<IActionResult> MyLeave()
+        {
+            string curentUser = User.Identity.Name;
+            var userlevelist = _context.LeaveHistory.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
+            List<MyLeave> myLeaves = new List<MyLeave>();
+            foreach (var temp in userlevelist)
+            {
+                int status = DateTime.Compare(temp.StartFrome, DateTime.Now);
+                var singleLeave = new MyLeave
+                {
+                    EndTill = temp.EndTill,
+                    LeaveReason = temp.LeaveReason,
+                    LeaveStatus = temp.LeaveStatus,
+                    LeaveType = temp.leaveType.LeaveType,
+                    leave_id = temp.leave_id,
+                    NoOfDay = temp.NoOfDay,
+                    StartFrome = temp.StartFrome,
+                    Attachment = temp.Attachment,
+                    changeable = (status > 0) ? 1 : 0,
+                };
+                myLeaves.Add(singleLeave);
+            }
+            return View(myLeaves);
         }
         [HttpPost]
         [Authorize(Roles = "HOD")]

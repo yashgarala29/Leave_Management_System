@@ -79,6 +79,10 @@
               "target": "Package",
               "version": "[5.0.1, )"
             },
+            "Mvc.JQuery.DataTables.AspNetCore": {
+              "target": "Package",
+              "version": "[1.5.56, )"
+            },
             "PagedList.Mvc": {
               "target": "Package",
               "version": "[4.5.0, )"

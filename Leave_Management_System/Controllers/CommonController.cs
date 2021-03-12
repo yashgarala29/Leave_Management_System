@@ -368,33 +368,5 @@ namespace Leave_Management_System.Controllers
 
 
         }
-
-
-        [HttpGet]
-        [Authorize(Roles = "HOD,Registrar,Dean,admin,Faculty")]
-        public async Task<IActionResult> MyLeave()
-        {
-            string curentUser = User.Identity.Name;
-            var userlevelist = _context.LeaveHistory.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
-            List<MyLeave> myLeaves = new List<MyLeave>();
-            foreach (var temp in userlevelist)
-            {
-                int status = DateTime.Compare(temp.StartFrome, DateTime.Now);
-                var singleLeave = new MyLeave
-                {
-                    EndTill = temp.EndTill,
-                    LeaveReason = temp.LeaveReason,
-                    LeaveStatus = temp.LeaveStatus,
-                    leave_id = temp.leave_id,
-                    NoOfDay = temp.NoOfDay,
-                    StartFrome = temp.StartFrome,
-                    Attachment = temp.Attachment,
-                    changeable = (status > 0) ? 1 : 0,
-                    LeaveType = temp.leaveType.LeaveType,
-                };
-                myLeaves.Add(singleLeave);
-            }
-            return View(myLeaves);
-        }
     }
 }

@@ -111,7 +111,7 @@ namespace Leave_Management_System.Controllers
         public async Task<IActionResult> MyLeave()
         {
             string curentUser = User.Identity.Name;
-            var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
+            var userlevelist = _context.LeaveHistory.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
             List<MyLeave> myLeaves = new List<MyLeave>();
             foreach (var temp in userlevelist)
             {
@@ -121,6 +121,7 @@ namespace Leave_Management_System.Controllers
                     EndTill = temp.EndTill,
                     LeaveReason = temp.LeaveReason,
                     LeaveStatus = temp.LeaveStatus,
+                    LeaveType = temp.leaveType.LeaveType,
                     leave_id = temp.leave_id,
                     NoOfDay = temp.NoOfDay,
                     StartFrome = temp.StartFrome,
