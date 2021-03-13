@@ -287,6 +287,7 @@ namespace Leave_Management_System.Controllers
         int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
+            ViewData["LeaveTypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveType_desc" : "";
             ViewData["LeaveStatusSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveStatus_desc" : "";
             ViewData["LeaveReasonSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveReason_desc" : "";
             ViewData["NoOfDaySortParm"] = String.IsNullOrEmpty(sortOrder) ? "NoOfDay_desc" : "";
@@ -312,6 +313,7 @@ namespace Leave_Management_System.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 allusers = allusers.Where(s => s.LeaveStatus.Contains(searchString)
+                    || s.leaveType.LeaveType.Contains(searchString)
                     || s.LeaveReason.Contains(searchString)
                     || s.NoOfDay.ToString().Contains(searchString)
                     || s.EndTill.ToString().Contains(searchString)
@@ -320,6 +322,9 @@ namespace Leave_Management_System.Controllers
 
             switch (sortOrder)
             {
+                case "LeaveType_desc":
+                    allusers = allusers.OrderByDescending(s => s.leaveType.LeaveType);
+                    break;
                 case "LeaveStatus_desc":
                     allusers = allusers.OrderByDescending(s => s.LeaveStatus);
                     break;
@@ -345,7 +350,7 @@ namespace Leave_Management_System.Controllers
                     break;
             }
             //return View(await allusers.AsNoTracking().ToListAsync());
-            int pageSize = 5;
+            int pageSize = 10;
             return View(await PaginatedList<LeaveHistory>.CreateAsync(allusers.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
         // GET: LeaveHistories/Details/5

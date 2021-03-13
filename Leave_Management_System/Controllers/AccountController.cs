@@ -227,7 +227,7 @@ namespace Leave_Management_System.Controllers
                     //IdentityResult identityResult = await userManager.AddToRoleAsync(s, "Admin");
                     await leaveallocationToALL(s.Email);
                     if (identityResult.Succeeded)
-                        return RedirectToAction("index", "home");
+                        return RedirectToAction("Login", "Account");
                 }
                 foreach(var error in result.Errors)
                 {

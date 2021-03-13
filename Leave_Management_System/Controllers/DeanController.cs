@@ -168,7 +168,7 @@ namespace Leave_Management_System.Controllers
 
 
             int leave_id_int = int.Parse(leave_id);
-            var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
+            var leave = _context.LeaveHistory.Include(x => x.AllUser).Include(x => x.leaveType).Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.DeanApproveStatus = name;
             leave.LeaveStatus = name;
             leave.approved_id = currentuserId;
