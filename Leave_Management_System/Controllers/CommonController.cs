@@ -278,18 +278,123 @@ namespace Leave_Management_System.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "HOD,Registrar,Dean,Admin")]
-        public async Task<IActionResult> MyLeaveOperation()
-        {
-           
-            var curentuser = await _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefaultAsync();
-            List<LeaveHistory> listof;
-            
-                listof = await _context.LeaveHistory.Include(l => l.AllUser).Include(x => x.leaveType)
-                   .Where(y => y.approved_id == curentuser.id).ToListAsync();
+        [Authorize(Roles = "HOD,Registrar,Dean,admin")]
+        public async Task<IActionResult> MyLeaveOperation(
 
-            return View(listof);
+            string sortOrder,
+        string currentFilter,
+        string searchString,
+        int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["LeaveStatusSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveStatus_desc" : "";
+            ViewData["LeaveReasonSortParm"] = String.IsNullOrEmpty(sortOrder) ? "LeaveReason_desc" : "";
+            ViewData["NoOfDaySortParm"] = String.IsNullOrEmpty(sortOrder) ? "NoOfDay_desc" : "";
+            ViewData["StartFromeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "StartFrome_desc" : "";
+            ViewData["EndTillSortParm"] = String.IsNullOrEmpty(sortOrder) ? "EndTill_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+
+                searchString = currentFilter;
+            }
+
+
+            var curentuser = await _context.AllUser.Where(x => x.Email == User.Identity.Name).FirstOrDefaultAsync();
+            var allusers = from s in _context.LeaveHistory.Include(l => l.AllUser).Include(x => x.leaveType)
+                   .Where(y => y.approved_id == curentuser.id)
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                allusers = allusers.Where(s => s.LeaveStatus.Contains(searchString)
+                    || s.LeaveReason.Contains(searchString)
+                    || s.NoOfDay.ToString().Contains(searchString)
+                    || s.EndTill.ToString().Contains(searchString)
+                    );
+            }
+
+            switch (sortOrder)
+            {
+                case "LeaveStatus_desc":
+                    allusers = allusers.OrderByDescending(s => s.LeaveStatus);
+                    break;
+
+                case "LeaveReason_desc":
+                    allusers = allusers.OrderByDescending(s => s.LeaveReason);
+                    break;
+
+                case "NoOfDay_desc":
+                    allusers = allusers.OrderByDescending(s => s.NoOfDay);
+                    break;
+
+                case "StartFrome_desc":
+                    allusers = allusers.OrderByDescending(s => s.StartFrome);
+                    break;
+
+                case "EndTill_desc":
+                    allusers = allusers.OrderByDescending(s => s.EndTill);
+                    break;
+
+                default:
+                    allusers = allusers.OrderBy(s => s.LeaveStatus);
+                    break;
+            }
+            //return View(await allusers.AsNoTracking().ToListAsync());
+            int pageSize = 5;
+            return View(await PaginatedList<LeaveHistory>.CreateAsync(allusers.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+        // GET: LeaveHistories/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var leaveHistory = await _context.LeaveHistory
+                .Include(l => l.AllUser)
+                .FirstOrDefaultAsync(m => m.leave_id == id);
+            if (leaveHistory == null)
+            {
+                return NotFound();
+            }
+
+            return View(leaveHistory);
+
+
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "HOD,Registrar,Dean,admin,Faculty")]
+        public async Task<IActionResult> MyLeave()
+        {
+            string curentUser = User.Identity.Name;
+            var userlevelist = _context.LeaveHistory.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
+            List<MyLeave> myLeaves = new List<MyLeave>();
+            foreach (var temp in userlevelist)
+            {
+                int status = DateTime.Compare(temp.StartFrome, DateTime.Now);
+                var singleLeave = new MyLeave
+                {
+                    EndTill = temp.EndTill,
+                    LeaveReason = temp.LeaveReason,
+                    LeaveStatus = temp.LeaveStatus,
+                    leave_id = temp.leave_id,
+                    NoOfDay = temp.NoOfDay,
+                    StartFrome = temp.StartFrome,
+                    Attachment = temp.Attachment,
+                    changeable = (status > 0) ? 1 : 0,
+                    LeaveType = temp.leaveType.LeaveType,
+                };
+                myLeaves.Add(singleLeave);
+            }
+            return View(myLeaves);
         }
     }
-
 }

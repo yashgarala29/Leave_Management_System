@@ -8192,19 +8192,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lenovo\\.nuget\\packages\\": {}
+    "C:\\Users\\91728\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\SEM 6\\SDP\\project\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
+      "projectUniqueName": "F:\\SEM 6\\SDP\\project\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
       "projectName": "Leave_Management_System",
-      "projectPath": "E:\\SEM 6\\SDP\\project\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
-      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "E:\\SEM 6\\SDP\\project\\Leave_Management_System\\Leave_Management_System\\obj\\",
+      "projectPath": "F:\\SEM 6\\SDP\\project\\Leave_Management_System\\Leave_Management_System\\Leave_Management_System.csproj",
+      "packagesPath": "C:\\Users\\91728\\.nuget\\packages\\",
+      "outputPath": "F:\\SEM 6\\SDP\\project\\Leave_Management_System\\Leave_Management_System\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\91728\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8289,7 +8289,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   },

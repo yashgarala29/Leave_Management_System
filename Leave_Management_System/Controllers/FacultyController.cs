@@ -105,12 +105,13 @@ namespace Leave_Management_System.Controllers
             }
             return View(leaveRequest);
             }
+
         [HttpGet]
         [Authorize(Roles = "Faculty")]
         public async Task<IActionResult> MyLeave()
         {
             string curentUser = User.Identity.Name;
-            var userlevelist = _context.LeaveHistory.Include(x => x.leaveType).Where(x => x.AllUser.Email == curentUser).ToList();
+            var userlevelist = _context.LeaveHistory.Where(x => x.AllUser.Email == curentUser).ToList();
             List<MyLeave> myLeaves = new List<MyLeave>();
             foreach (var temp in userlevelist)
             {
@@ -125,12 +126,12 @@ namespace Leave_Management_System.Controllers
                     StartFrome = temp.StartFrome,
                     Attachment = temp.Attachment,
                     changeable = (status > 0) ? 1 : 0,
-                    LeaveType = temp.leaveType.LeaveType,
                 };
                 myLeaves.Add(singleLeave);
             }
             return View(myLeaves);
         }
+
         int noofleavealocated;
         [HttpGet]
         [Authorize(Roles = "Faculty")]

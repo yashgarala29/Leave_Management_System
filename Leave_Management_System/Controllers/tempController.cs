@@ -47,18 +47,7 @@ namespace Leave_Management_System.Controllers
         {
             var user_id = User.Identity.Name;
             var arr = context.Notifications.Include(l => l.AllUser).Where(x => x.AllUser.Email == user_id).OrderBy(x => x.isreaded).ToList();
-            List<Notification> changedatabase_arr;
-            changedatabase_arr = arr.FindAll(x=>x.isreaded==false);
-            if (changedatabase_arr.Count() != 0)
-            {
-                foreach (var t in changedatabase_arr)
-                {
-                    t.isreaded = true;
-                    context.Update(t);
 
-                }
-                context.SaveChanges();
-            }
             return arr;
         }
     }

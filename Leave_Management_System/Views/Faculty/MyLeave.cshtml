@@ -1,21 +1,21 @@
 ﻿@model IEnumerable<Leave_Management_System.Models.ViewModel.MyLeave>
 
-@{
-    ViewData["Title"] = "MyLeave";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@{ ViewData["Title"] = "MyLeave";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
 
 <div class="row m-t-30">
     <div class="col-md-12">
         <div class="table-data__tool-left">
-
-            <form class="form-header" asp-action="Index" method="get">
-                <input class="au-input au-input--xl" input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" required / placeholder="Search With Keayword" />
-                &nbsp;&nbsp;
-                <input type="submit" value="Search" class="au-btn-filter" />
-                &nbsp;&nbsp;
-                <a class="btn btn-primary" asp-action="Index">Back to Full List</a>
-            </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">My Leave</h2>
+                        
+                    </div>
+                </div>
+            </div>
+            
         </div><br />
         </hr>
         <!-- DATA TABLE-->
@@ -26,9 +26,6 @@
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.LeaveStatus)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.LeaveType)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.LeaveReason)
@@ -45,58 +42,56 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Attachment)
                         </th>
-                        <th>Operations</th>
+
+                        <th colspan="2">Operations</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LeaveReason)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NoOfDay)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartFrome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EndTill)
-                        </td>
-                        <td>
-                            @if (item.Attachment == null)
-                            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveReason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartFrome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTill)
+                </td>
+                <td>
+                    @if (item.Attachment == null)
+                    {
 
-
-                            }
-                            else
-                            {
-                                <a href="~/file/@item.Attachment">User Document</a>}
-
-                        </td>
-                        @if (item.changeable == 1)
-                        {
-                            <td>
-
-                                <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
-                                <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
-
-                            </td>
-                        }
-                    </tr>
                     }
+                    else
+                    {
+                        <a href="~/file/@item.Attachment">User Document</a>
+                    }
+                </td>
+                @if (item.changeable == 1)
+                {
+            <td>
+
+                <a asp-action="UpdateLeave" asp-route-leave_id="@item.leave_id" class="btn btn-warning zmdi zmdi-edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
+                <a asp-action="DeleteLeave" asp-route-leave_id="@item.leave_id" class="btn btn-danger zmdi zmdi-delete" data-toggle="tooltip" data-placement="top" title="Delete"></a>
+
+            </td>
+}
+            </tr>
+}
                 </tbody>
             </table>
         </div>
 
-        
+
         <!-- END DATA TABLE-->
     </div>
 </div>
+

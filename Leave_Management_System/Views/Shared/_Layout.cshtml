@@ -42,8 +42,8 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
-                            <img src="images/icon/logo9_1.png" />
+                        <a class="logo">
+                            <img src="~/images/icon/logo9_1.png" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -56,112 +56,224 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>LeaveType
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
+                        @if (signinmanager.IsSignedIn(User))
+                        {
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Create Leave Type</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">List Leave Type</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation"> My Leave Operation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-table"></i>History
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="AllUsers" asp-action="Index">All Users History</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="LeaveHistories" asp-action="Index">All Leave History</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="far fa-check-square"></i>Role Allocation
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Role" asp-action="ListOfAllUser">Role Allocation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.IsInRole("Registrar"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Registrar" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Registrar" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Registrar" asp-action="ListOfLeaveRequest">ListOfLeaveRequest</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">Users Leaves</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">My Leave Operations</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Profile Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">My Leaves</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.IsInRole("Dean"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="HomePageDean">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="ListOfLeaveRequest">ListOfLeaveRequest</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">Users Leaves History</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">My Leave Operations</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.IsInRole("HOD"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="HomePageHOD">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="ListOfLeaveRequest">Pending Leave Requests</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">My Leave Operations</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
 
-                                </li>
-                                <li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
 
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
+                                        </li>
+
+                                    </ul>
                                 </li>
 
-                            </ul>
+                            }
+                            @if (User.IsInRole("Faculty"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Faculty" asp-action="HomePageFaculty">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Faculty" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Faculty" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.IsInRole("Pending"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
 
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-
+                                        <li>
+                                            <a class="nav-link text-white" asp-area="" asp-controller="temp" asp-action="pendingView">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Charts
-                            </a>
-                        </li>
-                        <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Tables
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms
-                            </a>
-                        </li>
-                        <li>
-                            <a href="calendar.html">
-                                <i class="fas fa-calendar-alt"></i>Calendar
-                            </a>
-                        </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-map-marker-alt"></i>Maps
-                            </a>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>UI Elements
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="button.html">Button</a>
-                                </li>
-                                <li>
-                                    <a href="badge.html">Badges</a>
-                                </li>
-                                <li>
-                                    <a href="tab.html">Tabs</a>
-                                </li>
-                                <li>
-                                    <a href="card.html">Cards</a>
-                                </li>
-                                <li>
-                                    <a href="alert.html">Alerts</a>
-                                </li>
-                                <li>
-                                    <a href="progress-bar.html">Progress Bars</a>
-                                </li>
-                                <li>
-                                    <a href="modal.html">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="switch.html">Switchs</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grids</a>
-                                </li>
-                                <li>
-                                    <a href="fontawesome.html">Fontawesome Icon</a>
-                                </li>
-                                <li>
-                                    <a href="typo.html">Typography</a>
-                                </li>
-                            </ul>
-                        </li>
+                            }
+                        }
                     </ul>
                 </div>
             </nav>
@@ -179,71 +291,72 @@
                     <ul class="list-unstyled navbar__list">
                         @if (signinmanager.IsSignedIn(User))
                         {
-            @if (User.IsInRole("admin"))
-            {
-<li class="active has-sub">
-    <a class="js-arrow" href="#">
-        <i class="fas fa-tachometer-alt"></i>Leave Operations
-    </a>
-    <ul class="list-unstyled navbar__sub-list js-sub-list">
-        <li>
-            <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Create Leave Type</a>
-        </li>
-        <li>
-            <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">List Leave Type</a>
-        </li>
-        <li>
-            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">List Leave Type</a>
-        </li>
-    </ul>
-</li>
-                    <li class="active has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-table"></i>History
-                        </a>
-                        <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a class="" asp-area="" asp-controller="AllUsers" asp-action="Index">All Users History</a>
-                            </li>
-                            <li>
-                                <a class="" asp-area="" asp-controller="LeaveHistories" asp-action="Index">All Leave History</a>
-                            </li>
-                        </ul>
-                    </li>
-                                        <li class="active has-sub">
-                                            <a class="js-arrow" href="#">
-                                                <i class="far fa-check-square"></i>Role Allocation
-                                            </a>
-                                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                <li>
-                                                    <a class="" asp-area="" asp-controller="Role" asp-action="ListOfAllUser">Role Allocation</a>
-                                                </li>
-                                            </ul>
-                                        </li>}
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Admin" asp-action="CreatLeaveType">Create Leave Type</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Admin" asp-action="ListLeaveType">List Leave Type</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">MyLeaveOperation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-table"></i>History
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="AllUsers" asp-action="Index">All Users History</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="LeaveHistories" asp-action="Index">All Leave History</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="far fa-check-square"></i>Role Allocation
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Role" asp-action="ListOfAllUser">Role Allocation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
                             @if (User.IsInRole("Registrar"))
                             {
-            <li class="active has-sub">
-                <a class="js-arrow" href="#">
-                    <i class="fas fa-tachometer-alt"></i>Leave Operations
-                </a>
-                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                    <li>
-                        <a class="" asp-area="" asp-controller="Registrar" asp-action="LeaveRequest">Create Leave</a>
-                    </li>
-                    <li>
-                        <a class="" asp-area="" asp-controller="Registrar" asp-action="MyLeave">MyLeave</a>
-                    </li>
-                    <li>
-                        <a class="" asp-area="" asp-controller="Registrar" asp-action="ListOfLeaveRequest">ListOfLeaveRequest</a>
-                    </li>
-                    <li>
-                        <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">Users Leaves</a>
-                    </li>
-                    <li>
-                        <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">List Leave Type</a>
-                    </li>
-                </ul>
-            </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Registrar" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Registrar" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Registrar" asp-action="ListOfLeaveRequest">ListOfLeaveRequest</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">Users Leaves</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">MyLeaveOperation</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li class="active has-sub">
                                     <a class="js-arrow" href="#">
                                         <i class="fas fa-copy"></i>My Profile
@@ -256,137 +369,144 @@
                                             <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">My Leaves</a>
                                         </li>
                                     </ul>
-                                </li>}
-                                            @if (User.IsInRole("Dean"))
-                                            {
-                            <li class="active has-sub">
-                                <a class="js-arrow" href="#">
-                                    <i class="fas fa-tachometer-alt"></i>Leave Operations
-                                </a>
-                                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                    <li>
-                                        <a class="" asp-area="" asp-controller="Dean" asp-action="HomePageDean">Home</a>
-                                    </li>
-                                    <li>
-                                        <a class="" asp-area="" asp-controller="Dean" asp-action="LeaveRequest">Create Leave</a>
-                                    </li>
-                                    <li>
-                                        <a class="" asp-area="" asp-controller="Dean" asp-action="MyLeave">MyLeave</a>
-                                    </li>
-                                    <li>
-                                        <a class="" asp-area="" asp-controller="Dean" asp-action="ListOfLeaveRequest">ListOfLeaveRequest</a>
-                                    </li>
-                                    <li>
-                                        <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">Users Leaves History</a>
-                                    </li>
-                                    <li>
-                                        <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">List Leave Type</a>
-                                    </li>
-                                </ul>
-                            </li>
-                                                <li class="active has-sub">
-                                                    <a class="js-arrow" href="#">
-                                                        <i class="fas fa-copy"></i>My Profile
-                                                    </a>
-                                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                        <li>
-                                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>}
-                                                            @if (User.IsInRole("HOD"))
-                                                            {
-                                            <li class="active has-sub">
-                                                <a class="js-arrow" href="#">
-                                                    <i class="fas fa-tachometer-alt"></i>Leave Operations
-                                                </a>
-                                                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                    <li>
-                                                        <a class="" asp-area="" asp-controller="HOD" asp-action="HomePageHOD">Home</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="" asp-area="" asp-controller="HOD" asp-action="LeaveRequest">Create Leave</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="" asp-area="" asp-controller="HOD" asp-action="MyLeave">MyLeave</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="" asp-area="" asp-controller="HOD" asp-action="ListOfLeaveRequest">Pending Leave Requests</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">My Leave Operations</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                                                <li class="active has-sub">
-                                                                    <a class="js-arrow" href="#">
-                                                                        <i class="fas fa-copy"></i>My Profile
-                                                                    </a>
-                                                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                </li>
+                            }
+                            @if (User.IsInRole("Dean"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="HomePageDean">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Dean" asp-action="ListOfLeaveRequest">ListOfLeaveRequest</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">Users Leaves History</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">MyLeaveOperation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.IsInRole("HOD"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="HomePageHOD">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="HOD" asp-action="ListOfLeaveRequest">Pending Leave Requests</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListLeaveAllocation">List Leave Allocation</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="MyLeaveOperation">My Leave Operations</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
 
-                                                                        <li>
-                                                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
 
-                                                                        <li>
-                                                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
-                                                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
+                                        </li>
 
-                                                                    </ul>
-                                                                </li>}
-                                                                            @if (User.IsInRole("Faculty"))
-                                                                            {
-                                                            <li class="active has-sub">
-                                                                <a class="js-arrow" href="#">
-                                                                    <i class="fas fa-tachometer-alt"></i>Leave Operations
-                                                                </a>
-                                                                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                                    <li>
-                                                                        <a class="" asp-area="" asp-controller="Faculty" asp-action="HomePageFaculty">Home</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="" asp-area="" asp-controller="Faculty" asp-action="LeaveRequest">Create Leave</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="" asp-area="" asp-controller="Faculty" asp-action="MyLeave">MyLeave</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                                                <li class="active has-sub">
-                                                                                    <a class="js-arrow" href="#">
-                                                                                        <i class="fas fa-copy"></i>My Profile
-                                                                                    </a>
-                                                                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                                                        <li>
-                                                                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </li>}
-                                                                                            @if (User.IsInRole("Pending"))
-                                                                                            {
-                                                                            <li class="active has-sub">
-                                                                                <a class="js-arrow" href="#">
-                                                                                    <i class="fas fa-copy"></i>My Profile
-                                                                                </a>
-                                                                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    </ul>
+                                </li>
 
-                                                                                    <li>
-                                                                                        <a class="nav-link text-white" asp-area="" asp-controller="temp" asp-action="pendingView">Home</a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </li>}}
+                            }
+                            @if (User.IsInRole("Faculty"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-tachometer-alt"></i>Leave Operations
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Faculty" asp-action="HomePageFaculty">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Faculty" asp-action="LeaveRequest">Create Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Faculty" asp-action="MyLeave">MyLeave</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ListUserLeaveAllocation">List Allocated Leave</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.IsInRole("Pending"))
+                            {
+                                <li class="active has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-copy"></i>My Profile
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+
+                                        <li>
+                                            <a class="nav-link text-white" asp-area="" asp-controller="temp" asp-action="pendingView">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="" asp-area="" asp-controller="Common" asp-action="ownprofile">Edit Profile Details</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
                     </ul>
                 </nav>
             </div>
@@ -395,94 +515,86 @@
         <!-- PAGE CONTAINER-->
         <div class="page-container">
             <!-- HEADER DESKTOP-->
-            <header class="header-desktop">
+            <header class="header-desktop ">
                 <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                <button class="au-btn--submit" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                            </form>
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div class="account-wrap">
-                                        <div class="account-item clearfix js-item-menu">
+                    <div class="container-fluid float-right">
+                        <div class="header-wrap float-right">
+                         
+                            <div class="header-button float-right">
+                                <div class="noti-wrap float-right">
+                                    <div class="account-wrap float-right">
+                                        <div class="account-item clearfix js-item-menu  float-right">
 
                                             @if (signinmanager.IsSignedIn(User))
                                             {
 
 
-                                <div class="image">
-                                    <img alt="John Doe" src="" id="nav_image" />
-                                </div>
-                                                <div class="content">
+                                                <div class="image">
+                                                    <img alt="John Doe" src="" id="nav_image" />
+                                                </div>
+                                                <div class="content align-content-end">
                                                     <a class="js-acc-btn" href="#">@User.Identity.Name</a>
                                                 </div>
-                                                                <div class="account-dropdown js-dropdown">
-                                                                    <div class="info clearfix">
-                                                                        <div class="image">
-                                                                            <a href="#">
-                                                                                <img alt="John Doe" src="" id="drop_nav_image" />
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="content">
-                                                                            <h5 class="name">
-                                                                                <a>@User.Identity.Name</a>
-                                                                            </h5>
-                                                                            <span class="email">
-                                                                                @{var x = (
-                                                                                        await signinmanager.UserManager
-                                                                                        .GetRolesAsync(await signinmanager.UserManager.FindByNameAsync(User.Identity.Name))); }
-                                                                                @x[0]
-                                                                            </span>
+                                                <div class="account-dropdown js-dropdown">
+                                                    <div class="info clearfix">
+                                                        <div class="image">
+                                                            <a href="#">
+                                                                <img alt="John Doe" src="" id="drop_nav_image" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="content">
+                                                            <h5 class="name">
+                                                                <a>@User.Identity.Name</a>
+                                                            </h5>
+                                                            <span class="email">
+                                                                @{var x = (
+                                                                          await signinmanager.UserManager
+                                                                          .GetRolesAsync(await signinmanager.UserManager.FindByNameAsync(User.Identity.Name)));
+                                                                }
+                                                                @x[0]
+                                                            </span>
 
 
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="account-dropdown__body">
-                                                                        <div class="account-dropdown__item">
-                                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
-                                                                                <i class="zmdi zmdi-account"></i>Account
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="account-dropdown__item">
-                                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
-                                                                                <i class="zmdi zmdi-settings"></i>Setting
-                                                                            </a>
-                                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="account-dropdown__body">
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Common" asp-action="OwnProfile">
+                                                                <i class="zmdi zmdi-account"></i>Account
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="account-dropdown__footer">
+                                                        <form asp-controller="account" asp-action="Logout">
+                                                            <a>
+                                                                <i class="zmdi zmdi-power"></i><button type="submit">Logout</button>
+                                                            </a>
+                                                        </form>
+                                                    </div>
 
-                                                                    </div>
-                                                                    <div class="account-dropdown__footer">
-                                                                        <form asp-controller="account" asp-action="Logout">
-                                                                            <a>
-                                                                                <i class="zmdi zmdi-power"></i><button type="submit">Logout</button>
-                                                                            </a>
-                                                                        </form>
-                                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
 
-                                                                </div> }
-                                                                            else
-                                                                            {
-
-                                                                <div class="content">
-                                                                    Login
-                                                                </div>
-                                                                                <div class="account-dropdown js-dropdown">
-                                                                                    <div class="account-dropdown__body">
-                                                                                        <div class="account-dropdown__item">
-                                                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="login">
-                                                                                                <i class="zmdi zmdi-account"></i>Login
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <div class="account-dropdown__item">
-                                                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="register">
-                                                                                                <i class="zmdi zmdi-settings"></i>Register
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>}
+                                                <div class="content">
+                                                    Login
+                                                </div>
+                                                <div class="account-dropdown js-dropdown">
+                                                    <div class="account-dropdown__body">
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="login">
+                                                                <i class="zmdi zmdi-account"></i>Login
+                                                            </a>
+                                                        </div>
+                                                        <div class="account-dropdown__item">
+                                                            <a class="" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="account" asp-action="register">
+                                                                <i class="zmdi zmdi-settings"></i>Register
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -532,30 +644,29 @@
     <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/vendor/select2/select2.min.js">
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
     </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script>
-            $(window).on("load", function () {
+        $(window).on("load", function () {
             console.log("Hello Image");
-                if ($("#nav_image").length) {
-            $.ajax({
-                type: "POST",
-                url: "/Common/GetUserImage",
-                success: function (response) {
-                    $('#nav_image').attr('src', response);
-                    $('#drop_nav_image').attr('src', response);
-                },
-                failure: function (response) {
-                    alert("failure");
-                },
-                error: function (response) {
-                    alert("error");
-                }
-            });
-                }
-            });
+            if ($("#nav_image").length) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/GetUserImage",
+                    success: function (response) {
+                        $('#nav_image').attr('src', response);
+                        $('#drop_nav_image').attr('src', response);
+                    },
+                    failure: function (response) {
+                        alert("failure");
+                    },
+                    error: function (response) {
+                        alert("error");
+                    }
+                });
+            }
+        });
     </script>
 
     <!-- Main JS-->

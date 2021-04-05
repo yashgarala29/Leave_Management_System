@@ -24,9 +24,14 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\file\" />
-    <Folder Include="wwwroot\file\" />
     <Folder Include="wwwroot\Uploads\" />
-    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Faculty\MyLeave.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Leave_Management_System.Models.Class.LeaveHistory>
+
+<div class="ui container">
+
+    <br />
+    <div class="ui container">
+        <div class="ui grid">
+            <div class="ui sixteen column">
+                @ViewBag.calenderdata
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            console.log("Calender")
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                defaultDate: @ViewBag.todaydate,
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [
+                    @ViewBag.calenderdata
+                ]
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            console.log("Calender")
+            var s=@ViewBag.calenderdata;
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                defaultDate: '2016-12-12',
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [
+                   s,
+                    {
+                        title: 'Long Event',
+                        start: '2016-12-07',
+                        end: '2016-12-10'
+                    },
+
+
+
+                ]
+            });
+
+        });
+    </script>
+}

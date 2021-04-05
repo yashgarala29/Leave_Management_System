@@ -55,17 +55,20 @@ namespace Leave_Management_System.Controllers
             var curentuser = await _context.AllUser.Where(x => x.Email == curentuseremail).FirstOrDefaultAsync();
             var leavedata = await _context.LeaveHistory.Include(x => x.AllUser)
                 .Include(x => x.leaveType).Where(x => x.AllUser.Role == "HOD").ToListAsync();
-            var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accept").Count();
+            var succesleavecount = leavedata.Where(x => x.LeaveStatus == "Accepted").Count();
             var pandingleavecount = leavedata.Where(x => x.LeaveStatus == "Pending" && x.StartFrome > DateTime.Now).Count();
             var Rejectedleavecount = leavedata.Count() - succesleavecount - pandingleavecount;
+            var TotalLeaveCount = succesleavecount + pandingleavecount + Rejectedleavecount;
             var newhomepageviewmodel = new HomePageDatapass
             {
                 approveleave = succesleavecount,
                 Peandingeave = pandingleavecount,
                 Rejectedleave = Rejectedleavecount,
+                TotalLeave = TotalLeaveCount
             };
             return View(newhomepageviewmodel);
         }
+
         [HttpPost]
         [Authorize(Roles = "Dean")]
         public IActionResult LeaveRequest(LeaveRequest leaveRequest, IFormFile file)
@@ -192,13 +195,32 @@ namespace Leave_Management_System.Controllers
             var leave = _context.LeaveHistory.Where(x => x.leave_id == leave_id_int).FirstOrDefault();
             leave.DeanApproveStatus = name;
             leave.LeaveStatus = name;
-
-
-
             leave.approved_id = currentuserId;
-            if (name == "Accept")
+
+            UserEmail userEmail = new UserEmail
             {
-                var allocation = _context.leaveAllocation.Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
+                ToEmail = leave.AllUser.Email,
+
+            };
+            var arr = new List<KeyValuePair<string, string>>();
+            var leavereason = new KeyValuePair<string, string>("{{leavereason}}", leave.LeaveReason);
+            var leavestart = new KeyValuePair<string, string>("{{leavestart}}", leave.StartFrome.ToString());
+            var leaveend = new KeyValuePair<string, string>("{{leaveend}}", leave.EndTill.ToString());
+            var leavetype = new KeyValuePair<string, string>("{{leavetype}}", leave.leaveType.LeaveType);
+            var leavestatus = new KeyValuePair<string, string>("{{leavestatus}}", leave.LeaveStatus);
+
+            //temp.Key = "username";
+            //temp.Value = "yashgarala29@gmail.com";
+            arr.Add(leavereason);
+            arr.Add(leavestart);
+            arr.Add(leaveend);
+            arr.Add(leavetype);
+            arr.Add(leavestatus);
+            userEmail.PlaceHolder = arr;
+            await emailService.LeaveStatusChangeEmail(userEmail);
+            if (name == "Accepted")
+            {
+                var allocation = _context.leaveAllocation.Include(x => x.AllUser).Include(x => x.leaveType).Where(x => x.id == leave.id && x.leaveTypeID == leave.leaveTypeID).FirstOrDefault();
                 allocation.NoOfLeave -= leave.NoOfDay;
                 _context.Update(allocation);
                 _context.SaveChanges();
@@ -213,6 +235,12 @@ namespace Leave_Management_System.Controllers
             //{
             //    throw;
             //}
+
+
+            
+
+
+
             return Json(leave);
         }
         public bool convertleavetype(string email,string newvalue, string oldvalue, int noofday, int oldday)
@@ -318,7 +346,7 @@ namespace Leave_Management_System.Controllers
                         ModelState.AddModelError(string.Empty, "You can not request More than " + oldallocatedleave.NoOfLeave + leaveHistory.NoOfDay);
                         return View(leaveRequest);
                     }
-                    if (leaveHistory.LeaveStatus == "Accept")
+                    if (leaveHistory.LeaveStatus == "Accepted")
                     {
                         //await readdleave(leaveHistory.AllUser.Email, leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
                     }
@@ -425,7 +453,7 @@ namespace Leave_Management_System.Controllers
             };
             var arr = new List<KeyValuePair<string, string>>();
             KeyValuePair<string, string> temp = new KeyValuePair<string, string>("{{username}}", leaveHistory.AllUser.Email);
-            if (leaveHistory.LeaveStatus == "Accept")
+            if (leaveHistory.LeaveStatus == "Accepted")
                 readdleave(leaveHistory.AllUser.Email,leaveHistory.leaveType.LeaveType, leaveHistory.NoOfDay);
             //temp.Key = "username";
             //temp.Value = "yashgarala29@gmail.com";
