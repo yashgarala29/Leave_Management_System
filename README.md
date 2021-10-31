@@ -1,5 +1,6 @@
 # Leave_Management_System
 ##  [live Demo](https://leavebalancesystem.azurewebsites.net/)
+##  [Report](https://drive.google.com/file/d/171VrwrI2GUw7jwQWD80pV_1zgaPwZbo2/view?usp=drive_open)
 
 ### Step for Run Project on your PC
 
